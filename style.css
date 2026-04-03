@@ -1,10 +1,13 @@
 /* ============================================================
    Equanimity Advisory — style.css
    Palette:
-     Parchment  #F5EFE7  primary background
-     Wheat      #EBD9B4  dividers, texture, blockquotes
-     Steel      #6D94C5  sole accent — links, italic labels, CTA
+     Parchment  #EDE4D3  primary background (warm, aged paper)
+     Wheat      #D9CEBC  dividers, texture
+     Steel      #6D94C5  sole accent — links, italic labels
      Navy       #213555  primary type, headings, dark surfaces
+   Fonts:
+     Lora       headlines + body (editorial serif, wt 400–600)
+     Inter      nav links, labels, UI elements (wt 400–500)
    ============================================================ */
 
 /* ------------------------------------------------------------
@@ -18,22 +21,20 @@
 
 html {
   scroll-behavior: smooth;
-  font-size: 16px;
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 56px;
 }
 
 body {
-  background-color: #F5EFE7;
+  background-color: #EDE4D3;
   color: #213555;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 18px;
   font-weight: 400;
-  line-height: 1.7;
+  line-height: 1.75;
+  letter-spacing: -0.005em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-/* Page entry fade-in — single, no stagger */
-body {
   animation: pageFadeIn 400ms ease-out both;
 }
 
@@ -53,7 +54,7 @@ a:hover {
 }
 
 /* ------------------------------------------------------------
-   Typography — Cormorant Garamond for display/headings
+   Typography
    ------------------------------------------------------------ */
 h1, h2, h3,
 .wordmark,
@@ -61,14 +62,14 @@ h1, h2, h3,
 .hero-sub,
 .contact-framing,
 .section-framing {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Lora', Georgia, serif;
 }
 
 h2.section-label {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  font-size: 10px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #213555;
   opacity: 0.5;
@@ -85,7 +86,7 @@ h2.section-label {
   right: 0;
   z-index: 100;
   height: 56px;
-  background-color: #F5EFE7;
+  background-color: #EDE4D3;
   border-bottom: 1px solid transparent;
   transition: border-color 280ms ease-out;
 }
@@ -93,7 +94,7 @@ h2.section-label {
 .nav-inner {
   max-width: 960px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 32px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -105,10 +106,10 @@ h2.section-label {
 }
 
 .wordmark {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 300;
+  font-family: 'Lora', Georgia, serif;
+  font-weight: 500;
   font-size: 20px;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   line-height: 1;
   color: inherit;
   text-decoration: none;
@@ -133,6 +134,7 @@ h2.section-label {
 }
 
 .nav-links a {
+  font-family: 'Inter', -apple-system, sans-serif;
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -185,7 +187,6 @@ h2.section-label {
 .hamburger-bar::before { top: -6px; }
 .hamburger-bar::after  { top:  6px; }
 
-/* Open state */
 .hamburger[aria-expanded="true"] .hamburger-bar {
   background-color: transparent;
 }
@@ -206,7 +207,7 @@ h2.section-label {
 .mobile-overlay {
   position: fixed;
   inset: 0;
-  z-index: 99;
+  z-index: 200;
   background-color: #213555;
   display: flex;
   flex-direction: column;
@@ -228,7 +229,7 @@ h2.section-label {
   right: 24px;
   background: none;
   border: none;
-  color: #F5EFE7;
+  color: #EDE4D3;
   font-size: 20px;
   cursor: pointer;
   opacity: 0.6;
@@ -248,36 +249,41 @@ h2.section-label {
 }
 
 .mobile-overlay nav a {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 300;
+  font-family: 'Lora', Georgia, serif;
+  font-weight: 400;
   font-size: 36px;
-  color: #F5EFE7;
-  letter-spacing: 0.04em;
+  color: #EDE4D3;
+  letter-spacing: 0.02em;
   opacity: 0.85;
   transition: opacity 280ms ease-out;
 }
 
 .mobile-overlay nav a:hover {
   opacity: 1;
-  color: #F5EFE7;
+  color: #EDE4D3;
 }
 
 /* ------------------------------------------------------------
-   Sections — shared layout
+   Sections — shared layout (snap + full viewport)
    ------------------------------------------------------------ */
 section {
-  padding: 72px 0;
+  min-height: 100vh;
+  padding: 56px 0 40px; /* top accounts for fixed nav */
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .section-inner {
   max-width: 960px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 32px;
+  width: 100%;
 }
 
-/* Wheat divider between sections */
 section + section {
-  border-top: 1px solid #EBD9B4;
+  border-top: 1px solid #D9CEBC;
 }
 
 /* ------------------------------------------------------------
@@ -285,12 +291,9 @@ section + section {
    ------------------------------------------------------------ */
 #hero {
   position: relative;
-  padding-top: 96px; /* nav height + breathing room */
-  padding-bottom: 72px;
   overflow: hidden;
 }
 
-/* Ledger texture: repeating horizontal rules at rgba(33,53,85,0.032) */
 .hero-ledger {
   position: absolute;
   inset: 0;
@@ -299,8 +302,8 @@ section + section {
     to bottom,
     transparent,
     transparent 39px,
-    rgba(33, 53, 85, 0.032) 39px,
-    rgba(33, 53, 85, 0.032) 40px
+    rgba(33, 53, 85, 0.028) 39px,
+    rgba(33, 53, 85, 0.028) 40px
   );
 }
 
@@ -308,23 +311,25 @@ section + section {
   position: relative;
   max-width: 960px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 32px;
 }
 
 .hero-antagonist {
-  font-size: 13px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 14px;
   font-weight: 400;
   color: #213555;
   margin-bottom: 28px;
   line-height: 1.6;
+  letter-spacing: 0.01em;
 }
 
 .hero-headline {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 300;
-  font-size: clamp(52px, 8vw, 96px);
-  line-height: 1.05;
-  letter-spacing: -0.01em;
+  font-family: 'Lora', Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(52px, 8vw, 88px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
   margin-bottom: 40px;
 }
 
@@ -342,31 +347,30 @@ section + section {
 }
 
 .hero-sub {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 300;
-  font-size: clamp(20px, 2.6vw, 32px);
-  line-height: 1.4;
+  font-family: 'Lora', Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(20px, 2.6vw, 28px);
+  line-height: 1.5;
   color: #213555;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   font-style: italic;
 }
 
 .hero-body {
-  font-size: 14px;
+  font-size: 18px;
   color: #213555;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
-/* Ornament: vertical line · diamond · vertical line */
+/* Ornament */
 .hero-ornament {
   position: absolute;
-  right: 32px;
+  right: 48px;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0;
 }
 
 .orn-line {
@@ -388,34 +392,34 @@ section + section {
    ------------------------------------------------------------ */
 .placeholder-block {
   padding: 48px 0;
-  border-top: 1px solid #EBD9B4;
-  border-bottom: 1px solid #EBD9B4;
+  border-top: 1px solid #D9CEBC;
+  border-bottom: 1px solid #D9CEBC;
 }
 
 .placeholder-text {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 18px;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 20px;
   font-style: italic;
   color: #213555;
-  opacity: 0.35;
+  opacity: 0.3;
   text-align: center;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
 /* ------------------------------------------------------------
    Section 3 — Services
    ------------------------------------------------------------ */
 .section-framing {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 20px;
-  font-weight: 300;
+  font-family: 'Lora', Georgia, serif;
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 400;
   font-style: italic;
   color: #6D94C5;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .services-intro {
-  font-size: 14px;
+  font-size: 18px;
   color: #213555;
   margin-bottom: 48px;
   opacity: 0.75;
@@ -424,7 +428,7 @@ section + section {
 .service-phase {
   margin-bottom: 40px;
   padding-bottom: 40px;
-  border-bottom: 1px solid #EBD9B4;
+  border-bottom: 1px solid #D9CEBC;
 }
 
 .service-phase:last-of-type {
@@ -434,9 +438,9 @@ section + section {
 }
 
 .phase-title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 400;
-  font-size: 24px;
+  font-family: 'Lora', Georgia, serif;
+  font-weight: 500;
+  font-size: 26px;
   color: #213555;
   margin-bottom: 16px;
   display: flex;
@@ -446,7 +450,7 @@ section + section {
 }
 
 .phase-duration {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: 'Inter', -apple-system, sans-serif;
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -456,9 +460,10 @@ section + section {
 }
 
 .services-note {
+  font-family: 'Inter', -apple-system, sans-serif;
   font-size: 12px;
   color: #213555;
-  opacity: 0.45;
+  opacity: 0.4;
   letter-spacing: 0.04em;
   margin-top: 8px;
 }
@@ -467,8 +472,8 @@ section + section {
    Section 4 — About
    ------------------------------------------------------------ */
 .about-content p {
-  margin-bottom: 20px;
-  line-height: 1.75;
+  margin-bottom: 24px;
+  line-height: 1.8;
 }
 
 .about-content p:last-child {
@@ -478,10 +483,14 @@ section + section {
 /* ------------------------------------------------------------
    Section 5 — Contact
    ------------------------------------------------------------ */
+#contact {
+  position: relative;
+}
+
 .contact-framing {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 22px;
-  font-weight: 300;
+  font-family: 'Lora', Georgia, serif;
+  font-size: clamp(22px, 2.8vw, 32px);
+  font-weight: 400;
   font-style: italic;
   color: #213555;
   line-height: 1.45;
@@ -490,13 +499,14 @@ section + section {
 
 .cta-button {
   display: inline-block;
-  font-size: 11px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #213555;
   border: 1px solid rgba(33, 53, 85, 0.30);
-  padding: 14px 32px;
+  padding: 16px 36px;
   margin-bottom: 28px;
   transition: color 280ms ease-out, border-color 280ms ease-out;
 }
@@ -507,7 +517,7 @@ section + section {
 }
 
 .contact-email {
-  font-size: 13px;
+  font-size: 16px;
 }
 
 .contact-email a {
@@ -521,34 +531,20 @@ section + section {
   color: #6D94C5;
 }
 
-/* ------------------------------------------------------------
-   Footer
-   ------------------------------------------------------------ */
-footer {
-  padding: 40px 0;
-  border-top: 1px solid #EBD9B4;
-}
-
-.footer-inner {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 0 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.footer-wordmark {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 300;
-  font-size: 16px;
-  letter-spacing: 0.02em;
+/* Footer line inside contact section */
+.section-footer {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  text-align: center;
 }
 
 .footer-copy {
+  font-family: 'Inter', -apple-system, sans-serif;
   font-size: 11px;
   color: #213555;
-  opacity: 0.35;
+  opacity: 0.3;
   letter-spacing: 0.06em;
 }
 
@@ -557,7 +553,10 @@ footer {
    ------------------------------------------------------------ */
 @media (max-width: 768px) {
 
-  /* Nav */
+  html {
+    scroll-snap-type: y proximity;
+  }
+
   .nav-inner {
     padding: 0 20px;
   }
@@ -570,49 +569,34 @@ footer {
     display: flex;
   }
 
-  /* Hero */
-  #hero {
-    padding-top: 80px;
-    padding-bottom: 52px;
-  }
-
   .hero-content {
     padding: 0 20px;
   }
 
-  .hero-headline {
-    font-size: 38px;
-  }
-
-  /* Hide ornament on mobile */
   .hero-ornament {
     display: none;
   }
 
-  /* Sections */
   .section-inner {
     padding: 0 20px;
   }
 
   section {
-    padding: 44px 0;
-  }
-
-  /* Footer */
-  .footer-inner {
-    padding: 0 20px;
-    flex-direction: column;
-    gap: 8px;
-    align-items: flex-start;
+    min-height: auto;
+    padding: 52px 0 40px;
   }
 }
 
 @media (max-width: 480px) {
   .hero-headline {
-    font-size: 36px;
+    font-size: 40px;
   }
 
   .hero-sub {
     font-size: 20px;
+  }
+
+  body {
+    font-size: 17px;
   }
 }
