@@ -84,8 +84,8 @@ h2.section-label {
   left: 0;
   right: 0;
   z-index: 100;
-  height: 64px;
-  padding: 0 48px;
+  height: 56px;
+  padding: 0 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -260,13 +260,13 @@ h2.section-label {
    Sections — shared layout
    ------------------------------------------------------------ */
 section {
-  padding: 80px 0;
+  padding: 56px 0;
 }
 
 .section-inner {
-  max-width: 640px;
+  max-width: 680px;
   margin: 0 auto;
-  padding: 0 80px;
+  padding: 0 32px;
 }
 
 /* Wheat divider between sections */
@@ -279,8 +279,8 @@ section + section {
    ------------------------------------------------------------ */
 #hero {
   position: relative;
-  padding-top: 144px; /* nav height + breathing room */
-  padding-bottom: 100px;
+  padding-top: 96px; /* nav height + breathing room */
+  padding-bottom: 72px;
   overflow: hidden;
 }
 
@@ -300,9 +300,9 @@ section + section {
 
 .hero-content {
   position: relative;
-  max-width: 640px;
+  max-width: 680px;
   margin: 0 auto;
-  padding: 0 80px;
+  padding: 0 32px;
 }
 
 .hero-antagonist {
@@ -354,7 +354,7 @@ section + section {
 /* Ornament: vertical line · diamond · vertical line */
 .hero-ornament {
   position: absolute;
-  right: 80px;
+  right: 32px;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -524,9 +524,9 @@ footer {
 }
 
 .footer-inner {
-  max-width: 640px;
+  max-width: 680px;
   margin: 0 auto;
-  padding: 0 80px;
+  padding: 0 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -566,12 +566,12 @@ footer {
 
   /* Hero */
   #hero {
-    padding-top: 112px;
-    padding-bottom: 72px;
+    padding-top: 80px;
+    padding-bottom: 52px;
   }
 
   .hero-content {
-    padding: 0 24px;
+    padding: 0 20px;
   }
 
   .hero-headline {
@@ -585,16 +585,16 @@ footer {
 
   /* Sections */
   .section-inner {
-    padding: 0 24px;
+    padding: 0 20px;
   }
 
   section {
-    padding: 60px 0;
+    padding: 44px 0;
   }
 
   /* Footer */
   .footer-inner {
-    padding: 0 24px;
+    padding: 0 20px;
     flex-direction: column;
     gap: 8px;
     align-items: flex-start;
