@@ -85,13 +85,19 @@ h2.section-label {
   right: 0;
   z-index: 100;
   height: 56px;
-  padding: 0 calc((100vw - min(860px, 90vw)) / 2 + 24px);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   background-color: #F5EFE7;
   border-bottom: 1px solid transparent;
   transition: border-color 280ms ease-out;
+}
+
+.nav-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 #nav.scrolled {
@@ -264,7 +270,7 @@ section {
 }
 
 .section-inner {
-  max-width: min(860px, 90vw);
+  max-width: 960px;
   margin: 0 auto;
   padding: 0 24px;
 }
@@ -300,7 +306,7 @@ section + section {
 
 .hero-content {
   position: relative;
-  max-width: min(860px, 90vw);
+  max-width: 960px;
   margin: 0 auto;
   padding: 0 24px;
 }
@@ -524,7 +530,7 @@ footer {
 }
 
 .footer-inner {
-  max-width: min(860px, 90vw);
+  max-width: 960px;
   margin: 0 auto;
   padding: 0 24px;
   display: flex;
@@ -552,7 +558,7 @@ footer {
 @media (max-width: 768px) {
 
   /* Nav */
-  #nav {
+  .nav-inner {
     padding: 0 20px;
   }
 
