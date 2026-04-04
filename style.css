@@ -149,6 +149,14 @@ h2.section-label {
   color: #6D94C5;
 }
 
+.nav-dot {
+  font-size: 8px;
+  color: #213555;
+  opacity: 0.3;
+  line-height: 1;
+  user-select: none;
+}
+
 /* Hamburger — hidden on desktop */
 .hamburger {
   display: none;
