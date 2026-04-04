@@ -581,7 +581,7 @@ section + section {
 @media (max-width: 768px) {
 
   html {
-    scroll-snap-type: y proximity;
+    scroll-snap-type: none;
   }
 
   .nav-inner {
@@ -610,7 +610,25 @@ section + section {
 
   section {
     min-height: auto;
-    padding: 52px 0 40px;
+    padding: 64px 0;
+  }
+
+  #hero {
+    padding-top: 80px;
+    padding-bottom: 64px;
+  }
+
+  .hero-headline {
+    font-size: clamp(36px, 10vw, 52px);
+    margin-bottom: 28px;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+  }
+
+  .phase-title {
+    font-size: 22px;
   }
 
   .bottom-bar {
@@ -618,24 +636,25 @@ section + section {
   }
 
   #contact {
-    padding-bottom: 60px;
+    position: relative;
+    padding-bottom: 80px;
   }
 
   .section-footer {
-    bottom: 16px;
+    bottom: 20px;
+  }
+
+  .contact-framing {
+    font-size: 20px;
   }
 }
 
 @media (max-width: 480px) {
-  .hero-headline {
-    font-size: 40px;
-  }
-
-  .hero-sub {
-    font-size: 20px;
-  }
-
   body {
     font-size: 17px;
+  }
+
+  .hero-headline {
+    font-size: 36px;
   }
 }
