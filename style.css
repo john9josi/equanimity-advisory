@@ -534,7 +534,7 @@ section + section {
 /* Footer line inside contact section */
 .section-footer {
   position: absolute;
-  bottom: 24px;
+  bottom: 40px;
   left: 0;
   right: 0;
   text-align: center;
@@ -611,6 +611,18 @@ section + section {
   section {
     min-height: auto;
     padding: 52px 0 40px;
+  }
+
+  .bottom-bar {
+    display: none;
+  }
+
+  #contact {
+    padding-bottom: 60px;
+  }
+
+  .section-footer {
+    bottom: 16px;
   }
 }
 
