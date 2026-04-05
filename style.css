@@ -53,6 +53,10 @@ a:hover {
   color: #6D94C5;
 }
 
+.accent-link {
+  color: #6D94C5;
+}
+
 /* ------------------------------------------------------------
    Typography
    ------------------------------------------------------------ */
@@ -60,8 +64,7 @@ h1, h2, h3,
 .wordmark,
 .hero-headline,
 .hero-sub,
-.contact-framing,
-.section-framing {
+.contact-framing {
   font-family: 'Lora', Georgia, serif;
 }
 
