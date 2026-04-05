@@ -252,17 +252,18 @@ h2.section-label {
 .mobile-overlay nav {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 40px;
   text-align: center;
 }
 
 .mobile-overlay nav a {
-  font-family: 'Lora', Georgia, serif;
+  font-family: 'Inter', -apple-system, sans-serif;
   font-weight: 400;
-  font-size: 36px;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
   color: #EDE4D3;
-  letter-spacing: 0.02em;
-  opacity: 0.85;
+  opacity: 0.7;
   transition: opacity 280ms ease-out;
 }
 
@@ -398,20 +399,13 @@ section + section {
 /* ------------------------------------------------------------
    Section 2 — Why Equanimity (placeholder)
    ------------------------------------------------------------ */
-.placeholder-block {
-  padding: 48px 0;
-  border-top: 1px solid #D9CEBC;
-  border-bottom: 1px solid #D9CEBC;
+.why-content p {
+  margin-bottom: 24px;
+  line-height: 1.8;
 }
 
-.placeholder-text {
-  font-family: 'Lora', Georgia, serif;
-  font-size: 20px;
-  font-style: italic;
-  color: #213555;
-  opacity: 0.3;
-  text-align: center;
-  letter-spacing: 0.01em;
+.why-content p:last-child {
+  margin-bottom: 0;
 }
 
 /* ------------------------------------------------------------
@@ -604,6 +598,10 @@ section + section {
     display: none;
   }
 
+  .hero-ledger {
+    display: none;
+  }
+
   .section-inner {
     padding: 0 20px;
   }
@@ -614,7 +612,7 @@ section + section {
   }
 
   #hero {
-    padding-top: 80px;
+    padding-top: 120px;
     padding-bottom: 64px;
   }
 
