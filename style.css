@@ -21,7 +21,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity;
   scroll-padding-top: 56px;
 }
 
@@ -323,15 +323,6 @@ section + section {
   padding: 0 32px;
 }
 
-.hero-antagonist {
-  font-family: 'Inter', -apple-system, sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  color: #213555;
-  margin-bottom: 28px;
-  line-height: 1.6;
-  letter-spacing: 0.01em;
-}
 
 .hero-headline {
   font-family: 'Lora', Georgia, serif;
@@ -365,11 +356,6 @@ section + section {
   font-style: italic;
 }
 
-.hero-body {
-  font-size: 18px;
-  color: #213555;
-  line-height: 1.75;
-}
 
 /* Ornament */
 .hero-ornament {
@@ -397,7 +383,7 @@ section + section {
 }
 
 /* ------------------------------------------------------------
-   Section 2 — Why Equanimity (placeholder)
+   Section 2 — Why
    ------------------------------------------------------------ */
 .why-content p {
   margin-bottom: 24px;
@@ -411,21 +397,6 @@ section + section {
 /* ------------------------------------------------------------
    Section 3 — Services
    ------------------------------------------------------------ */
-.section-framing {
-  font-family: 'Lora', Georgia, serif;
-  font-size: clamp(24px, 3vw, 36px);
-  font-weight: 400;
-  font-style: italic;
-  color: #6D94C5;
-  margin-bottom: 16px;
-}
-
-.services-intro {
-  font-size: 18px;
-  color: #213555;
-  margin-bottom: 48px;
-  opacity: 0.75;
-}
 
 .service-phase {
   margin-bottom: 40px;
@@ -451,15 +422,6 @@ section + section {
   flex-wrap: wrap;
 }
 
-.phase-duration {
-  font-family: 'Inter', -apple-system, sans-serif;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #6D94C5;
-  opacity: 0.8;
-}
 
 
 /* ------------------------------------------------------------
@@ -510,20 +472,6 @@ section + section {
   border-color: #6D94C5;
 }
 
-.contact-email {
-  font-size: 16px;
-}
-
-.contact-email a {
-  color: #213555;
-  opacity: 0.6;
-  transition: opacity 280ms ease-out, color 280ms ease-out;
-}
-
-.contact-email a:hover {
-  opacity: 1;
-  color: #6D94C5;
-}
 
 /* Footer line inside contact section */
 .section-footer {
