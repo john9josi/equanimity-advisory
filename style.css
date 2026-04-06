@@ -428,7 +428,56 @@ section + section {
 
 
 /* ------------------------------------------------------------
-   Section 4 — About
+   Section 4 — Thinking
+   ------------------------------------------------------------ */
+.thinking-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.thinking-link {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: #6D94C5;
+  line-height: 1.4;
+  padding: 20px 0;
+  border-bottom: 1px solid #D9CEBC;
+  transition: color 280ms ease-out;
+}
+
+.thinking-link:first-child {
+  padding-top: 0;
+}
+
+.thinking-link:last-child {
+  border-bottom: none;
+}
+
+.thinking-link:hover {
+  color: #213555;
+}
+
+.thinking-substack {
+  display: inline-block;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #213555;
+  opacity: 0.45;
+  margin-top: 28px;
+  transition: opacity 280ms ease-out, color 280ms ease-out;
+}
+
+.thinking-substack:hover {
+  opacity: 1;
+  color: #6D94C5;
+}
+
+/* ------------------------------------------------------------
+   Section 5 — About
    ------------------------------------------------------------ */
 .about-content p {
   margin-bottom: 24px;
@@ -444,6 +493,15 @@ section + section {
    ------------------------------------------------------------ */
 #contact {
   position: relative;
+}
+
+.contact-qualifier {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #213555;
+  line-height: 1.75;
+  margin-bottom: 28px;
 }
 
 .contact-framing {
