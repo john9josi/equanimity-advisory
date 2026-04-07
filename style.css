@@ -382,6 +382,11 @@ section + section {
   margin-bottom: 0;
 }
 
+.section-cta {
+  margin-top: 40px;
+  margin-bottom: 0;
+}
+
 
 /* Ornament */
 .hero-ornament {
