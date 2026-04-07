@@ -287,6 +287,10 @@ section {
   justify-content: center;
 }
 
+section[hidden] {
+  display: none;
+}
+
 .section-inner {
   max-width: 960px;
   margin: 0 auto;
