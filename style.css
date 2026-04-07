@@ -473,6 +473,16 @@ section + section {
 
 
 
+.how-we-work-inline {
+  margin-top: 48px;
+  padding-top: 40px;
+  border-top: 1px solid #D9CEBC;
+}
+
+.how-we-work-inline .section-label {
+  margin-bottom: 16px;
+}
+
 /* ------------------------------------------------------------
    Section 4 — Thinking
    ------------------------------------------------------------ */
