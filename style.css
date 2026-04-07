@@ -355,8 +355,31 @@ section + section {
   font-size: clamp(20px, 2.6vw, 28px);
   line-height: 1.5;
   color: #213555;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   font-style: italic;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero-cta-primary {
+  background-color: #213555;
+  color: #EDE4D3;
+  border-color: #213555;
+  margin-bottom: 0;
+}
+
+.hero-cta-primary:hover {
+  background-color: #6D94C5;
+  border-color: #6D94C5;
+  color: #EDE4D3;
+}
+
+.hero-cta-secondary {
+  margin-bottom: 0;
 }
 
 
