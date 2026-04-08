@@ -308,6 +308,7 @@ section + section {
 #hero {
   position: relative;
   overflow: hidden;
+  padding-top: 80px;
 }
 
 .hero-ledger {
@@ -337,7 +338,7 @@ section + section {
   font-size: clamp(52px, 8vw, 88px);
   line-height: 1.08;
   letter-spacing: -0.02em;
-  margin-bottom: 40px;
+  margin-bottom: 28px;
 }
 
 .hl-navy {
@@ -357,35 +358,35 @@ section + section {
   font-family: 'Lora', Georgia, serif;
   font-weight: 400;
   font-size: clamp(18px, 2vw, 22px);
-  line-height: 1.6;
+  line-height: 1.65;
   color: #213555;
-  margin-bottom: 40px;
+  margin-bottom: 36px;
   font-style: normal;
-  opacity: 0.75;
+  opacity: 0.85;
+  max-width: 640px;
 }
 
 .hero-actions {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
+}
+
+.hero-actions .cta-button {
+  margin-bottom: 0;
 }
 
 .cta-button.hero-cta-primary {
   background-color: #213555;
   color: #EDE4D3;
   border-color: #213555;
-  margin-bottom: 0;
 }
 
 .cta-button.hero-cta-primary:hover {
   background-color: #1a2a44;
   border-color: #1a2a44;
   color: #EDE4D3;
-}
-
-.hero-cta-secondary {
-  margin-bottom: 0;
 }
 
 .section-cta {
