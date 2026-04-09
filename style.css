@@ -3,7 +3,7 @@
    Palette:
      Parchment  #EDE4D3  primary background (warm, aged paper)
      Wheat      #D9CEBC  dividers, texture
-     Steel      #1D5FA4  sole accent — links, italic labels (darkened from #1D5FA4 for WCAG AA contrast)
+     Steel      #6D94C5  sole accent — links, italic labels
      Navy       #213555  primary type, headings, dark surfaces
    Fonts:
      Lora       headlines + body (editorial serif, wt 400–600)
@@ -50,11 +50,11 @@ a {
 }
 
 a:hover {
-  color: #1D5FA4;
+  color: #6D94C5;
 }
 
 .accent-link {
-  color: #1D5FA4;
+  color: #6D94C5;
 }
 
 /* ------------------------------------------------------------
@@ -127,7 +127,7 @@ h2.section-label {
 }
 
 .wordmark-adv {
-  color: #1D5FA4;
+  color: #6D94C5;
 }
 
 .nav-links {
@@ -149,7 +149,7 @@ h2.section-label {
 
 .nav-links a:hover {
   opacity: 1;
-  color: #1D5FA4;
+  color: #6D94C5;
 }
 
 .nav-dot {
@@ -347,7 +347,7 @@ section + section {
 }
 
 .hl-steel {
-  color: #1D5FA4;
+  color: #6D94C5;
 }
 
 .hl-steel em {
@@ -474,7 +474,7 @@ section + section {
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #1D5FA4;
+  color: #6D94C5;
   margin-bottom: 16px;
 }
 
@@ -502,7 +502,7 @@ section + section {
   font-family: 'Lora', Georgia, serif;
   font-size: 20px;
   font-weight: 400;
-  color: #1D5FA4;
+  color: #6D94C5;
   line-height: 1.4;
   padding: 20px 0;
   border-bottom: 1px solid #D9CEBC;
@@ -536,7 +536,7 @@ section + section {
 
 .thinking-substack:hover {
   opacity: 1;
-  color: #1D5FA4;
+  color: #6D94C5;
 }
 
 /* ------------------------------------------------------------
@@ -594,8 +594,8 @@ section + section {
 }
 
 .cta-button:hover {
-  color: #1D5FA4;
-  border-color: #1D5FA4;
+  color: #6D94C5;
+  border-color: #6D94C5;
 }
 
 
