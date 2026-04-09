@@ -472,7 +472,7 @@ section + section {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 48px;
-  margin-bottom: 0;
+  margin-bottom: 24px;
 }
 
 .service-phase {
