@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caltrans Grant Lifecycle</title>
+  <meta name="description" content="An interactive diagram of the Caltrans / CTC grant lifecycle — from call for projects through closeout.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --asphalt: #141c24;
+      --asphalt-2: #1e2a36;
+      --lane: #2a3a4a;
+      --chalk: #f4f1ea;
+      --fog: #c8d0d8;
+      --muted: #8a97a5;
+      --amber: #f0b429;
+      --amber-dim: #c48914;
+      --sky: #3d8fa8;
+      --sky-soft: #6eb3c4;
+      --concrete: #d9d2c5;
+      --green: #3f8f6b;
+      --coral: #d96b4c;
+      --panel: rgba(30, 42, 54, 0.92);
+      --glow: rgba(240, 180, 41, 0.18);
+      --radius: 4px;
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+      --font-display: "Barlow Condensed", sans-serif;
+      --font-serif: "Source Serif 4", Georgia, serif;
+      --font-sans: "IBM Plex Sans", sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      color: var(--chalk);
+      font-family: var(--font-sans);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(61, 143, 168, 0.22), transparent 55%),
+        radial-gradient(900px 500px at 90% 0%, rgba(240, 180, 41, 0.12), transparent 50%),
+        linear-gradient(180deg, #0f151c 0%, var(--asphalt) 40%, #18232e 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 23px,
+          rgba(255, 255, 255, 0.55) 23px,
+          rgba(255, 255, 255, 0.55) 24px
+        );
+      z-index: 0;
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      width: min(1180px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 2.5rem 0 4rem;
+    }
+
+    header.hero {
+      display: grid;
+      gap: 1.25rem;
+      margin-bottom: 2.25rem;
+      animation: rise 0.7s ease both;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      color: var(--amber);
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 2.25rem;
+      height: 3px;
+      background: linear-gradient(90deg, var(--amber), transparent);
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(2.8rem, 7vw, 5.2rem);
+      line-height: 0.92;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      max-width: 14ch;
+    }
+
+    h1 span {
+      color: var(--amber);
+    }
+
+    .lede {
+      max-width: 52ch;
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      line-height: 1.55;
+      color: var(--fog);
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+
+    .role-toggle {
+      display: inline-flex;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.25rem;
+      gap: 0.2rem;
+    }
+
+    .role-toggle button {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.55rem 0.85rem;
+      cursor: pointer;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .role-toggle button[aria-pressed="true"] {
+      background: var(--amber);
+      color: var(--asphalt);
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .diagram-shell {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 1.5rem;
+      align-items: start;
+      animation: rise 0.85s 0.1s ease both;
+    }
+
+    @media (max-width: 920px) {
+      .diagram-shell { grid-template-columns: 1fr; }
+    }
+
+    .road {
+      position: relative;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), transparent 30%),
+        var(--asphalt-2);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow);
+      padding: 1.5rem 1.25rem 1.35rem;
+      overflow: hidden;
+    }
+
+    .road::before {
+      content: "";
+      position: absolute;
+      left: 2.1rem;
+      top: 1.5rem;
+      bottom: 1.5rem;
+      width: 3px;
+      background:
+        linear-gradient(
+          180deg,
+          var(--amber) 0%,
+          var(--amber) 12%,
+          transparent 12%,
+          transparent 22%
+        );
+      background-size: 3px 28px;
+      opacity: 0.85;
+      animation: dash 1.2s linear infinite;
+    }
+
+    @keyframes dash {
+      to { background-position: 0 28px; }
+    }
+
+    .stages {
+      list-style: none;
+      display: grid;
+      gap: 0.55rem;
+      position: relative;
+      padding-left: 1.1rem;
+    }
+
+    .stage {
+      position: relative;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 0.9rem;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      appearance: none;
+      border: 1px solid transparent;
+      background: rgba(255, 255, 255, 0.03);
+      color: inherit;
+      padding: 0.85rem 1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+
+    .stage:hover {
+      transform: translateX(4px);
+      border-color: rgba(240, 180, 41, 0.35);
+      background: rgba(240, 180, 41, 0.06);
+    }
+
+    .stage[aria-selected="true"] {
+      border-color: rgba(240, 180, 41, 0.7);
+      background: linear-gradient(90deg, rgba(240, 180, 41, 0.14), rgba(61, 143, 168, 0.08));
+      box-shadow: 0 0 0 1px rgba(240, 180, 41, 0.15), inset 0 0 24px var(--glow);
+    }
+
+    .stage:focus-visible {
+      outline: 2px solid var(--sky-soft);
+      outline-offset: 2px;
+    }
+
+    .mile {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.35rem;
+      letter-spacing: 0.04em;
+      color: var(--amber);
+      min-width: 2ch;
+    }
+
+    .stage-copy h2 {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+
+    .stage-copy p {
+      margin-top: 0.2rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.35;
+    }
+
+    .chip {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--asphalt);
+      background: var(--concrete);
+      padding: 0.28rem 0.5rem;
+      white-space: nowrap;
+    }
+
+    .chip.ctc { background: var(--amber); }
+    .chip.caltrans { background: var(--sky-soft); }
+    .chip.local { background: #9fd0b5; }
+    .chip.shared { background: var(--fog); }
+
+    .detail {
+      position: sticky;
+      top: 1rem;
+      min-height: 420px;
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      display: grid;
+      align-content: start;
+      gap: 1rem;
+      overflow: hidden;
+    }
+
+    .detail::after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      top: -40px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(61, 143, 168, 0.25), transparent 70%);
+      pointer-events: none;
+    }
+
+    .detail-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .detail-index {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      font-weight: 700;
+      line-height: 0.85;
+      color: rgba(240, 180, 41, 0.85);
+      letter-spacing: 0.02em;
+    }
+
+    .detail h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      line-height: 0.95;
+      max-width: 14ch;
+    }
+
+    .detail .summary {
+      font-family: var(--font-serif);
+      font-size: 1.08rem;
+      line-height: 1.5;
+      color: var(--fog);
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .meta {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--fog);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.55rem;
+    }
+
+    .bullets {
+      list-style: none;
+      display: grid;
+      gap: 0.65rem;
+      margin-top: 0.25rem;
+    }
+
+    .bullets li {
+      position: relative;
+      padding-left: 1.1rem;
+      color: var(--chalk);
+      font-size: 0.95rem;
+      line-height: 1.45;
+    }
+
+    .bullets li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55rem;
+      width: 0.45rem;
+      height: 0.45rem;
+      background: var(--amber);
+      transform: rotate(45deg);
+    }
+
+    .role-note {
+      margin-top: 0.35rem;
+      padding: 0.85rem 1rem;
+      background: rgba(61, 143, 168, 0.12);
+      border-left: 3px solid var(--sky);
+      color: var(--fog);
+      font-size: 0.92rem;
+      line-height: 1.45;
+      min-height: 4.5rem;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .role-note.swap {
+      animation: noteIn 0.28s ease;
+    }
+
+    @keyframes noteIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .nav-row {
+      display: flex;
+      gap: 0.55rem;
+      margin-top: 0.5rem;
+    }
+
+    .nav-row button {
+      appearance: none;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: transparent;
+      color: var(--chalk);
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.55rem 0.85rem;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .nav-row button:hover {
+      border-color: var(--amber);
+      background: rgba(240, 180, 41, 0.08);
+    }
+
+    .timeline {
+      margin-top: 2rem;
+      animation: rise 0.9s 0.18s ease both;
+    }
+
+    .timeline h2 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.85rem;
+      color: var(--fog);
+    }
+
+    .bars {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 0.35rem;
+      margin-bottom: 0.75rem;
+    }
+
+    @media (max-width: 720px) {
+      .bars { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .bar {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--amber-dim), var(--amber));
+      transition: width 0.45s ease;
+    }
+
+    .bar.active span,
+    .bar.filled span {
+      width: 100%;
+    }
+
+    .bar.active {
+      box-shadow: 0 0 0 1px rgba(240, 180, 41, 0.55);
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .legend i {
+      display: inline-block;
+      width: 0.7rem;
+      height: 0.7rem;
+      margin-right: 0.35rem;
+      vertical-align: -1px;
+    }
+
+    footer {
+      margin-top: 2.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.5;
+      max-width: 70ch;
+      animation: rise 1s 0.22s ease both;
+    }
+
+    footer a {
+      color: var(--sky-soft);
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+      .road::before { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="kicker">California DOT · Local Assistance</div>
+      <h1>Caltrans Grant <span>Lifecycle</span></h1>
+      <p class="lede">
+        Follow a grant-funded local project from the call for projects to closeout.
+        Click each stage. Switch the role view to see what the local agency, Caltrans, and the CTC each do.
+      </p>
+      <div class="controls">
+        <div class="role-toggle" role="group" aria-label="View by role">
+          <button type="button" data-role="local" aria-pressed="true">Local Agency</button>
+          <button type="button" data-role="caltrans" aria-pressed="false">Caltrans</button>
+          <button type="button" data-role="ctc" aria-pressed="false">CTC</button>
+        </div>
+        <p class="hint">Press ← → to move through stages</p>
+      </div>
+    </header>
+
+    <section class="diagram-shell" aria-label="Interactive grant lifecycle diagram">
+      <div class="road">
+        <ol class="stages" id="stages"></ol>
+      </div>
+
+      <aside class="detail" id="detail" aria-live="polite">
+        <div class="detail-top">
+          <div>
+            <div class="detail-index" id="detailIndex">01</div>
+            <h3 id="detailTitle">Call for Projects</h3>
+          </div>
+          <div class="meta-row" id="detailMeta"></div>
+        </div>
+        <p class="summary" id="detailSummary"></p>
+        <ul class="bullets" id="detailBullets"></ul>
+        <div class="role-note" id="roleNote"></div>
+        <div class="nav-row">
+          <button type="button" id="prevBtn">← Previous</button>
+          <button type="button" id="nextBtn">Next →</button>
+        </div>
+      </aside>
+    </section>
+
+    <section class="timeline" aria-label="Progress across stages">
+      <h2>Progress Map</h2>
+      <div class="bars" id="bars"></div>
+      <div class="legend">
+        <span><i style="background:var(--amber)"></i>Current stage</span>
+        <span><i style="background:var(--sky-soft)"></i>Caltrans-led step</span>
+        <span><i style="background:var(--concrete)"></i>Local-led step</span>
+        <span><i style="background:#9fd0b5"></i>Shared / parallel work</span>
+      </div>
+    </section>
+
+    <footer>
+      Based on Caltrans Local Assistance practice for CTC-programmed and Caltrans-administered grants
+      (e.g. ATP, SB&nbsp;1 programs, and related local assistance pathways): guidelines and call,
+      application, programming, agreements, allocation, authorization when federal funds apply,
+      delivery with invoicing and reporting, then closeout.
+      See the
+      <a href="https://dot.ca.gov/programs/local-assistance/guidelines-and-procedures/local-assistance-procedures-manual-lapm" target="_blank" rel="noopener noreferrer">LAPM</a>
+      and
+      <a href="https://dot.ca.gov/-/media/dot-media/programs/local-assistance/documents/guide/cmrg-chapter-2-grant-management.pdf" target="_blank" rel="noopener noreferrer">Contracts Manager Reference Guide, Ch.&nbsp;2</a>.
+      This page is an explainer, not official guidance.
+    </footer>
+  </div>
+
+  <script>
+    const stages = [
+      {
+        id: "call",
+        mile: "01",
+        title: "Call for Projects",
+        blurb: "Guidelines open. Agencies prepare.",
+        lead: "ctc",
+        chip: "CTC",
+        chipClass: "ctc",
+        duration: "Cycle start",
+        docs: "Program guidelines",
+        summary: "The California Transportation Commission adopts program guidelines and opens the call for projects. Agencies learn the rules before they write.",
+        bullets: [
+          "CTC adopts guidelines and the fund estimate for the cycle.",
+          "Caltrans and partners publish application materials and workshops.",
+          "Local agencies confirm eligibility, partners, and match strategy."
+        ],
+        roles: {
+          local: "Read the guidelines. Confirm your project type is eligible. Begin community and partner outreach early.",
+          caltrans: "Publish technical resources. Host workshops. Answer delivery questions before applications land.",
+          ctc: "Adopt guidelines and open the call. Set the scoring rules and the program schedule."
+        }
+      },
+      {
+        id: "apply",
+        mile: "02",
+        title: "Apply",
+        blurb: "Submit scope, cost, schedule, benefits.",
+        lead: "local",
+        chip: "Local",
+        chipClass: "local",
+        duration: "Application window",
+        docs: "Application · PPR · estimates",
+        summary: "The local agency submits a complete application. The package defines scope, cost, schedule, and expected benefits. Treat the application as the seed for later agreements.",
+        bullets: [
+          "Build a clear project narrative with measurable outcomes.",
+          "Attach cost estimates, maps, letters, and programming request forms.",
+          "For infrastructure work, document all phases, not only the funded phase."
+        ],
+        roles: {
+          local: "Own the application quality. Align elected bodies, partners, and match funds before you submit.",
+          caltrans: "Provide technical clarifications. Review State Highway System impacts when required.",
+          ctc: "Receive applications through the adopted process. Do not change scoring mid-cycle."
+        }
+      },
+      {
+        id: "program",
+        mile: "03",
+        title: "Program",
+        blurb: "Projects are scored and adopted.",
+        lead: "ctc",
+        chip: "CTC",
+        chipClass: "ctc",
+        duration: "Staff recs → adoption",
+        docs: "Program of projects",
+        summary: "Staff score applications. The CTC adopts a program of projects. Programming places the project in a fiscal year plan. It does not by itself authorize reimbursable work.",
+        bullets: [
+          "Statewide, rural, and MPO components may follow different paths.",
+          "Adopted projects appear in the program with a planned funding year.",
+          "Agencies should start delivery planning as soon as they are programmed."
+        ],
+        roles: {
+          local: "Track staff recommendations. Prepare for baseline work if your project is likely to be adopted.",
+          caltrans: "Support evaluation where assigned. Help districts prepare for post-award delivery.",
+          ctc: "Adopt the program after public process. Set the official list of funded projects."
+        }
+      },
+      {
+        id: "agree",
+        mile: "04",
+        title: "Agree",
+        blurb: "Master, baseline, and supplements.",
+        lead: "shared",
+        chip: "Shared",
+        chipClass: "shared",
+        duration: "Pre-allocation",
+        docs: "Master · Baseline · PSA",
+        summary: "Legal and accountability documents lock the deal. A Master Agreement covers the agency relationship. A Baseline Agreement (when required) fixes benefits, scope, schedule, and cost. A Program Supplement covers the specific project allocation.",
+        bullets: [
+          "Execute a Local Agency Master Agreement if one is not already in place.",
+          "Submit a Baseline Agreement for projects that meet CTC thresholds.",
+          "Keep the Baseline, PPR, and Project Report amounts reconciled."
+        ],
+        roles: {
+          local: "Get governing-body authority. Sign agreements. Keep documentation aligned with the application.",
+          caltrans: "Review packages. Route Baseline Agreements. Prepare program supplements after allocation.",
+          ctc: "Require Baseline Agreements where thresholds apply. Use them for later accountability."
+        }
+      },
+      {
+        id: "allocate",
+        mile: "05",
+        title: "Allocate",
+        blurb: "CTC releases funds when ready.",
+        lead: "ctc",
+        chip: "CTC",
+        chipClass: "ctc",
+        duration: "~60-day review path",
+        docs: "Allocation request",
+        summary: "When the project is ready for a phase, the implementing agency asks the CTC to allocate funds. Allocation is the key state step that makes reimbursement possible for that phase.",
+        bullets: [
+          "Submit the allocation request through the District Local Assistance Engineer.",
+          "Confirm CEQA status, funding plan, and milestone dates before you ask.",
+          "Construction allocations usually require contract award within six months."
+        ],
+        roles: {
+          local: "Request allocation only when the phase is truly ready. Weak requests create delay.",
+          caltrans: "Review the request package. Recommend action. Place ready requests on the CTC agenda path.",
+          ctc: "Allocate funds by phase. Approve time extensions when justified."
+        }
+      },
+      {
+        id: "authorize",
+        mile: "06",
+        title: "Authorize",
+        blurb: "Federal or state notice to proceed.",
+        lead: "caltrans",
+        chip: "Caltrans",
+        chipClass: "caltrans",
+        duration: "Before reimbursable work",
+        docs: "RFA · E-76 / NTP",
+        summary: "Authorization is the green light for reimbursable work. For federal-aid projects, this is typically an FHWA Authorization to Proceed (E-76) after a Request for Authorization. Do not start reimbursable work early.",
+        bullets: [
+          "Submit a complete Request for Authorization package to the district.",
+          "Obligate funds before obligation deadlines.",
+          "Begin only the authorized phase after notice to proceed."
+        ],
+        roles: {
+          local: "Do not charge reimbursable costs before authorization. Keep phase scopes clean.",
+          caltrans: "Process authorization packages. Coordinate federal obligation with FHWA when needed.",
+          ctc: "Allocation and programming stay with the CTC; authorization is a delivery control step."
+        }
+      },
+      {
+        id: "deliver",
+        mile: "07",
+        title: "Deliver",
+        blurb: "Design, build, invoice, report.",
+        lead: "local",
+        chip: "Local",
+        chipClass: "local",
+        duration: "Phase delivery years",
+        docs: "Invoices · progress reports",
+        summary: "The agency delivers the work: environmental clearance, design, right-of-way, and construction as programmed. Invoice for eligible costs. Report progress. Amend scope, cost, or schedule only through approved channels.",
+        bullets: [
+          "Advance PA&ED, PS&E, right-of-way, and construction in order as funded.",
+          "Submit invoices and required progress reports on time.",
+          "Notify Caltrans early of scope, cost, or schedule changes; seek CTC action when required."
+        ],
+        roles: {
+          local: "Manage consultants and contractors. Protect the project file. Meet timely-use-of-funds rules.",
+          caltrans: "Monitor delivery through the DLAE. Flag inactivity and deadline risk. Advise on amendments.",
+          ctc: "Oversee accountability for programmed benefits, especially on SB 1 and ATP projects."
+        }
+      },
+      {
+        id: "closeout",
+        mile: "08",
+        title: "Close Out",
+        blurb: "Final reports and project closure.",
+        lead: "shared",
+        chip: "Shared",
+        chipClass: "shared",
+        duration: "Within 180 days",
+        docs: "Completion · FDR · expenditures",
+        summary: "Closeout proves the project finished as funded. Agencies submit completion and final delivery materials, the final invoice, and expenditure reports. Caltrans reviews and closes the project after approval.",
+        bullets: [
+          "Submit a Completion Report after the project is operable or contract acceptance.",
+          "Follow with a Final Delivery Report and Final Report of Expenditures as required.",
+          "Retain records for audit. Report actual outcomes against the promised benefits."
+        ],
+        roles: {
+          local: "Assemble final deliverables quickly. Incomplete closeout packages stall final payment.",
+          caltrans: "Verify completion. Review final reports. Close the project when deliverables are accepted.",
+          ctc: "Use final delivery reporting for program accountability and future policy."
+        }
+      }
+    ];
+
+    const stageList = document.getElementById("stages");
+    const bars = document.getElementById("bars");
+    const detailIndex = document.getElementById("detailIndex");
+    const detailTitle = document.getElementById("detailTitle");
+    const detailSummary = document.getElementById("detailSummary");
+    const detailBullets = document.getElementById("detailBullets");
+    const detailMeta = document.getElementById("detailMeta");
+    const roleNote = document.getElementById("roleNote");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const roleButtons = Array.from(document.querySelectorAll(".role-toggle button"));
+
+    let current = 0;
+    let role = "local";
+
+    function renderStages() {
+      stageList.innerHTML = stages.map((stage, index) => `
+        <li>
+          <button class="stage" type="button" data-index="${index}" aria-selected="${index === current}">
+            <span class="mile">${stage.mile}</span>
+            <span class="stage-copy">
+              <h2>${stage.title}</h2>
+              <p>${stage.blurb}</p>
+            </span>
+            <span class="chip ${stage.chipClass}">${stage.chip}</span>
+          </button>
+        </li>
+      `).join("");
+
+      bars.innerHTML = stages.map((stage, index) => `
+        <div class="bar ${index === current ? "active" : ""} ${index < current ? "filled" : ""}" data-index="${index}" title="${stage.title}" role="button" tabindex="0" aria-label="Show ${stage.title}">
+          <span style="transition-delay:${index * 40}ms"></span>
+        </div>
+      `).join("");
+
+      stageList.querySelectorAll(".stage").forEach((btn) => {
+        btn.addEventListener("click", () => selectStage(Number(btn.dataset.index)));
+      });
+
+      bars.querySelectorAll(".bar").forEach((bar) => {
+        const go = () => selectStage(Number(bar.dataset.index));
+        bar.addEventListener("click", go);
+        bar.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            go();
+          }
+        });
+      });
+    }
+
+    function selectStage(index) {
+      current = Math.max(0, Math.min(stages.length - 1, index));
+      const stage = stages[current];
+
+      stageList.querySelectorAll(".stage").forEach((btn, i) => {
+        btn.setAttribute("aria-selected", i === current ? "true" : "false");
+      });
+
+      bars.querySelectorAll(".bar").forEach((bar, i) => {
+        bar.classList.toggle("active", i === current);
+        bar.classList.toggle("filled", i < current);
+      });
+
+      detailIndex.textContent = stage.mile;
+      detailTitle.textContent = stage.title;
+      detailSummary.textContent = stage.summary;
+      detailBullets.innerHTML = stage.bullets.map((b) => `<li>${b}</li>`).join("");
+      detailMeta.innerHTML = `
+        <span class="meta">${stage.duration}</span>
+        <span class="meta">${stage.docs}</span>
+        <span class="meta">${stage.chip} lead</span>
+      `;
+      updateRoleNote();
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === stages.length - 1;
+    }
+
+    function updateRoleNote() {
+      const stage = stages[current];
+      const labels = { local: "Local agency", caltrans: "Caltrans", ctc: "CTC" };
+      roleNote.classList.remove("swap");
+      void roleNote.offsetWidth;
+      roleNote.classList.add("swap");
+      roleNote.innerHTML = `<strong>${labels[role]} focus:</strong> ${stage.roles[role]}`;
+    }
+
+    roleButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        role = btn.dataset.role;
+        roleButtons.forEach((b) => b.setAttribute("aria-pressed", b === btn ? "true" : "false"));
+        updateRoleNote();
+      });
+    });
+
+    prevBtn.addEventListener("click", () => selectStage(current - 1));
+    nextBtn.addEventListener("click", () => selectStage(current + 1));
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") selectStage(current + 1);
+      if (e.key === "ArrowLeft") selectStage(current - 1);
+    });
+
+    renderStages();
+    selectStage(0);
+  </script>
+</body>
+</html>
