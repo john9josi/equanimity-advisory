@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#17150f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+  <title>Grant Terminology Glossary · Caltrans Local Assistance</title>
+  <meta name="description" content="Plain-language glossary of Caltrans Local Assistance and CTC grant terms.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ground: #17150f;
+      --ground-2: #221f17;
+      --chalk: #f5f1e6;
+      --fog: #d2cbb8;
+      --muted: #9a917c;
+      --sand: #d7b56d;
+      --sand-bright: #e8c97a;
+      --olive: #8fa36a;
+      --panel: rgba(34, 31, 23, 0.96);
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+      --font-display: "Barlow Condensed", -apple-system, sans-serif;
+      --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+      --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+      --tap: 44px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      color: var(--chalk);
+      font-family: var(--font-sans);
+      background:
+        radial-gradient(900px 480px at 12% -10%, rgba(215, 181, 109, 0.16), transparent 55%),
+        radial-gradient(700px 420px at 100% 0%, rgba(143, 163, 106, 0.14), transparent 50%),
+        linear-gradient(180deg, #100e0a 0%, var(--ground) 45%, #1c1912 100%);
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: rgba(232, 201, 122, 0.18);
+      touch-action: manipulation;
+    }
+
+    a { color: var(--sand-bright); }
+
+    button {
+      -webkit-appearance: none;
+      appearance: none;
+      font: inherit;
+      color: inherit;
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      width: min(900px, 100%);
+      margin: 0 auto;
+      padding:
+        calc(1rem + var(--safe-top))
+        calc(1rem + var(--safe-right))
+        calc(2.5rem + var(--safe-bottom))
+        calc(1rem + var(--safe-left));
+    }
+
+    .topnav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .topnav a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 0.4rem 0.7rem;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--fog);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .topnav a[aria-current="page"] {
+      background: var(--sand);
+      border-color: var(--sand);
+      color: #1a160c;
+    }
+
+    header.hero {
+      display: grid;
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      color: var(--sand-bright);
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 1.75rem;
+      height: 3px;
+      background: linear-gradient(90deg, var(--sand-bright), transparent);
+    }
+
+    h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(2.4rem, 11vw, 4.8rem);
+      line-height: 0.92;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      max-width: 14ch;
+    }
+
+    h1 span { color: var(--sand-bright); }
+
+    .lede {
+      margin: 0;
+      max-width: 54ch;
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: var(--fog);
+    }
+
+    .search-wrap {
+      position: sticky;
+      top: calc(0.5rem + var(--safe-top));
+      z-index: 5;
+      background: rgba(23, 21, 15, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 0.55rem 0;
+      margin-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .search-wrap label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .search-wrap input {
+      width: 100%;
+      min-height: var(--tap);
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.04);
+      color: var(--chalk);
+      font-size: 16px;
+      padding: 0.7rem 0.85rem;
+      border-radius: 0;
+      outline: none;
+    }
+
+    .search-wrap input:focus {
+      border-color: var(--sand);
+      box-shadow: 0 0 0 2px rgba(215, 181, 109, 0.2);
+    }
+
+    .alpha {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin: 0.65rem 0 1rem;
+    }
+
+    .alpha button {
+      min-width: 2rem;
+      min-height: 2rem;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: transparent;
+      color: var(--fog);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .alpha button[aria-pressed="true"],
+    .alpha button:hover {
+      background: var(--sand);
+      border-color: var(--sand);
+      color: #1a160c;
+    }
+
+    .alpha button:disabled {
+      opacity: 0.25;
+      cursor: default;
+    }
+
+    .count {
+      margin: 0 0 0.85rem;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .glossary {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .term {
+      border: 1px solid rgba(255,255,255,0.1);
+      background: var(--panel);
+      padding: 1rem 1.05rem;
+      box-shadow: var(--shadow);
+    }
+
+    .term[hidden] { display: none; }
+
+    .term-head {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem 0.7rem;
+      align-items: baseline;
+      margin-bottom: 0.45rem;
+    }
+
+    .term dt {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      line-height: 1;
+      color: var(--chalk);
+    }
+
+    .aka {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #1a160c;
+      background: var(--olive);
+      padding: 0.22rem 0.4rem;
+    }
+
+    .term dd {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: 1.02rem;
+      line-height: 1.5;
+      color: var(--fog);
+    }
+
+    .term .use {
+      margin-top: 0.55rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.4;
+    }
+
+    .empty {
+      display: none;
+      margin: 1rem 0;
+      color: var(--muted);
+      font-family: var(--font-serif);
+    }
+
+    .empty.show { display: block; }
+
+    footer {
+      margin-top: 1.75rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    @media (min-width: 700px) {
+      .wrap {
+        width: min(900px, calc(100% - 2rem));
+        padding-top: calc(1.5rem + var(--safe-top));
+      }
+      .term { padding: 1.15rem 1.25rem; }
+      .term dt { font-size: 1.65rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="topnav" aria-label="Diagram pages">
+      <a href="grant-basic-shape.html">Grant Shapes</a>
+      <a href="caltrans-grant-glossary.html" aria-current="page">Glossary</a>
+    </nav>
+
+    <header class="hero">
+      <div class="kicker">Plain terms</div>
+      <h1>Grant <span>Glossary</span></h1>
+      <p class="lede">
+        This page defines common Caltrans Local Assistance and CTC grant words.
+        Each definition uses short sentences.
+        Use one word for one meaning.
+      </p>
+    </header>
+
+    <div class="search-wrap">
+      <label for="search">Find a term</label>
+      <input id="search" type="search" enterkeyhint="search" autocomplete="off" placeholder="Example: E-76, allocation, DLAE">
+      <div class="alpha" id="alpha" aria-label="Jump by letter"></div>
+    </div>
+
+    <p class="count" id="count"></p>
+    <p class="empty" id="empty">No term matches this search.</p>
+
+    <dl class="glossary" id="glossary"></dl>
+
+    <footer>
+      These definitions support the
+      <a href="grant-basic-shape.html">grant shapes</a>
+      page.
+      They are teaching notes, not official Caltrans policy.
+      Use the current LAPM and program guidelines for decisions.
+    </footer>
+  </div>
+
+  <script>
+    const terms = [
+      {
+        term: "Allocation",
+        aka: "CTC allocation",
+        letter: "A",
+        def: "The CTC gives funds to a project phase. The agency can then ask for authorization and reimbursement for that phase.",
+        use: "Use: Ask for allocation when the phase is ready."
+      },
+      {
+        term: "ATP",
+        aka: "Active Transportation Program",
+        letter: "A",
+        def: "A California grant program for walking, biking, and related projects. The CTC adopts the program. Caltrans helps deliver it.",
+        use: "Use: Name the program in the application and reports."
+      },
+      {
+        term: "Authorization",
+        aka: "Authorization to Proceed",
+        letter: "A",
+        def: "Official approval to start reimbursable work on a phase. For many federal-aid projects, this is an E-76.",
+        use: "Rule: Do not start reimbursable work before authorization."
+      },
+      {
+        term: "Baseline Agreement",
+        aka: "Engineer’s Report basis",
+        letter: "B",
+        def: "A signed agreement on project benefits, scope, schedule, and cost. The CTC uses it to track accountability on larger projects.",
+        use: "Use: Keep the Baseline aligned with the PPR and Project Report."
+      },
+      {
+        term: "CalSMART",
+        aka: "Reporting system",
+        letter: "C",
+        def: "An online system used for some program progress, completion, and final delivery reports.",
+        use: "Use: Submit required reports in the system by the due date."
+      },
+      {
+        term: "Caltrans",
+        aka: "California DOT",
+        letter: "C",
+        def: "The state department that oversees many local assistance projects. District Local Assistance staff guide local agencies.",
+        use: "Use: Work through your District Local Assistance Engineer."
+      },
+      {
+        term: "CEQA",
+        aka: "California Environmental Quality Act",
+        letter: "C",
+        def: "State environmental review law. Most state-funded projects need CEQA clearance before later phases move forward.",
+        use: "Use: Finish CEQA before you lock final design choices."
+      },
+      {
+        term: "Closeout",
+        aka: "Project completion",
+        letter: "C",
+        def: "The set of final reports, final invoice, and approvals that end the funded project.",
+        use: "Use: Start closeout work before construction acceptance."
+      },
+      {
+        term: "Completion Report",
+        aka: "Program report",
+        letter: "C",
+        def: "A report that says the project is operable or the construction contract is accepted. Some programs also need a Final Delivery Report.",
+        use: "Use: File it within the program time limit."
+      },
+      {
+        term: "CTC",
+        aka: "California Transportation Commission",
+        letter: "C",
+        def: "The commission that adopts many grant programs and allocates state transportation funds.",
+        use: "Use: Track CTC meeting dates for allocation and amendments."
+      },
+      {
+        term: "DBE",
+        aka: "Disadvantaged Business Enterprise",
+        letter: "D",
+        def: "A federal civil-rights program for contracting. Federal-aid projects must follow DBE rules in procurement and construction.",
+        use: "Use: Keep DBE commitments and reports with the project file."
+      },
+      {
+        term: "DLAE",
+        aka: "District Local Assistance Engineer",
+        letter: "D",
+        def: "The Caltrans district contact for local agency federal-aid and many state-funded local projects.",
+        use: "Use: Send authorization, invoice, and amendment packages to the DLAE."
+      },
+      {
+        term: "E-76",
+        aka: "FHWA authorization form",
+        letter: "E",
+        def: "The federal authorization that obligates federal funds for a project phase.",
+        use: "Use: Treat E-76 as the green light for that phase only."
+      },
+      {
+        term: "FDR",
+        aka: "Final Delivery Report",
+        letter: "F",
+        def: "A later report that records final costs and measured outcomes after remaining project work is done.",
+        use: "Use: Submit after the Completion Report when the program requires it."
+      },
+      {
+        term: "FHWA",
+        aka: "Federal Highway Administration",
+        letter: "F",
+        def: "The federal agency that authorizes and oversees federal-aid highway funds.",
+        use: "Use: Follow FHWA rules on federal-aid phases."
+      },
+      {
+        term: "Field Review",
+        aka: "LAPM Ch. 7",
+        letter: "F",
+        def: "An early review of the project site or scope. It helps set environmental and design needs.",
+        use: "Use: Record decisions from the field review in the project file."
+      },
+      {
+        term: "Final Report of Expenditures",
+        aka: "Closeout cost report",
+        letter: "F",
+        def: "The final cost report that supports project closure and final payment.",
+        use: "Use: Attach it with the final invoice package."
+      },
+      {
+        term: "Finance Letter",
+        aka: "Funding letter",
+        letter: "F",
+        def: "A document that shows the approved funding setup for the project.",
+        use: "Use: Match invoices and agreements to the finance letter."
+      },
+      {
+        term: "FTIP / FSTIP",
+        aka: "Transportation Improvement Program",
+        letter: "F",
+        def: "Programming documents that list federally funded projects by year and phase.",
+        use: "Use: Confirm the project is programmed before federal authorization."
+      },
+      {
+        term: "Implementing Agency",
+        aka: "Delivery agency",
+        letter: "I",
+        def: "The agency that delivers the project and follows LAPM procedures.",
+        use: "Use: Name the implementing agency in agreements and reports."
+      },
+      {
+        term: "Invoice",
+        aka: "LAPM Ch. 5",
+        letter: "I",
+        def: "A request for reimbursement of eligible costs after authorization.",
+        use: "Use: Invoice only for the authorized phase and eligible costs."
+      },
+      {
+        term: "LAPG",
+        aka: "Local Assistance Program Guidelines",
+        letter: "L",
+        def: "Guidance on state and federal funding programs available to local agencies.",
+        use: "Use: Read the LAPG chapter for your program before you apply."
+      },
+      {
+        term: "LAPM",
+        aka: "Local Assistance Procedures Manual",
+        letter: "L",
+        def: "The Caltrans manual for procedures on federal and state funded local transportation projects.",
+        use: "Use: Follow the current LAPM chapter for each delivery step."
+      },
+      {
+        term: "Local Public Agency",
+        aka: "LPA",
+        letter: "L",
+        def: "A city, county, or other local agency that receives and delivers grant or federal-aid funds.",
+        use: "Use: The LPA owns delivery and the project file."
+      },
+      {
+        term: "Master Agreement",
+        aka: "Local Agency Master Agreement",
+        letter: "M",
+        def: "The base legal agreement between Caltrans and the local agency for funded projects.",
+        use: "Use: Execute a Master Agreement before or with the first project."
+      },
+      {
+        term: "NEPA",
+        aka: "National Environmental Policy Act",
+        letter: "N",
+        def: "Federal environmental review law. Federal-aid projects need NEPA clearance.",
+        use: "Use: Plan NEPA time into the project schedule."
+      },
+      {
+        term: "Obligation",
+        aka: "Federal obligation",
+        letter: "O",
+        def: "The federal commitment of funds to an authorized project phase.",
+        use: "Use: Meet obligation deadlines or risk loss of funds."
+      },
+      {
+        term: "PA&ED",
+        aka: "Project Approval & Environmental Document",
+        letter: "P",
+        def: "The phase that completes environmental clearance and project approval.",
+        use: "Use: Finish PA&ED before final design commitments."
+      },
+      {
+        term: "PE",
+        aka: "Preliminary Engineering",
+        letter: "P",
+        def: "Early engineering work. It often needs its own authorization.",
+        use: "Use: Request PE authorization before PE reimbursable work."
+      },
+      {
+        term: "PPR",
+        aka: "Project Programming Request",
+        letter: "P",
+        def: "A form that shows project funding by year and phase.",
+        use: "Use: Keep the PPR current when funding or schedule changes."
+      },
+      {
+        term: "Program Supplement Agreement",
+        aka: "PSA",
+        letter: "P",
+        def: "A project-specific agreement that adds the funded project under the Master Agreement.",
+        use: "Use: Execute the supplement for the allocated project funds."
+      },
+      {
+        term: "Programming",
+        aka: "Program of projects",
+        letter: "P",
+        def: "The act of placing a project into an adopted funding program and fiscal year plan.",
+        use: "Note: Programming is not the same as authorization."
+      },
+      {
+        term: "PS&E",
+        aka: "Plans, Specifications & Estimate",
+        letter: "P",
+        def: "The final design package used to advertise a construction contract.",
+        use: "Use: Complete PS&E before you advertise construction."
+      },
+      {
+        term: "Request for Authorization",
+        aka: "RFA",
+        letter: "R",
+        def: "The package an agency sends to ask for authorization to proceed on a phase.",
+        use: "Use: Send a complete RFA to the district office."
+      },
+      {
+        term: "Right of Way",
+        aka: "R/W",
+        letter: "R",
+        def: "The land rights needed for the project. Federal-aid projects need proper acquisition and certification.",
+        use: "Use: Get right-of-way certification before you advertise construction."
+      },
+      {
+        term: "SB 1",
+        aka: "Senate Bill 1 programs",
+        letter: "S",
+        def: "State transportation funding programs with strong accountability for scope, cost, schedule, and benefits.",
+        use: "Use: Track SB 1 reporting and baseline rules closely."
+      },
+      {
+        term: "Timely Use of Funds",
+        aka: "Deadline rules",
+        letter: "T",
+        def: "Rules that require agencies to award, obligate, or spend funds by set dates.",
+        use: "Use: Put every deadline on one shared calendar."
+      }
+    ];
+
+    const glossary = document.getElementById("glossary");
+    const search = document.getElementById("search");
+    const count = document.getElementById("count");
+    const empty = document.getElementById("empty");
+    const alpha = document.getElementById("alpha");
+
+    let activeLetter = "ALL";
+
+    function render() {
+      glossary.innerHTML = terms.map((item, index) => `
+        <div class="term" data-index="${index}" data-letter="${item.letter}">
+          <div class="term-head">
+            <dt id="term-${index}">${item.term}</dt>
+            ${item.aka ? `<span class="aka">${item.aka}</span>` : ""}
+          </div>
+          <dd>${item.def}</dd>
+          <p class="use">${item.use}</p>
+        </div>
+      `).join("");
+
+      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+      const present = new Set(terms.map((t) => t.letter));
+      alpha.innerHTML = `<button type="button" data-letter="ALL" aria-pressed="true">All</button>` +
+        letters.map((letter) => `
+          <button type="button" data-letter="${letter}" ${present.has(letter) ? "" : "disabled"} aria-pressed="false">${letter}</button>
+        `).join("");
+
+      alpha.querySelectorAll("button").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          if (btn.disabled) return;
+          activeLetter = btn.dataset.letter;
+          alpha.querySelectorAll("button").forEach((b) => {
+            b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+          });
+          applyFilter();
+        });
+      });
+
+      applyFilter();
+    }
+
+    function applyFilter() {
+      const q = search.value.trim().toLowerCase();
+      let shown = 0;
+
+      glossary.querySelectorAll(".term").forEach((node) => {
+        const item = terms[Number(node.dataset.index)];
+        const hay = `${item.term} ${item.aka || ""} ${item.def} ${item.use}`.toLowerCase();
+        const letterOk = activeLetter === "ALL" || item.letter === activeLetter;
+        const textOk = !q || hay.includes(q);
+        const ok = letterOk && textOk;
+        node.hidden = !ok;
+        if (ok) shown += 1;
+      });
+
+      count.textContent = `${shown} term${shown === 1 ? "" : "s"} shown`;
+      empty.classList.toggle("show", shown === 0);
+    }
+
+    search.addEventListener("input", applyFilter);
+    render();
+  </script>
+</body>
+</html>
