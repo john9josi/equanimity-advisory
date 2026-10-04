@@ -475,6 +475,194 @@
       color: var(--coord);
     }
 
+    .alloc-section {
+      margin-top: 1.75rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .alloc-section > h2 {
+      margin: 0 0 0.45rem;
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .alloc-section > .lede-mini {
+      margin: 0 0 1rem;
+      max-width: 66ch;
+      font-family: var(--font-serif);
+      color: var(--fog);
+      line-height: 1.45;
+    }
+
+    .sheet {
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+      padding: 1rem 0.85rem 1.15rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .sheet-meta {
+      display: grid;
+      gap: 0.35rem 1.25rem;
+      margin-bottom: 0.9rem;
+    }
+
+    @media (min-width: 720px) {
+      .sheet-meta {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .sheet-meta .budget-row {
+      grid-template-columns: 7.5rem 1fr;
+      font-size: 0.86rem;
+    }
+
+    .sheet-title {
+      margin: 0 0 0.65rem;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    table.alloc {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+      font-size: 0.82rem;
+    }
+
+    table.alloc th,
+    table.alloc td {
+      text-align: left;
+      padding: 0.55rem 0.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      vertical-align: top;
+      line-height: 1.35;
+    }
+
+    table.alloc th {
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    table.alloc td.num,
+    table.alloc th.num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    table.alloc tr.local td {
+      color: var(--warn);
+    }
+
+    table.alloc tr.excluded td {
+      color: var(--muted);
+      text-decoration: line-through;
+      text-decoration-color: rgba(139, 151, 163, 0.55);
+    }
+
+    table.alloc tfoot td {
+      border-bottom: none;
+      padding-top: 0.75rem;
+      font-weight: 600;
+      color: var(--chalk);
+    }
+
+    .sheet-checks {
+      margin: 0.85rem 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.35rem;
+      font-size: 0.86rem;
+      color: var(--fog);
+    }
+
+    .sheet-checks li {
+      padding-left: 0.7rem;
+      border-left: 2px solid var(--coord);
+    }
+
+    .method-block {
+      margin-top: 1.5rem;
+    }
+
+    .method-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.35rem;
+      margin-bottom: 0.85rem;
+    }
+
+    @media (min-width: 720px) {
+      .method-toggle { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .method-toggle button {
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 700;
+      min-height: var(--tap);
+      padding: 0.5rem 0.4rem;
+      cursor: pointer;
+    }
+
+    .method-toggle button[aria-pressed="true"] {
+      color: #0c1520;
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .method-panel {
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+      padding: 1rem 0.85rem 1.15rem;
+      animation: fade 220ms ease;
+    }
+
+    .method-panel h3 {
+      margin: 0 0 0.4rem;
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .method-panel .method-blurb {
+      margin: 0 0 0.85rem;
+      font-family: var(--font-serif);
+      color: var(--fog);
+      line-height: 1.45;
+      max-width: 70ch;
+    }
+
+    .method-panel .method-watch {
+      margin: 0.85rem 0 0;
+      font-size: 0.86rem;
+      line-height: 1.4;
+      color: var(--risk);
+    }
+
+    .method-panel .method-watch.ok {
+      color: var(--coord);
+    }
+
     footer {
       margin-top: 1.75rem;
       color: var(--muted);
@@ -645,6 +833,141 @@
       </div>
     </section>
 
+    <section class="alloc-section" aria-labelledby="worksheetLabel">
+      <h2 id="worksheetLabel">Allocation worksheet</h2>
+      <p class="lede-mini">
+        Marin-scale sample for a <strong style="color:var(--chalk);font-weight:600">$100,000</strong> annual SaaS invoice.
+        Ulysses bills the county once. Finance uses this sheet to charge cost codes and support draws.
+      </p>
+
+      <div class="sheet">
+        <h3 class="sheet-title">FY27 cost allocation · Ulysses county license</h3>
+        <dl class="sheet-meta">
+          <div class="budget-row"><dt>County</dt><dd>Marin County (illustrative)</dd></div>
+          <div class="budget-row"><dt>Vendor</dt><dd>Ulysses — annual SaaS</dd></div>
+          <div class="budget-row"><dt>Period</dt><dd>Jul 1, 2026 – Jun 30, 2027</dd></div>
+          <div class="budget-row"><dt>Total fee</dt><dd>$100,000</dd></div>
+          <div class="budget-row"><dt>Methodology</dt><dd>Hybrid (see methods below) · locked for FY</dd></div>
+          <div class="budget-row"><dt>Prepared by</dt><dd>Grants coordinator + Finance</dd></div>
+        </dl>
+
+        <table class="alloc">
+          <thead>
+            <tr>
+              <th>Award / source</th>
+              <th>Grantor</th>
+              <th>POP</th>
+              <th>Eligible?</th>
+              <th>Basis note</th>
+              <th class="num">Alloc %</th>
+              <th class="num">Amount</th>
+              <th>Budget category</th>
+              <th>Draw</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>EMPG FY27</td>
+              <td>Cal OES / FEMA</td>
+              <td>7/1/26–6/30/27</td>
+              <td>Y</td>
+              <td>OEM seat + award share</td>
+              <td class="num">25%</td>
+              <td class="num">$25,000</td>
+              <td>Other / IT systems</td>
+              <td>Ready</td>
+            </tr>
+            <tr>
+              <td>CDBG admin</td>
+              <td>HCD / HUD</td>
+              <td>7/1/26–6/30/27</td>
+              <td>Y</td>
+              <td>HHS admin FTE on CDBG</td>
+              <td class="num">20%</td>
+              <td class="num">$20,000</td>
+              <td>Admin / activity delivery</td>
+              <td>Ready</td>
+            </tr>
+            <tr>
+              <td>Sustainable Communities</td>
+              <td>Caltrans</td>
+              <td>10/1/26–9/30/27</td>
+              <td>Y</td>
+              <td>Named in planning scope</td>
+              <td class="num">15%</td>
+              <td class="num">$15,000</td>
+              <td>Contractual</td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td>HSGP</td>
+              <td>Cal OES</td>
+              <td>9/1/26–8/31/27</td>
+              <td>Y</td>
+              <td>Program use in Ulysses</td>
+              <td class="num">10%</td>
+              <td class="num">$10,000</td>
+              <td>Other / IT</td>
+              <td>Ready</td>
+            </tr>
+            <tr class="excluded">
+              <td>Bridge rehab (capital)</td>
+              <td>Caltrans</td>
+              <td>7/1/26–6/30/29</td>
+              <td>N</td>
+              <td>Hard costs only</td>
+              <td class="num">0%</td>
+              <td class="num">$0</td>
+              <td>—</td>
+              <td>Excluded</td>
+            </tr>
+            <tr class="local">
+              <td>CAO / general fund</td>
+              <td>Local</td>
+              <td>FY27</td>
+              <td>n/a</td>
+              <td>Residual + ineligible gap</td>
+              <td class="num">30%</td>
+              <td class="num">$30,000</td>
+              <td>Non-grant</td>
+              <td>Local PO</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="5">Totals</td>
+              <td class="num">100%</td>
+              <td class="num">$100,000</td>
+              <td colspan="2">Matches invoice</td>
+            </tr>
+          </tfoot>
+        </table>
+
+        <ul class="sheet-checks">
+          <li>Grant-reimbursable subtotal: <strong style="color:var(--chalk)">$70,000</strong></li>
+          <li>Local residual: <strong style="color:var(--chalk)">$30,000</strong></li>
+          <li>Attach: vendor invoice, SaaS contract, this worksheet, seat roster or award list used as basis</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="alloc-section method-block" aria-labelledby="methodsLabel">
+      <h2 id="methodsLabel">How % is determined</h2>
+      <p class="lede-mini">
+        Pick one methodology for the fiscal year. Measure relative benefit — not leftover grant balance.
+        Examples below all start from the same <strong style="color:var(--chalk);font-weight:600">$100,000</strong> Marin-scale contract.
+      </p>
+
+      <div class="method-toggle" role="group" aria-label="Select allocation methodology">
+        <button type="button" data-method="seats" aria-pressed="true">Staff / seats</button>
+        <button type="button" data-method="awards" aria-pressed="false">Active awards</button>
+        <button type="button" data-method="dollars" aria-pressed="false">$ under management</button>
+        <button type="button" data-method="hybrid" aria-pressed="false">Hybrid</button>
+      </div>
+
+      <div class="method-panel" id="methodPanel" aria-live="polite"></div>
+    </section>
+
     <footer>
       Teaching diagram for Ulysses go-to-market.
       Not official FEMA, Cal OES, HCD, HUD, or Caltrans guidance.
@@ -758,6 +1081,117 @@ If the NOFO limits costs to construction and related hard costs, do not charge t
     });
 
     renderBudget();
+
+    const methods = {
+      seats: {
+        title: "Staff time / seats",
+        blurb: "Count people who actively use Ulysses for grant work this period. Share = seats ÷ total seats.",
+        columns: ["Dept / stack", "Seats", "Share", "$ of $100k"],
+        rows: [
+          ["OEM / preparedness", "4", "40%", "$40,000"],
+          ["HHS / CDBG", "3", "30%", "$30,000"],
+          ["Public works / planning", "2", "20%", "$20,000"],
+          ["CAO (countywide, local)", "1", "10%", "$10,000"]
+        ],
+        foot: ["Total", "10", "100%", "$100,000"],
+        watch: "Then zero any award that cannot reimburse software; move that seat’s dollars to local unless another eligible award truly benefits.",
+        watchClass: "ok"
+      },
+      awards: {
+        title: "Active awards",
+        blurb: "Count awards managed in Ulysses. Share = awards in that stack ÷ total awards in the basis.",
+        columns: ["Source", "Awards", "Share", "$"],
+        rows: [
+          ["EMPG / HSGP", "3", "25%", "$25,000"],
+          ["CDBG / housing admin", "4", "33%", "$33,000"],
+          ["Caltrans / planning", "3", "25%", "$25,000"],
+          ["Local / ineligible capital tracked only", "2", "17%", "$17,000"]
+        ],
+        foot: ["Total", "12", "100%", "$100,000"],
+        watch: "Simple — but a $2M bridge and a $50k planning grant count the same.",
+        watchClass: ""
+      },
+      dollars: {
+        title: "Dollars under management",
+        blurb: "Use $ of awards (or annual spend) administered in Ulysses. Share = $ in stack ÷ total $ in the basis.",
+        columns: ["Source", "$ managed", "Share", "$ of SaaS"],
+        rows: [
+          ["OEM stack", "$8M", "16%", "$16,000"],
+          ["HHS / CDBG", "$12M", "24%", "$24,000"],
+          ["PW / planning", "$15M", "30%", "$30,000"],
+          ["Disaster recovery admin", "$5M", "10%", "$10,000"],
+          ["Local / capital watched but not charged", "$10M", "20%", "$20,000"]
+        ],
+        foot: ["Total", "$50M", "100%", "$100,000"],
+        watch: "One huge capital project can soak % even if it barely uses the tool — often exclude pure construction $ from the basis.",
+        watchClass: ""
+      },
+      hybrid: {
+        title: "Hybrid (50% seats + 50% awards)",
+        blurb: "Average seat share and active-award share when one basis alone misweights the portfolio.",
+        columns: ["Source", "Seat share", "Award share", "Hybrid", "$"],
+        rows: [
+          ["OEM", "40%", "25%", "32.5%", "$32,500"],
+          ["HHS / CDBG", "30%", "33%", "31.5%", "$31,500"],
+          ["PW / planning", "20%", "25%", "22.5%", "$22,500"],
+          ["Local / other", "10%", "17%", "13.5%", "$13,500"]
+        ],
+        foot: ["Total", "—", "—", "100%", "$100,000"],
+        watch: "Write the hybrid formula on the worksheet and keep it fixed for the fiscal year.",
+        watchClass: "ok"
+      }
+    };
+
+    let methodKey = "seats";
+    const methodPanel = document.getElementById("methodPanel");
+
+    function renderMethod() {
+      const m = methods[methodKey];
+      methodPanel.style.animation = "none";
+      void methodPanel.offsetWidth;
+      methodPanel.style.animation = "";
+
+      const head = m.columns.map((c, i) =>
+        `<th class="${i > 0 ? "num" : ""}">${c}</th>`
+      ).join("");
+
+      const body = m.rows.map((r) => {
+        const cells = r.map((cell, i) =>
+          `<td class="${i > 0 ? "num" : ""}">${cell}</td>`
+        ).join("");
+        return `<tr>${cells}</tr>`;
+      }).join("");
+
+      const foot = m.foot.map((cell, i) =>
+        `<td class="${i > 0 ? "num" : ""}">${cell}</td>`
+      ).join("");
+
+      methodPanel.innerHTML = `
+        <h3>${m.title}</h3>
+        <p class="method-blurb">${m.blurb}</p>
+        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+          <table class="alloc" style="min-width:520px;">
+            <thead><tr>${head}</tr></thead>
+            <tbody>${body}</tbody>
+            <tfoot><tr>${foot}</tr></tfoot>
+          </table>
+        </div>
+        <p class="method-watch ${m.watchClass}">${m.watch}</p>
+      `;
+
+      document.querySelectorAll(".method-toggle button").forEach((btn) => {
+        btn.setAttribute("aria-pressed", btn.dataset.method === methodKey ? "true" : "false");
+      });
+    }
+
+    document.querySelectorAll(".method-toggle button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        methodKey = btn.dataset.method;
+        renderMethod();
+      });
+    });
+
+    renderMethod();
   </script>
 </body>
 </html>
