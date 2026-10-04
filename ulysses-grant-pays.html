@@ -93,6 +93,37 @@
       color: #0c1520;
     }
 
+    .jump {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin: 0.25rem 0 0.35rem;
+    }
+
+    .jump a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 0.35rem 0.7rem;
+      border: 1px solid rgba(126, 184, 255, 0.35);
+      color: var(--core);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .jump a:hover {
+      background: rgba(126, 184, 255, 0.12);
+    }
+
+    #worksheetLabel,
+    #methodsLabel,
+    #examplesLabel {
+      scroll-margin-top: 1rem;
+    }
+
     header.hero {
       display: grid;
       gap: 0.85rem;
@@ -693,6 +724,12 @@
         The county buys one annual Ulysses contract, then allocates a share into each award that allows it.
         Only the budget language changes below.
       </p>
+      <nav class="jump" aria-label="On this page">
+        <a href="#processLabel">Process</a>
+        <a href="#worksheetLabel">Worksheet</a>
+        <a href="#methodsLabel">Methods</a>
+        <a href="#examplesLabel">Examples</a>
+      </nav>
     </header>
 
     <div class="layout">
@@ -770,67 +807,6 @@
         Grants do not set the price.
         Finance allocates shares of that contract across awards that can reimburse — and fills the rest from local funds.
       </p>
-    </section>
-
-    <section class="examples" aria-labelledby="examplesLabel">
-      <h2 id="examplesLabel">Customer examples</h2>
-      <p class="lede-mini">
-        Same process in each case: one county SaaS invoice, then allocated shares on eligible awards.
-        Illustrative numbers for packaging — not quotes.
-      </p>
-      <div class="example-grid">
-        <article class="example">
-          <div class="example-tier">Rural / small</div>
-          <h3>Thin grants shop</h3>
-          <p class="example-price"><strong>$14,000 / yr</strong> · setup waived (design partner)</p>
-          <dl>
-            <div class="budget-row"><dt>Portfolio</dt><dd>5 awards · 1 coordinator + shared finance</dd></div>
-            <div class="budget-row"><dt>Invoice</dt><dd>One AP bill to County Finance</dd></div>
-          </dl>
-          <ul class="example-mix">
-            <li>HSGP / EMPG-style: 60%</li>
-            <li>FEMA PA admin (while open): 20%</li>
-            <li>Two tiny program grants: 0% (software not eligible)</li>
-            <li>General fund: 20% (rises when PA admin ends)</li>
-          </ul>
-          <p class="example-outcome">Renews on the annual contract even when only 1–2 awards reimburse. Finance re-runs the allocation worksheet; Ulysses does not reprice.</p>
-        </article>
-
-        <article class="example">
-          <div class="example-tier">Mid-size California</div>
-          <h3>Growing portfolio</h3>
-          <p class="example-price"><strong>$28,000 / yr</strong> + $12,000 Year-1 setup</p>
-          <dl>
-            <div class="budget-row"><dt>Portfolio</dt><dd>14 active awards · ~$40M under management</dd></div>
-            <div class="budget-row"><dt>Invoice</dt><dd>One AP bill to County Finance</dd></div>
-          </dl>
-          <ul class="example-mix">
-            <li>EMPG: 40% of subscription</li>
-            <li>CDBG admin: 25%</li>
-            <li>Caltrans planning: 15%</li>
-            <li>OEM / CAO general fund: 20% (+ setup not on capital awards)</li>
-          </ul>
-          <p class="example-outcome">Board sees one SaaS line. Grants cover ~$19k of the $28k run-rate; local dollars fill the gap. Setup mostly lands on EMPG + planning as contractual.</p>
-        </article>
-
-        <article class="example">
-          <div class="example-tier">Large county · Marin-scale</div>
-          <h3>Civic capital platform</h3>
-          <p class="example-price"><strong>$100,000 / yr</strong> · enterprise county license</p>
-          <dl>
-            <div class="budget-row"><dt>Portfolio</dt><dd>40+ awards · multi-department grants office</dd></div>
-            <div class="budget-row"><dt>Invoice</dt><dd>One annual contract; cost codes by department</dd></div>
-          </dl>
-          <ul class="example-mix">
-            <li>OEM / preparedness stack: 25%</li>
-            <li>HHS / housing &amp; CDBG admin: 20%</li>
-            <li>Public works / planning grants: 20%</li>
-            <li>Disaster recovery admin (when active): 10%</li>
-            <li>CAO / countywide indirect &amp; local: 25%</li>
-          </ul>
-          <p class="example-outcome">Target packaging for a county like Marin: system of record across the capital stack. Grants reimburse a large share; local funds keep the platform whole when awards churn.</p>
-        </article>
-      </div>
     </section>
 
     <section class="alloc-section" aria-labelledby="worksheetLabel">
@@ -966,6 +942,67 @@
       </div>
 
       <div class="method-panel" id="methodPanel" aria-live="polite"></div>
+    </section>
+
+    <section class="examples" aria-labelledby="examplesLabel">
+      <h2 id="examplesLabel">Customer examples</h2>
+      <p class="lede-mini">
+        Same process in each case: one county SaaS invoice, then allocated shares on eligible awards.
+        Illustrative numbers for packaging — not quotes.
+      </p>
+      <div class="example-grid">
+        <article class="example">
+          <div class="example-tier">Rural / small</div>
+          <h3>Thin grants shop</h3>
+          <p class="example-price"><strong>$14,000 / yr</strong> · setup waived (design partner)</p>
+          <dl>
+            <div class="budget-row"><dt>Portfolio</dt><dd>5 awards · 1 coordinator + shared finance</dd></div>
+            <div class="budget-row"><dt>Invoice</dt><dd>One AP bill to County Finance</dd></div>
+          </dl>
+          <ul class="example-mix">
+            <li>HSGP / EMPG-style: 60%</li>
+            <li>FEMA PA admin (while open): 20%</li>
+            <li>Two tiny program grants: 0% (software not eligible)</li>
+            <li>General fund: 20% (rises when PA admin ends)</li>
+          </ul>
+          <p class="example-outcome">Renews on the annual contract even when only 1–2 awards reimburse. Finance re-runs the allocation worksheet; Ulysses does not reprice.</p>
+        </article>
+
+        <article class="example">
+          <div class="example-tier">Mid-size California</div>
+          <h3>Growing portfolio</h3>
+          <p class="example-price"><strong>$28,000 / yr</strong> + $12,000 Year-1 setup</p>
+          <dl>
+            <div class="budget-row"><dt>Portfolio</dt><dd>14 active awards · ~$40M under management</dd></div>
+            <div class="budget-row"><dt>Invoice</dt><dd>One AP bill to County Finance</dd></div>
+          </dl>
+          <ul class="example-mix">
+            <li>EMPG: 40% of subscription</li>
+            <li>CDBG admin: 25%</li>
+            <li>Caltrans planning: 15%</li>
+            <li>OEM / CAO general fund: 20% (+ setup not on capital awards)</li>
+          </ul>
+          <p class="example-outcome">Board sees one SaaS line. Grants cover ~$19k of the $28k run-rate; local dollars fill the gap. Setup mostly lands on EMPG + planning as contractual.</p>
+        </article>
+
+        <article class="example">
+          <div class="example-tier">Large county · Marin-scale</div>
+          <h3>Civic capital platform</h3>
+          <p class="example-price"><strong>$100,000 / yr</strong> · enterprise county license</p>
+          <dl>
+            <div class="budget-row"><dt>Portfolio</dt><dd>40+ awards · multi-department grants office</dd></div>
+            <div class="budget-row"><dt>Invoice</dt><dd>One annual contract; cost codes by department</dd></div>
+          </dl>
+          <ul class="example-mix">
+            <li>OEM / preparedness stack: 25%</li>
+            <li>HHS / housing &amp; CDBG admin: 20%</li>
+            <li>Public works / planning grants: 20%</li>
+            <li>Disaster recovery admin (when active): 10%</li>
+            <li>CAO / countywide indirect &amp; local: 25%</li>
+          </ul>
+          <p class="example-outcome">Target packaging for a county like Marin: system of record across the capital stack. Grants reimburse a large share; local funds keep the platform whole when awards churn. <a href="#worksheetLabel">See sample worksheet ↓</a></p>
+        </article>
+      </div>
     </section>
 
     <footer>
