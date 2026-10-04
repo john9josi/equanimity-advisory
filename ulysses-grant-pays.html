@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#12161c">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+  <title>How the Grant Pays for Ulysses</title>
+  <meta name="description" content="Interactive explainer: how a county writes Ulysses software costs into a grant application so the award reimburses the system.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #12161c;
+      --bg-2: #1a212a;
+      --chalk: #eef2f5;
+      --fog: #c5ced6;
+      --muted: #8b97a3;
+      --core: #7eb8ff;
+      --coord: #9fd0b5;
+      --warn: #f0b429;
+      --risk: #f0a36b;
+      --panel: rgba(26, 33, 42, 0.96);
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+      --font-display: "Barlow Condensed", -apple-system, sans-serif;
+      --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+      --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+      --tap: 44px;
+      --accent: var(--core);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      color: var(--chalk);
+      font-family: var(--font-sans);
+      background:
+        radial-gradient(900px 500px at 8% -10%, rgba(126, 184, 255, 0.16), transparent 55%),
+        radial-gradient(700px 420px at 100% 0%, rgba(159, 208, 181, 0.12), transparent 50%),
+        linear-gradient(180deg, #0c1015 0%, var(--bg) 45%, #171d25 100%);
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: rgba(126, 184, 255, 0.18);
+      touch-action: manipulation;
+    }
+
+    a { color: var(--core); }
+    button { -webkit-appearance: none; appearance: none; font: inherit; color: inherit; }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      width: min(1100px, 100%);
+      margin: 0 auto;
+      padding:
+        calc(1rem + var(--safe-top))
+        calc(1rem + var(--safe-right))
+        calc(2.5rem + var(--safe-bottom))
+        calc(1rem + var(--safe-left));
+    }
+
+    .topnav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .topnav a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 0.4rem 0.7rem;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--fog);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .topnav a[aria-current="page"] {
+      background: var(--core);
+      border-color: var(--core);
+      color: #0c1520;
+    }
+
+    header.hero {
+      display: grid;
+      gap: 0.85rem;
+      margin-bottom: 1.35rem;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      color: var(--accent);
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 1.75rem;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+
+    h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(2.4rem, 10vw, 4.6rem);
+      line-height: 0.92;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      max-width: 16ch;
+    }
+
+    h1 span { color: var(--accent); }
+
+    .lede {
+      margin: 0;
+      max-width: 58ch;
+      font-family: var(--font-serif);
+      font-size: 1.08rem;
+      line-height: 1.5;
+      color: var(--fog);
+    }
+
+    .assumptions {
+      margin: 0;
+      padding: 0.85rem 1rem;
+      border-left: 3px solid var(--warn);
+      background: rgba(240, 180, 41, 0.08);
+      color: var(--fog);
+      font-size: 0.88rem;
+      line-height: 1.45;
+      max-width: 70ch;
+    }
+
+    .assumptions strong {
+      color: var(--warn);
+      font-weight: 600;
+    }
+
+    .scenario-bar {
+      display: grid;
+      gap: 0.65rem;
+      margin: 1.4rem 0 1rem;
+    }
+
+    .scenario-label {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .scenario-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.35rem;
+      width: 100%;
+    }
+
+    @media (min-width: 720px) {
+      .scenario-toggle { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .scenario-toggle button {
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      min-height: var(--tap);
+      padding: 0.55rem 0.45rem;
+      cursor: pointer;
+      transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+    }
+
+    .scenario-toggle button[aria-pressed="true"] {
+      color: #0c1520;
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .scenario-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.4;
+      min-height: 2.6em;
+    }
+
+    .stage-nav {
+      display: flex;
+      gap: 0.4rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 0.15rem 0 0.75rem;
+      margin-bottom: 0.35rem;
+      scrollbar-width: thin;
+    }
+
+    .stage-nav button {
+      flex: 0 0 auto;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      min-height: 40px;
+      padding: 0.45rem 0.75rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 160ms ease, background 160ms ease, color 160ms ease;
+    }
+
+    .stage-nav button[aria-current="true"] {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0c1520;
+      transform: translateY(-1px);
+    }
+
+    .main-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    @media (min-width: 900px) {
+      .main-grid {
+        grid-template-columns: 1.15fr 0.85fr;
+        align-items: stretch;
+      }
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--shadow);
+      padding: 1.25rem 1.2rem 1.35rem;
+      min-height: 380px;
+      animation: rise 320ms ease both;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .panel-label {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.85rem;
+    }
+
+    .panel-label .swatch {
+      width: 0.7rem;
+      height: 0.7rem;
+      background: var(--accent);
+    }
+
+    .panel-label .swatch.green { background: var(--coord); }
+
+    .step-index {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+    }
+
+    .step-title {
+      margin: 0.35rem 0 0.65rem;
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 0.95;
+    }
+
+    .step-summary {
+      margin: 0 0 1rem;
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      line-height: 1.45;
+      color: var(--fog);
+    }
+
+    .section-label {
+      margin: 0 0 0.45rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .bullets {
+      margin: 0 0 1rem;
+      padding-left: 1.15rem;
+      color: var(--chalk);
+      line-height: 1.45;
+    }
+
+    .bullets li { margin-bottom: 0.4rem; }
+
+    .callout {
+      margin: 0;
+      padding: 0.75rem 0.85rem;
+      border: 1px solid rgba(159, 208, 181, 0.28);
+      background: rgba(159, 208, 181, 0.08);
+      color: var(--coord);
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .callout.risk {
+      border-color: rgba(240, 163, 107, 0.35);
+      background: rgba(240, 163, 107, 0.08);
+      color: var(--risk);
+    }
+
+    .narrative {
+      white-space: pre-wrap;
+      font-family: var(--font-serif);
+      font-size: 0.98rem;
+      line-height: 1.5;
+      color: var(--fog);
+      margin: 0;
+    }
+
+    .budget-line {
+      display: grid;
+      gap: 0.55rem;
+      margin-bottom: 1rem;
+    }
+
+    .budget-row {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 0.45rem;
+      font-size: 0.86rem;
+    }
+
+    .budget-row dt {
+      margin: 0;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .budget-row dd {
+      margin: 0;
+      color: var(--chalk);
+      font-weight: 500;
+    }
+
+    .controls {
+      display: flex;
+      gap: 0.55rem;
+      margin: 1rem 0 1.75rem;
+      flex-wrap: wrap;
+    }
+
+    .controls button {
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.04);
+      min-height: var(--tap);
+      padding: 0.55rem 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+    }
+
+    .controls button:hover { border-color: var(--accent); color: var(--accent); }
+    .controls button:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .flywheel {
+      margin-top: 0.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .flywheel h2 {
+      margin: 0 0 0.65rem;
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .flywheel p {
+      margin: 0 0 1rem;
+      max-width: 62ch;
+      color: var(--fog);
+      font-family: var(--font-serif);
+      line-height: 1.45;
+    }
+
+    .loop {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.45rem;
+    }
+
+    @media (min-width: 720px) {
+      .loop { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .loop-item {
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+      padding: 0.85rem 0.8rem;
+      min-height: 110px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .loop-item::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      animation: sweep 1.4s ease 0.2s both;
+    }
+
+    .loop-item:nth-child(2)::after { animation-delay: 0.35s; background: linear-gradient(90deg, var(--coord), transparent); }
+    .loop-item:nth-child(3)::after { animation-delay: 0.5s; background: linear-gradient(90deg, var(--warn), transparent); }
+    .loop-item:nth-child(4)::after { animation-delay: 0.65s; }
+
+    @keyframes sweep {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+
+    .loop-num {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .loop-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin: 0 0 0.3rem;
+      line-height: 1;
+    }
+
+    .loop-copy {
+      margin: 0;
+      color: var(--fog);
+      font-size: 0.84rem;
+      line-height: 1.35;
+    }
+
+    footer {
+      margin-top: 1.75rem;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.4;
+      max-width: 70ch;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .panel, .loop-item::after { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="topnav" aria-label="Diagram pages">
+      <a href="grant-basic-shape.html">Grant Shapes</a>
+      <a href="caltrans-grant-glossary.html">Glossary</a>
+      <a href="ulysses-grant-pays.html" aria-current="page">Grant Pays Ulysses</a>
+    </nav>
+
+    <header class="hero">
+      <div class="kicker">Ulysses · Civic capital</div>
+      <h1>How the Grant <span>Pays for Ulysses</span></h1>
+      <p class="lede">
+        The county does not buy software as “IT.”
+        The county writes Ulysses into the grant as delivery infrastructure for that award.
+        Then the award reimburses the cost.
+      </p>
+      <p class="assumptions">
+        <strong>Assumptions shown on this page:</strong>
+        the NOFO allows software, contractual, or project-admin technology;
+        the cost is incurred in the period of performance;
+        invoices and draws keep source documents.
+        Change the program below to see how the budget home changes.
+      </p>
+    </header>
+
+    <div class="scenario-bar">
+      <div class="scenario-label">Select a grant family</div>
+      <div class="scenario-toggle" role="group" aria-label="Select grant family">
+        <button type="button" data-scenario="empg" aria-pressed="true">Preparedness / EMPG</button>
+        <button type="button" data-scenario="planning" aria-pressed="false">Planning</button>
+        <button type="button" data-scenario="cdbg" aria-pressed="false">CDBG admin</button>
+        <button type="button" data-scenario="capital" aria-pressed="false">Capital-heavy</button>
+      </div>
+      <p class="scenario-note" id="scenarioNote"></p>
+    </div>
+
+    <div class="stage-nav" id="stageNav" aria-label="Path steps"></div>
+
+    <div class="main-grid">
+      <article class="panel" id="stepPanel" aria-live="polite">
+        <div class="panel-label"><span class="swatch"></span> County path</div>
+        <div class="step-index" id="stepIndex">01</div>
+        <h2 class="step-title" id="stepTitle">Attach to a project</h2>
+        <p class="step-summary" id="stepSummary"></p>
+        <p class="section-label">County actions</p>
+        <ul class="bullets" id="stepActions"></ul>
+        <p class="callout" id="stepCallout"></p>
+      </article>
+
+      <aside class="panel" id="budgetPanel">
+        <div class="panel-label"><span class="swatch green"></span> Budget language</div>
+        <p class="section-label">Suggested line</p>
+        <dl class="budget-line" id="budgetLine"></dl>
+        <p class="section-label">Narrative draft</p>
+        <p class="narrative" id="narrative"></p>
+      </aside>
+    </div>
+
+    <div class="controls">
+      <button type="button" id="prevBtn">← Previous</button>
+      <button type="button" id="nextBtn">Next →</button>
+    </div>
+
+    <section class="flywheel" aria-label="Ulysses flywheel">
+      <h2>The flywheel</h2>
+      <p>
+        Ulysses helps the county win and manage the award.
+        The award then reimburses Ulysses.
+        That is the starting wedge for civic capital portfolio management.
+      </p>
+      <div class="loop">
+        <div class="loop-item">
+          <div class="loop-num">01</div>
+          <h3 class="loop-title">Match</h3>
+          <p class="loop-copy">Find a NOFO where software or project admin tech is eligible.</p>
+        </div>
+        <div class="loop-item">
+          <div class="loop-num">02</div>
+          <h3 class="loop-title">Write</h3>
+          <p class="loop-copy">Put Ulysses in scope, budget, and narrative as delivery infrastructure.</p>
+        </div>
+        <div class="loop-item">
+          <div class="loop-num">03</div>
+          <h3 class="loop-title">Award</h3>
+          <p class="loop-copy">Execute the agreement. Buy Ulysses inside the approved period and category.</p>
+        </div>
+        <div class="loop-item">
+          <div class="loop-num">04</div>
+          <h3 class="loop-title">Draw</h3>
+          <p class="loop-copy">Invoice and reimburse against the line. Keep proof for audit.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Teaching diagram for Ulysses go-to-market.
+      Not official FEMA, Cal OES, HCD, HUD, or Caltrans guidance.
+      Always read the NOFO and ask the grantor analyst before you lock the budget.
+    </footer>
+  </div>
+
+  <script>
+    const scenarios = {
+      empg: {
+        label: "Preparedness / EMPG",
+        note: "Stronger beachhead. Preparedness and emergency management grants often allow planning, management, and information systems that support the funded program.",
+        accent: "#7eb8ff",
+        category: "Other / Information technology",
+        amount: "$24,000 / year (prorated to award term)",
+        allocation: "100% to this award if single-purpose; else by active award share",
+        narrative:
+`Grant lifecycle software (Ulysses) for the emergency management program.
+
+Purpose: track grant tasks, store source documents, prepare draws, and file required reports for this award.
+
+Cost basis: annual subscription for the period of performance, plus one-time setup and training.
+
+This cost is necessary to manage the award and meet reporting and audit duties.`
+      },
+      planning: {
+        label: "Planning",
+        note: "Use when the planning grant funds a work plan that includes data systems, coordination tools, or project management technology named in the scope.",
+        accent: "#9fd0b5",
+        category: "Contractual / Professional services",
+        amount: "$18,000 setup + $1,500 / month during POP",
+        allocation: "Direct to the planning project task that owns system use",
+        narrative:
+`Contractual services for a grant management platform (Ulysses).
+
+The platform supports application assembly, task tracking, stakeholder coordination, and progress reporting for this planning project.
+
+Deliverables tied to Ulysses: maintained project tracker, documented budget vs. actuals, and packaged progress reports for the grantor.`
+      },
+      cdbg: {
+        label: "CDBG admin",
+        note: "Possible under activity delivery or admin when the software supports beneficiary tracking, draws, and monitoring for the funded activity. Keep the share reasonable.",
+        accent: "#8fd0a4",
+        category: "Administration / Activity delivery",
+        amount: "Allocated share of county subscription",
+        allocation: "By CDBG-related staff time or by number of active CDBG activities",
+        narrative:
+`Allocated cost of grant portfolio software (Ulysses) used to manage CDBG activities.
+
+Functions: beneficiary and activity files, draw packages, monitoring checklists, and closeout evidence.
+
+Only the share of cost that supports CDBG activities is charged to this award. Allocation method is documented and retained.`
+      },
+      capital: {
+        label: "Capital-heavy",
+        note: "Harder path. Construction-heavy programs often reject generic SaaS unless the approved scope names project-management technology for that phase. Prefer a planning or admin companion grant when possible.",
+        accent: "#f0b429",
+        category: "Only if approved in scope — Project management technology",
+        amount: "Phase-limited; often weak or disallowed",
+        allocation: "Only for the authorized phase and only if the grantor accepts it",
+        narrative:
+`Project management technology (Ulysses) for grant compliance during the authorized phase.
+
+Include only if the application or amendment names this system as required for schedule control, invoice support, and reporting.
+
+If the NOFO limits reimbursable costs to construction and related hard costs, do not place Ulysses on this award. Pair it with an eligible admin or planning source instead.`
+      }
+    };
+
+    const steps = [
+      {
+        id: "attach",
+        title: "Attach to a project",
+        summary: "Ulysses is not a county IT purchase in the grant file. It is infrastructure for delivering and proving this award.",
+        actions: [
+          "Name the funded project or program Ulysses will serve.",
+          "List the grant duties Ulysses covers: tracking, docs, draws, reports, closeout.",
+          "Keep the story project-first, not vendor-first."
+        ],
+        callout: "Reviewers fund delivery. They do not fund a logo.",
+        calloutClass: ""
+      },
+      {
+        id: "check",
+        title: "Check eligibility",
+        summary: "Read the NOFO for software, contractual, supplies, information systems, or project administration language before you write the line.",
+        actions: [
+          "Find the allowed budget categories and any tech exclusions.",
+          "Ask the grantor analyst when the text is unclear.",
+          "If this award cannot carry software, pick a better award in the portfolio."
+        ],
+        callout: "Wrong category at apply time becomes an unallowable cost later.",
+        calloutClass: "risk"
+      },
+      {
+        id: "budget",
+        title: "Write the budget line",
+        summary: "Place Ulysses in an allowed category for the selected grant family. State amount, term, and allocation method.",
+        actions: [
+          "Use the suggested category for this grant family.",
+          "Bound the cost to the period of performance.",
+          "If Ulysses serves many awards, write the allocation rule now."
+        ],
+        callout: "The right panel shows draft language for the selected grant family.",
+        calloutClass: ""
+      },
+      {
+        id: "narrative",
+        title: "Justify in narrative",
+        summary: "Connect every dollar to a grant duty. Show why the county cannot manage the award without this system.",
+        actions: [
+          "Map subscription and setup to reporting, draws, and audit readiness.",
+          "Name users: grants coordinator, finance, project manager.",
+          "Avoid generic ‘modernize IT’ language."
+        ],
+        callout: "Necessary + allocable + reasonable is the test to pass.",
+        calloutClass: ""
+      },
+      {
+        id: "procure",
+        title: "Buy after authority",
+        summary: "Do not start costs before the agreement and any required pre-approval gates allow spending.",
+        actions: [
+          "Wait for award terms and local purchasing clearance.",
+          "Keep quote, contract, and invoice in the grant file.",
+          "Align the vendor period with the award period."
+        ],
+        callout: "Pre-agreement spend is a common way to strand software costs.",
+        calloutClass: "risk"
+      },
+      {
+        id: "draw",
+        title: "Draw and prove",
+        summary: "Reimbursement is the moment the grant pays for Ulysses. The draw must match the approved line and the source docs.",
+        actions: [
+          "Charge invoices to the grant cost code for this line.",
+          "Attach invoice, proof of payment, and allocation worksheet.",
+          "Keep the same story through closeout and audit."
+        ],
+        callout: "Writing the line wins permission. Drawing the line collects the money.",
+        calloutClass: ""
+      }
+    ];
+
+    let scenarioKey = "empg";
+    let stepIndex = 0;
+
+    const stageNav = document.getElementById("stageNav");
+    const scenarioNote = document.getElementById("scenarioNote");
+    const stepIndexEl = document.getElementById("stepIndex");
+    const stepTitle = document.getElementById("stepTitle");
+    const stepSummary = document.getElementById("stepSummary");
+    const stepActions = document.getElementById("stepActions");
+    const stepCallout = document.getElementById("stepCallout");
+    const budgetLine = document.getElementById("budgetLine");
+    const narrative = document.getElementById("narrative");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const root = document.documentElement;
+
+    function setAccent(color) {
+      root.style.setProperty("--accent", color);
+    }
+
+    function renderBudget() {
+      const s = scenarios[scenarioKey];
+      budgetLine.innerHTML = `
+        <div class="budget-row"><dt>Category</dt><dd>${s.category}</dd></div>
+        <div class="budget-row"><dt>Amount shape</dt><dd>${s.amount}</dd></div>
+        <div class="budget-row"><dt>Allocation</dt><dd>${s.allocation}</dd></div>
+        <div class="budget-row"><dt>Vendor</dt><dd>Ulysses (grant lifecycle platform)</dd></div>
+      `;
+      narrative.textContent = s.narrative;
+    }
+
+    function renderStep() {
+      const step = steps[stepIndex];
+      const panel = document.getElementById("stepPanel");
+      panel.style.animation = "none";
+      void panel.offsetWidth;
+      panel.style.animation = "";
+
+      stepIndexEl.textContent = String(stepIndex + 1).padStart(2, "0");
+      stepTitle.textContent = step.title;
+      stepSummary.textContent = step.summary;
+      stepActions.innerHTML = step.actions.map((a) => `<li>${a}</li>`).join("");
+      stepCallout.textContent = step.callout;
+      stepCallout.className = "callout" + (step.calloutClass ? " " + step.calloutClass : "");
+
+      [...stageNav.querySelectorAll("button")].forEach((btn, i) => {
+        btn.setAttribute("aria-current", i === stepIndex ? "true" : "false");
+      });
+
+      prevBtn.disabled = stepIndex === 0;
+      nextBtn.disabled = stepIndex === steps.length - 1;
+    }
+
+    function renderScenario() {
+      const s = scenarios[scenarioKey];
+      scenarioNote.textContent = s.note;
+      setAccent(s.accent);
+      renderBudget();
+      [...document.querySelectorAll(".scenario-toggle button")].forEach((btn) => {
+        btn.setAttribute("aria-pressed", btn.dataset.scenario === scenarioKey ? "true" : "false");
+      });
+    }
+
+    function buildStageNav() {
+      stageNav.innerHTML = "";
+      steps.forEach((step, i) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = `${String(i + 1).padStart(2, "0")} ${step.title}`;
+        btn.addEventListener("click", () => {
+          stepIndex = i;
+          renderStep();
+        });
+        stageNav.appendChild(btn);
+      });
+    }
+
+    document.querySelectorAll(".scenario-toggle button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        scenarioKey = btn.dataset.scenario;
+        renderScenario();
+      });
+    });
+
+    prevBtn.addEventListener("click", () => {
+      if (stepIndex > 0) {
+        stepIndex -= 1;
+        renderStep();
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (stepIndex < steps.length - 1) {
+        stepIndex += 1;
+        renderStep();
+      }
+    });
+
+    buildStageNav();
+    renderScenario();
+    renderStep();
+  </script>
+</body>
+</html>
