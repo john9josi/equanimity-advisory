@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#12161c">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+  <title>Grant Shapes + Coordinator Actions</title>
+  <meta name="description" content="Switch grantor programs to see each lifecycle step beside the grants coordinator actions for that step.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #12161c;
+      --bg-2: #1a212a;
+      --chalk: #eef2f5;
+      --fog: #c5ced6;
+      --muted: #8b97a3;
+      --core: #7eb8ff;
+      --coord: #9fd0b5;
+      --fema: #f0a36b;
+      --cdbg: #8fd0a4;
+      --caltrans: #f0b429;
+      --pa: #d58ccc;
+      --panel: rgba(26, 33, 42, 0.96);
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+      --font-display: "Barlow Condensed", -apple-system, sans-serif;
+      --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+      --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+      --tap: 44px;
+      --accent: var(--core);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      color: var(--chalk);
+      font-family: var(--font-sans);
+      background:
+        radial-gradient(900px 500px at 8% -10%, rgba(126, 184, 255, 0.16), transparent 55%),
+        radial-gradient(700px 420px at 100% 0%, rgba(159, 208, 181, 0.12), transparent 50%),
+        linear-gradient(180deg, #0c1015 0%, var(--bg) 45%, #171d25 100%);
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: rgba(126, 184, 255, 0.18);
+      touch-action: manipulation;
+    }
+
+    a { color: var(--core); }
+    button { -webkit-appearance: none; appearance: none; font: inherit; color: inherit; }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      padding:
+        calc(1rem + var(--safe-top))
+        calc(1rem + var(--safe-right))
+        calc(2.5rem + var(--safe-bottom))
+        calc(1rem + var(--safe-left));
+    }
+
+    .topnav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .topnav a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 0.4rem 0.7rem;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--fog);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .topnav a[aria-current="page"] {
+      background: var(--core);
+      border-color: var(--core);
+      color: #0c1520;
+    }
+
+    header.hero {
+      display: grid;
+      gap: 0.85rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      color: var(--accent);
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 1.75rem;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+
+    h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(2.3rem, 10vw, 4.5rem);
+      line-height: 0.92;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      max-width: 18ch;
+    }
+
+    h1 span { color: var(--accent); }
+
+    .lede {
+      margin: 0;
+      max-width: 60ch;
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: var(--fog);
+    }
+
+    .program-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.35rem;
+      width: 100%;
+    }
+
+    .program-toggle button {
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      min-height: var(--tap);
+      padding: 0.55rem 0.45rem;
+      cursor: pointer;
+    }
+
+    .program-toggle button[aria-pressed="true"] {
+      color: #0c1520;
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .legend i {
+      display: inline-block;
+      width: 0.7rem;
+      height: 0.7rem;
+      margin-right: 0.35rem;
+      vertical-align: -1px;
+    }
+
+    .stage-nav {
+      display: flex;
+      gap: 0.4rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 0.15rem 0 0.55rem;
+      margin: 0.35rem 0 0.85rem;
+      scrollbar-width: thin;
+    }
+
+    .stage-nav button {
+      flex: 0 0 auto;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      color: var(--fog);
+      min-height: 40px;
+      padding: 0.45rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .stage-nav button[aria-pressed="true"] {
+      background: rgba(255,255,255,0.08);
+      border-color: var(--accent);
+      color: var(--chalk);
+      box-shadow: inset 0 -2px 0 var(--accent);
+    }
+
+    .pair {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: var(--shadow);
+      padding: 1.1rem;
+      display: grid;
+      gap: 0.75rem;
+      align-content: start;
+      min-height: 0;
+    }
+
+    .card-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .card-label .swatch {
+      width: 0.7rem;
+      height: 0.7rem;
+      display: inline-block;
+    }
+
+    .card.lifecycle .swatch { background: var(--accent); }
+    .card.coordinator .swatch { background: var(--coord); }
+    .card.coordinator { border-color: rgba(159, 208, 181, 0.28); }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .card-index {
+      font-family: var(--font-display);
+      font-size: 2.6rem;
+      font-weight: 700;
+      line-height: 0.85;
+      color: var(--accent);
+    }
+
+    .card.coordinator .card-index { color: var(--coord); }
+
+    .card h2 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(1.55rem, 6vw, 2.1rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      line-height: 0.95;
+      max-width: 16ch;
+    }
+
+    .pill {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.28rem 0.45rem;
+      color: #0c1520;
+      background: var(--accent);
+      white-space: nowrap;
+    }
+
+    .pill.extra { background: var(--fema); }
+    .pill.variant { background: var(--pa); color: #1a0f18; }
+    .pill.coord { background: var(--coord); color: #0f1a12; }
+
+    .summary {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: 1.02rem;
+      line-height: 1.5;
+      color: var(--fog);
+    }
+
+    .section-label {
+      margin: 0.1rem 0 0;
+      font-family: var(--font-display);
+      font-size: 0.92rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .card.coordinator .section-label { color: var(--coord); }
+
+    .bullets {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .bullets li {
+      position: relative;
+      padding-left: 1.05rem;
+      font-size: 0.94rem;
+      line-height: 1.4;
+    }
+
+    .bullets li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55rem;
+      width: 0.4rem;
+      height: 0.4rem;
+      background: var(--accent);
+      transform: rotate(45deg);
+    }
+
+    .card.coordinator .bullets li::before {
+      background: transparent;
+      border: 1.5px solid var(--coord);
+      width: 0.65rem;
+      height: 0.65rem;
+      top: 0.35rem;
+      transform: none;
+      border-radius: 2px;
+    }
+
+    .handoff {
+      margin: 0;
+      padding: 0.8rem 0.85rem;
+      background: rgba(159, 208, 181, 0.08);
+      border-left: 3px solid var(--coord);
+      color: var(--fog);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .risk {
+      margin: 0;
+      padding: 0.8rem 0.85rem;
+      background: rgba(240, 163, 107, 0.1);
+      border-left: 3px solid var(--fema);
+      color: var(--fog);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.55rem;
+      margin-top: 0.85rem;
+    }
+
+    .controls button {
+      border: 1px solid rgba(255,255,255,0.16);
+      background: transparent;
+      color: var(--chalk);
+      font-size: 0.9rem;
+      font-weight: 600;
+      min-height: var(--tap);
+      padding: 0.65rem 0.85rem;
+      cursor: pointer;
+    }
+
+    .controls button:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .all-steps {
+      margin-top: 1.5rem;
+    }
+
+    .all-steps h2 {
+      margin: 0 0 0.75rem;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fog);
+    }
+
+    .stack {
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .stack-row {
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.02);
+      padding: 0.85rem 0.9rem;
+      cursor: pointer;
+      text-align: left;
+      width: 100%;
+    }
+
+    .stack-row[aria-current="true"] {
+      border-color: color-mix(in srgb, var(--accent) 70%, white 0%);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent);
+    }
+
+    .stack-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      align-items: baseline;
+      margin-bottom: 0.55rem;
+    }
+
+    .stack-top strong {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.55rem;
+    }
+
+    .stack-col {
+      font-size: 0.86rem;
+      line-height: 1.4;
+      color: var(--fog);
+    }
+
+    .stack-col em {
+      display: block;
+      font-style: normal;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+
+    footer {
+      margin-top: 1.75rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.5;
+      max-width: 72ch;
+    }
+
+    @media (min-width: 700px) {
+      .wrap {
+        width: min(1180px, calc(100% - 2rem));
+        padding-top: calc(1.5rem + var(--safe-top));
+      }
+      .program-toggle {
+        grid-template-columns: repeat(5, auto);
+        width: auto;
+      }
+      .program-toggle button {
+        padding: 0.55rem 0.85rem;
+        font-size: 0.85rem;
+      }
+      .stack-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    }
+
+    @media (min-width: 900px) {
+      .pair {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        align-items: stretch;
+      }
+      .card { min-height: 420px; padding: 1.3rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="topnav" aria-label="Diagram pages">
+      <a href="grant-basic-shape.html" aria-current="page">Grant Shapes</a>
+      <a href="caltrans-grant-glossary.html">Glossary</a>
+    </nav>
+
+    <header class="hero">
+      <div class="kicker">Grantor shape + coordinator work</div>
+      <h1>Lifecycle Steps <span>Side by Side</span></h1>
+      <p class="lede">
+        Select a grantor program.
+        Then move through each lifecycle step.
+        The left card shows the program shape.
+        The right card shows the grants coordinator actions.
+      </p>
+      <div class="program-toggle" role="group" aria-label="Select grantor program">
+        <button type="button" data-program="basic" aria-pressed="true">Basic</button>
+        <button type="button" data-program="fema" aria-pressed="false">FEMA HMA</button>
+        <button type="button" data-program="pa" aria-pressed="false">FEMA PA</button>
+        <button type="button" data-program="cdbg" aria-pressed="false">CDBG</button>
+        <button type="button" data-program="caltrans" aria-pressed="false">Caltrans</button>
+      </div>
+      <p class="note" id="programNote"></p>
+      <div class="legend">
+        <span><i style="background:var(--accent)"></i>Program lifecycle step</span>
+        <span><i style="background:var(--coord)"></i>Coordinator actions</span>
+      </div>
+    </header>
+
+    <div class="stage-nav" id="stageNav" aria-label="Lifecycle steps"></div>
+
+    <section class="pair" aria-label="Selected step pair" id="pair">
+      <article class="card lifecycle" id="lifeCard">
+        <div class="card-label"><span class="swatch"></span> Program lifecycle</div>
+        <div class="card-head">
+          <div>
+            <div class="card-index" id="lifeIndex">01</div>
+            <h2 id="lifeTitle">Notice</h2>
+          </div>
+          <span class="pill" id="lifePill">Core</span>
+        </div>
+        <p class="summary" id="lifeSummary"></p>
+        <p class="section-label">What happens</p>
+        <ul class="bullets" id="lifeBullets"></ul>
+        <p class="risk" id="lifeNote"></p>
+      </article>
+
+      <article class="card coordinator" id="coordCard">
+        <div class="card-label"><span class="swatch"></span> Grants coordinator</div>
+        <div class="card-head">
+          <div>
+            <div class="card-index" id="coordIndex">01</div>
+            <h2 id="coordTitle">Coordinator</h2>
+          </div>
+          <span class="pill coord">Lead actions</span>
+        </div>
+        <p class="summary" id="coordSummary"></p>
+        <p class="section-label">Do these actions</p>
+        <ul class="bullets" id="coordActions"></ul>
+        <p class="handoff" id="coordHandoff"></p>
+      </article>
+    </section>
+
+    <div class="controls">
+      <button type="button" id="prevBtn">← Previous step</button>
+      <button type="button" id="nextBtn">Next step →</button>
+    </div>
+
+    <section class="all-steps" aria-label="All steps for selected program">
+      <h2 id="stackTitle">All steps in this program</h2>
+      <div class="stack" id="stack"></div>
+    </section>
+
+    <footer>
+      This page pairs each grantor lifecycle step with the local grants coordinator actions for that step.
+      It is a teaching diagram.
+      It is not official FEMA, HCD, Cal OES, or Caltrans guidance.
+    </footer>
+  </div>
+
+  <script>
+    const programs = {
+      basic: {
+        label: "Basic",
+        accent: "#7eb8ff",
+        note: "Basic shared grant loop. Use this when the program is simple and not capital-heavy.",
+        steps: [
+          {
+            num: "01",
+            lifeTitle: "Notice",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "A funding notice opens. The notice sets rules, dates, and eligible uses.",
+            lifeBullets: [
+              "A NOFO, NOFA, or program call is published.",
+              "Eligibility and deadlines are stated.",
+              "Local agencies decide whether to pursue funds."
+            ],
+            lifeNote: "Same starting gate in almost every grant family.",
+            coordTitle: "Scout",
+            coordSummary: "The grants coordinator finds the opportunity early and checks fit before staff write.",
+            coordActions: [
+              "Capture the notice, due date, and match rules in one tracker.",
+              "Confirm agency eligibility.",
+              "Tell leadership and the likely project owner."
+            ],
+            coordHandoff: "Pull in: planning or program staff, finance for match, leadership for priority."
+          },
+          {
+            num: "02",
+            lifeTitle: "Apply",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "The agency submits a complete request for funds.",
+            lifeBullets: [
+              "The application states scope, budget, and required forms.",
+              "Local authority to submit is required.",
+              "Proof of timely submittal is kept."
+            ],
+            lifeNote: "Application form changes by program. The job does not.",
+            coordTitle: "Assemble & Submit",
+            coordSummary: "The coordinator owns the package quality, the approval path, and the filing proof.",
+            coordActions: [
+              "Assign owners for every attachment.",
+              "Get signatures and board actions before the due date.",
+              "Submit early and save confirmation."
+            ],
+            coordHandoff: "Pull in: project owner, finance, clerk or signatory, partners."
+          },
+          {
+            num: "03",
+            lifeTitle: "Award",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "The funding agency selects the project or allocation and offers funds.",
+            lifeBullets: [
+              "An award or allocation letter is issued.",
+              "Amount, match, and period of performance are set.",
+              "The local agency becomes recipient or subrecipient."
+            ],
+            lifeNote: "Award creates the funded relationship. It is not always permission to spend.",
+            coordTitle: "Stand Up",
+            coordSummary: "The coordinator turns the award into a managed grant file and team plan.",
+            coordActions: [
+              "Read award conditions and special terms.",
+              "Open the grant file and shared tracker.",
+              "Brief finance and the delivery owner."
+            ],
+            coordHandoff: "Pull in: finance, project manager, authorized signatory."
+          },
+          {
+            num: "04",
+            lifeTitle: "Agree",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "A binding agreement sets scope, budget, reports, and compliance duties.",
+            lifeBullets: [
+              "A standard agreement or subaward is executed.",
+              "Terms become enforceable.",
+              "Restricted work may still need later clearance."
+            ],
+            lifeNote: "Do not treat a signed agreement as a blank spending permission.",
+            coordTitle: "Clear Paper",
+            coordSummary: "The coordinator drives signatures and keeps the executed terms in the file.",
+            coordActions: [
+              "Route the agreement for signature on time.",
+              "Store the signed terms and exhibits.",
+              "Block restricted charges until required approvals exist."
+            ],
+            coordHandoff: "Pull in: counsel or clerk, signatory, finance."
+          },
+          {
+            num: "05",
+            lifeTitle: "Clearance",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "Required pre-work gates are completed. Environmental, historic, or setup rules often sit here.",
+            lifeBullets: [
+              "Required clearances are identified early.",
+              "Ineligible pre-approval costs are avoided.",
+              "Clearance decisions are recorded."
+            ],
+            lifeNote: "Light for simple operating grants. Heavy for construction.",
+            coordTitle: "Gate Keep",
+            coordSummary: "The coordinator stops spending that would create ineligible costs.",
+            coordActions: [
+              "List required clearances for the activity type.",
+              "Track each clearance to completion.",
+              "Tell finance when charging may start."
+            ],
+            coordHandoff: "Pull in: environmental or program specialists, project manager, finance."
+          },
+          {
+            num: "06",
+            lifeTitle: "Deliver",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "The agency does the approved work under the approved budget.",
+            lifeBullets: [
+              "Staff follow the approved scope.",
+              "Procurement rules are applied.",
+              "Source documents are kept for every cost."
+            ],
+            lifeNote: "Delivery controls later reimbursement success.",
+            coordTitle: "Watch Delivery",
+            coordSummary: "The coordinator does not replace the project manager. The coordinator protects grant compliance while work happens.",
+            coordActions: [
+              "Confirm work stays inside approved scope.",
+              "Check procurement and documentation standards.",
+              "Raise scope or budget risks early."
+            ],
+            coordHandoff: "Pull in: project manager, procurement, finance."
+          },
+          {
+            num: "07",
+            lifeTitle: "Draw & Report",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "The agency requests funds and submits progress and financial reports.",
+            lifeBullets: [
+              "Only eligible costs are drawn.",
+              "Required reports are filed on time.",
+              "Rejected draws are corrected quickly."
+            ],
+            lifeNote: "This step is nearly universal across grantors.",
+            coordTitle: "Draw & Chase",
+            coordSummary: "The coordinator runs the reporting calendar and clears invoice or draw problems.",
+            coordActions: [
+              "Keep a report and draw calendar.",
+              "Package draws with source documents.",
+              "Fix rejects and missing support fast."
+            ],
+            coordHandoff: "Pull in: finance, project manager, grantor analyst."
+          },
+          {
+            num: "08",
+            lifeTitle: "Close",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "Final reports prove the work is done and costs are final. Records are retained for audit.",
+            lifeBullets: [
+              "Final reports and financials are submitted.",
+              "Budget is reconciled to actual costs.",
+              "Records are retained for the required period."
+            ],
+            lifeNote: "Closeout is its own mini-project.",
+            coordTitle: "Close Clean",
+            coordSummary: "The coordinator drives the closeout packet and locks the audit file.",
+            coordActions: [
+              "Start closeout before the final day of work.",
+              "Submit the complete closeout package.",
+              "Archive decisions, reports, and final costs."
+            ],
+            coordHandoff: "Pull in: project manager, finance, grantor closeout contact."
+          }
+        ]
+      },
+      fema: {
+        label: "FEMA HMA",
+        accent: "#f0a36b",
+        note: "FEMA Hazard Mitigation Assistance through Cal OES: BRIC, HMGP, and FMA.",
+        steps: [
+          {
+            num: "01",
+            lifeTitle: "Notice",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "FEMA opens a mitigation opportunity. HMGP can also open after a disaster declaration.",
+            lifeBullets: [
+              "FEMA publishes a NOFO or HMGP opens after declaration.",
+              "Cal OES manages the state process.",
+              "Cost share and period of performance are set."
+            ],
+            lifeNote: "Counties usually apply as subapplicants through Cal OES.",
+            coordTitle: "Scout",
+            coordSummary: "Watch Cal OES and FEMA notices. Decide early whether the county can meet cost share and delivery time.",
+            coordActions: [
+              "Log Cal OES due dates and required forms.",
+              "Confirm local match and staff capacity.",
+              "Shortlist mitigation projects that can compete."
+            ],
+            coordHandoff: "Pull in: OEM/emergency management, public works, finance, Cal OES contact."
+          },
+          {
+            num: "02",
+            lifeTitle: "Subapply",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "The county prepares a subapplication. Cal OES reviews and submits eligible packages to FEMA.",
+            lifeBullets: [
+              "Scope, budget, and benefit-cost materials are prepared.",
+              "State review happens before FEMA review.",
+              "One complete package is maintained."
+            ],
+            lifeNote: "Do not bypass the state process.",
+            coordTitle: "Assemble",
+            coordSummary: "Own the subapplication quality and the Cal OES submission path.",
+            coordActions: [
+              "Build the workback schedule for technical attachments.",
+              "Reconcile scope, budget, and BCA assumptions.",
+              "Submit through Cal OES and keep proof."
+            ],
+            coordHandoff: "Pull in: engineers, OEM, finance, Cal OES grants analyst."
+          },
+          {
+            num: "03",
+            lifeTitle: "Award",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "FEMA awards the state recipient. Cal OES issues a subaward to the county.",
+            lifeBullets: [
+              "FEMA award conditions are set.",
+              "Cal OES issues the local subaward.",
+              "Approved scope and budget are fixed."
+            ],
+            lifeNote: "Two-layer award path: federal recipient, then local subrecipient.",
+            coordTitle: "Stand Up",
+            coordSummary: "Set up the subaward file, conditions list, and delivery owners.",
+            coordActions: [
+              "Read FEMA and Cal OES conditions line by line.",
+              "Create the local grant tracker and calendar.",
+              "Brief finance before any charges."
+            ],
+            coordHandoff: "Pull in: finance, project owner, Cal OES analyst."
+          },
+          {
+            num: "04",
+            lifeTitle: "Subaward",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "The county accepts the subaward terms. Early work can be ineligible if approvals are missing.",
+            lifeBullets: [
+              "Subaward documents are signed.",
+              "Special conditions are tracked.",
+              "Restricted work waits for required approvals."
+            ],
+            lifeNote: "Signed subaward is not always permission to build.",
+            coordTitle: "Clear Paper",
+            coordSummary: "Drive acceptance documents and block premature spending.",
+            coordActions: [
+              "Return signed documents on time.",
+              "List special conditions as open tasks.",
+              "Hold purchasing until conditions allow it."
+            ],
+            coordHandoff: "Pull in: signatory, finance, procurement."
+          },
+          {
+            num: "05",
+            lifeTitle: "EHP Gate",
+            kind: "extra",
+            kindLabel: "Extra",
+            lifeSummary: "Environmental Planning and Historic Preservation review is required. Phased projects may fund design before construction.",
+            lifeBullets: [
+              "EHP review must finish before restricted work.",
+              "Benefit-cost and technical feasibility must hold.",
+              "Phase I may precede Phase II construction funding."
+            ],
+            lifeNote: "Main extra gate versus simple operating grants.",
+            coordTitle: "Gate Keep",
+            coordSummary: "Keep the project from starting construction too early.",
+            coordActions: [
+              "Track EHP status weekly.",
+              "Stop construction procurement until clearance exists.",
+              "For phased projects, confirm Phase I close before Phase II spend."
+            ],
+            coordHandoff: "Pull in: environmental staff, engineer, Cal OES/FEMA reviewers."
+          },
+          {
+            num: "06",
+            lifeTitle: "Deliver",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "The county completes the approved mitigation scope.",
+            lifeBullets: [
+              "Work follows approved plans and conditions.",
+              "Procurement and force-account records are kept.",
+              "Scope changes need approval first."
+            ],
+            lifeNote: "Construction-like projects need strong field documentation.",
+            coordTitle: "Watch Delivery",
+            coordSummary: "Protect scope control and documentation quality during implementation.",
+            coordActions: [
+              "Compare field work to approved scope.",
+              "Collect invoices, payroll, and inspection records continuously.",
+              "Request amendments before work drifts."
+            ],
+            coordHandoff: "Pull in: project manager, contractor admin, finance."
+          },
+          {
+            num: "07",
+            lifeTitle: "Reimburse",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "The county requests reimbursement through Cal OES and files quarterly reports.",
+            lifeBullets: [
+              "Draws use eligible documented costs.",
+              "Quarterly progress and financial reports are required.",
+              "Period of performance is monitored."
+            ],
+            lifeNote: "Late reports create payment and compliance risk.",
+            coordTitle: "Draw & Chase",
+            coordSummary: "Run the Cal OES reimbursement and reporting rhythm.",
+            coordActions: [
+              "Submit complete reimbursement packages.",
+              "File quarterly reports before the due date.",
+              "Escalate POP or spend-rate risk early."
+            ],
+            coordHandoff: "Pull in: finance, project manager, Cal OES analyst."
+          },
+          {
+            num: "08",
+            lifeTitle: "Close",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "Cal OES and FEMA close the subaward after work and costs are verified.",
+            lifeBullets: [
+              "Closeout packet is submitted on time.",
+              "Final eligible costs are confirmed.",
+              "Records are retained for audit."
+            ],
+            lifeNote: "Closeout confirms the approved mitigation measure was completed.",
+            coordTitle: "Close Clean",
+            coordSummary: "Assemble the closeout packet and lock the file.",
+            coordActions: [
+              "Collect final photos, costs, and completion evidence.",
+              "Submit closeout through Cal OES.",
+              "Archive the full subaward record."
+            ],
+            coordHandoff: "Pull in: project manager, finance, Cal OES closeout contact."
+          }
+        ]
+      },
+      pa: {
+        label: "FEMA PA",
+        accent: "#d58ccc",
+        note: "FEMA Public Assistance after a declared disaster. Different start. Same end state.",
+        steps: [
+          {
+            num: "01",
+            lifeTitle: "Declaration",
+            kind: "variant",
+            kindLabel: "Variant",
+            lifeSummary: "A presidential disaster declaration opens Public Assistance. This replaces a normal competitive notice.",
+            lifeBullets: [
+              "The county is included in the declaration.",
+              "Applicant briefings begin.",
+              "Damage inventory starts immediately."
+            ],
+            lifeNote: "Incident-driven start, not NOFO-driven.",
+            coordTitle: "Mobilize",
+            coordSummary: "Stand up the county PA grant response and document controls on day one.",
+            coordActions: [
+              "Attend applicant briefings.",
+              "Open a disaster grant file and cost codes.",
+              "Tell departments how to capture labor, equipment, and contracts."
+            ],
+            coordHandoff: "Pull in: OEM, public works, finance, department timekeepers."
+          },
+          {
+            num: "02",
+            lifeTitle: "Project Worksheet",
+            kind: "variant",
+            kindLabel: "Variant",
+            lifeSummary: "Damage, scope, and estimates are documented in Project Worksheets with FEMA and the state.",
+            lifeBullets: [
+              "Damage is documented with records and photos.",
+              "Emergency work is separated from permanent work.",
+              "Force-account and contract costs are logged."
+            ],
+            lifeNote: "This replaces a normal grant application.",
+            coordTitle: "Document",
+            coordSummary: "Make sure every PW has support that can survive review.",
+            coordActions: [
+              "Collect photos, maps, invoices, and force-account logs.",
+              "Keep one inventory of sites and PWs.",
+              "Push departments for missing documentation daily."
+            ],
+            coordHandoff: "Pull in: department leads, OEM, finance, FEMA/state specialists."
+          },
+          {
+            num: "03",
+            lifeTitle: "Obligate",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "FEMA obligates funding by Project Worksheet. That creates the funded project version.",
+            lifeBullets: [
+              "Obligated amounts are confirmed.",
+              "PW versions are tracked when scope changes.",
+              "Local project codes map to each PW."
+            ],
+            lifeNote: "Award happens by project worksheet, not one simple grant letter alone.",
+            coordTitle: "Stand Up PWs",
+            coordSummary: "Translate each obligated PW into local tracking and budget codes.",
+            coordActions: [
+              "Log each PW version and dollar amount.",
+              "Assign a delivery owner per PW.",
+              "Align finance codes to PW numbers."
+            ],
+            coordHandoff: "Pull in: finance, department owners, OEM."
+          },
+          {
+            num: "04",
+            lifeTitle: "Conditions",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "The county must follow PA rules, procurement standards, and project conditions.",
+            lifeBullets: [
+              "Emergency-work and permanent-work rules differ.",
+              "Federal procurement standards apply.",
+              "Work must stay inside approved scopes."
+            ],
+            lifeNote: "PA compliance is continuous.",
+            coordTitle: "Set Rules",
+            coordSummary: "Publish clear local rules so departments do not create ineligible costs.",
+            coordActions: [
+              "Issue a short PA documentation and procurement guide.",
+              "Block noncompliant purchasing paths.",
+              "Review special conditions on each PW."
+            ],
+            coordHandoff: "Pull in: procurement, finance, department buyers."
+          },
+          {
+            num: "05",
+            lifeTitle: "Eligibility Gate",
+            kind: "extra",
+            kindLabel: "Extra",
+            lifeSummary: "Insurance, EHP, codes and standards, and improved projects can change what is reimbursable.",
+            lifeBullets: [
+              "Insurance proceeds must be coordinated.",
+              "Required EHP steps must be completed.",
+              "Scope improvements need approval first."
+            ],
+            lifeNote: "Eligibility can move after work starts if controls are weak.",
+            coordTitle: "Gate Keep",
+            coordSummary: "Catch eligibility issues before costs are stranded.",
+            coordActions: [
+              "Track insurance deductions and EHP status.",
+              "Flag improved-project or alternate-project proposals early.",
+              "Get written approval before scope upgrades."
+            ],
+            coordHandoff: "Pull in: risk/insurance, environmental, project owners, state/FEMA."
+          },
+          {
+            num: "06",
+            lifeTitle: "Perform Work",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "Eligible recovery work is completed with contemporaneous records.",
+            lifeBullets: [
+              "Who, what, when, and cost are documented as work occurs.",
+              "Contracts, materials, and force account are separated.",
+              "Work deadlines are watched."
+            ],
+            lifeNote: "Poor field documentation is the common failure point.",
+            coordTitle: "Watch Delivery",
+            coordSummary: "Keep documentation current while departments execute work.",
+            coordActions: [
+              "Spot-check timesheets, equipment logs, and contract files weekly.",
+              "Compare work to PW scope.",
+              "Escalate deadline risk immediately."
+            ],
+            coordHandoff: "Pull in: department leads, field supervisors, finance."
+          },
+          {
+            num: "07",
+            lifeTitle: "Claim",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "Claimed costs are supported with documentation. Large and small projects follow different payment patterns.",
+            lifeBullets: [
+              "Cost ledgers are kept by PW.",
+              "Payments are reconciled to support documents.",
+              "Documentation requests are answered quickly."
+            ],
+            lifeNote: "The claim is only as strong as the file.",
+            coordTitle: "Claim & Chase",
+            coordSummary: "Own the claim package quality and response time.",
+            coordActions: [
+              "Prepare claim support by PW.",
+              "Reconcile payments and deductions.",
+              "Answer FEMA/state document requests within set timelines."
+            ],
+            coordHandoff: "Pull in: finance, department owners, state PA staff."
+          },
+          {
+            num: "08",
+            lifeTitle: "Close",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "Each Project Worksheet is closed. Then larger grant closeout follows.",
+            lifeBullets: [
+              "Open documentation issues are resolved.",
+              "Final eligible costs are confirmed.",
+              "Records are retained for audit and appeal windows."
+            ],
+            lifeNote: "Closeout can stretch. Start early.",
+            coordTitle: "Close Clean",
+            coordSummary: "Drive PW closeout one by one until the disaster grant file is done.",
+            coordActions: [
+              "Maintain a PW closeout checklist.",
+              "Resolve final cost and insurance issues.",
+              "Archive the full disaster record."
+            ],
+            coordHandoff: "Pull in: finance, OEM, state closeout staff."
+          }
+        ]
+      },
+      cdbg: {
+        label: "CDBG",
+        accent: "#8fd0a4",
+        note: "CDBG through California HCD for many non-entitlement cities and counties.",
+        steps: [
+          {
+            num: "01",
+            lifeTitle: "NOFA",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "HCD issues the annual Notice of Funding Availability.",
+            lifeBullets: [
+              "Eligible activities and limits are published.",
+              "Scoring and threshold rules are set.",
+              "Due dates are fixed."
+            ],
+            lifeNote: "Same Notice step as the basic shape.",
+            coordTitle: "Scout",
+            coordSummary: "Read the NOFA early and check threshold readiness before writing.",
+            coordActions: [
+              "Check housing element and threshold items.",
+              "Confirm eligible activity ideas with departments.",
+              "Put the NOFA calendar in the tracker."
+            ],
+            coordHandoff: "Pull in: housing/community development, finance, leadership."
+          },
+          {
+            num: "02",
+            lifeTitle: "Apply",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "The local agency submits the NOFA application with resolutions and certifications.",
+            lifeBullets: [
+              "Governing-body authority is included.",
+              "National objective and beneficiaries are documented.",
+              "Application is filed in the required portal."
+            ],
+            lifeNote: "Incomplete threshold items kill applications.",
+            coordTitle: "Assemble & Submit",
+            coordSummary: "Own completeness against the HCD checklist.",
+            coordActions: [
+              "Collect resolution and certification forms early.",
+              "Align activity description, budget, and national objective.",
+              "Submit and save confirmation."
+            ],
+            coordHandoff: "Pull in: clerk/board, program staff, finance."
+          },
+          {
+            num: "03",
+            lifeTitle: "Award",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "HCD issues an award letter and starts Standard Agreement setup.",
+            lifeBullets: [
+              "Award conditions and activity limits are stated.",
+              "Agreement routing begins in the grants portal.",
+              "Local grant setup starts."
+            ],
+            lifeNote: "Move fast after the award letter.",
+            coordTitle: "Stand Up",
+            coordSummary: "Open the award file and prepare for Standard Agreement execution.",
+            coordActions: [
+              "Read the award letter and activity caps.",
+              "Start the local grant file and compliance checklist.",
+              "Brief finance on fund setup."
+            ],
+            coordHandoff: "Pull in: finance, program manager, signatory."
+          },
+          {
+            num: "04",
+            lifeTitle: "Standard Agreement",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "The HCD Standard Agreement sets the enforceable terms.",
+            lifeBullets: [
+              "Agreement is signed in the portal on time.",
+              "Effective dates and exhibits are confirmed.",
+              "Finance prepares for draws."
+            ],
+            lifeNote: "Same Agree step with HCD packaging.",
+            coordTitle: "Clear Paper",
+            coordSummary: "Drive agreement signature and exhibit control.",
+            coordActions: [
+              "Return the signed Standard Agreement on time.",
+              "Store exhibits and special conditions.",
+              "Tell staff when the agreement is active."
+            ],
+            coordHandoff: "Pull in: signatory, finance, program manager."
+          },
+          {
+            num: "05",
+            lifeTitle: "Pre-Draw Gate",
+            kind: "extra",
+            kindLabel: "Extra",
+            lifeSummary: "Setup and clearance documents are required before first draw.",
+            lifeBullets: [
+              "Threshold and pre-draw documents are completed.",
+              "Environmental and program files are ready.",
+              "No draw occurs before required clearances."
+            ],
+            lifeNote: "Extra administrative gate. Usually lighter than Caltrans phase authorization.",
+            coordTitle: "Gate Keep",
+            coordSummary: "Clear the pre-draw list before finance requests funds.",
+            coordActions: [
+              "Complete the HCD pre-draw document list.",
+              "Set beneficiary and activity file systems.",
+              "Release first-draw permission only when ready."
+            ],
+            coordHandoff: "Pull in: program staff, environmental as needed, finance."
+          },
+          {
+            num: "06",
+            lifeTitle: "Deliver",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "The funded housing or community development activity is delivered.",
+            lifeBullets: [
+              "Eligible beneficiaries are served.",
+              "Procurement and labor rules are followed when they apply.",
+              "Activity evidence is kept locally."
+            ],
+            lifeNote: "Often program delivery, not highway construction.",
+            coordTitle: "Watch Delivery",
+            coordSummary: "Ensure activity evidence will support monitoring.",
+            coordActions: [
+              "Check beneficiary documentation standards.",
+              "Spot-check procurement files.",
+              "Keep activity accomplishments current."
+            ],
+            coordHandoff: "Pull in: program manager, subrecipients, finance."
+          },
+          {
+            num: "07",
+            lifeTitle: "Draw & Report",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "Financial reports request funds. Activity reports show progress and beneficiaries.",
+            lifeBullets: [
+              "Each draw has source documents.",
+              "Beneficiary reporting follows required aggregate rules.",
+              "Monitoring findings are corrected quickly."
+            ],
+            lifeNote: "Same Draw & Report step with HCD systems.",
+            coordTitle: "Draw & Chase",
+            coordSummary: "Run draws and activity reporting on schedule.",
+            coordActions: [
+              "Submit complete financial report packages.",
+              "File activity reports with required data.",
+              "Resolve HCD questions and findings fast."
+            ],
+            coordHandoff: "Pull in: finance, program staff, HCD representative."
+          },
+          {
+            num: "08",
+            lifeTitle: "Close",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "A closeout package reports completion, final financials, and required notices.",
+            lifeBullets: [
+              "Closeout package is submitted in the grants system.",
+              "Final costs and accomplishments are reconciled.",
+              "Files are retained for HCD, HUD, or OIG review."
+            ],
+            lifeNote: "Same Close step.",
+            coordTitle: "Close Clean",
+            coordSummary: "Submit closeout and freeze the official file.",
+            coordActions: [
+              "Assemble completion and final financial documents.",
+              "Submit closeout in the portal.",
+              "Retain the local file for audit."
+            ],
+            coordHandoff: "Pull in: program manager, finance, HCD closeout contact."
+          }
+        ]
+      },
+      caltrans: {
+        label: "Caltrans",
+        accent: "#f0b429",
+        note: "Caltrans / CTC local assistance. Same core loop with the most capital-delivery gates.",
+        steps: [
+          {
+            num: "01",
+            lifeTitle: "Call",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "CTC or Caltrans opens a call for projects under program guidelines.",
+            lifeBullets: [
+              "Guidelines set eligibility and scoring.",
+              "Funding years and cycle dates are published.",
+              "Local agencies assess project fit."
+            ],
+            lifeNote: "Same Notice step.",
+            coordTitle: "Scout",
+            coordSummary: "Track calls and only advance projects that can deliver.",
+            coordActions: [
+              "Maintain a calendar of ATP and other Local Assistance calls.",
+              "Screen for match, capacity, and schedule realism.",
+              "Brief leadership on pursuit choices."
+            ],
+            coordHandoff: "Pull in: public works/engineering, finance, leadership."
+          },
+          {
+            num: "02",
+            lifeTitle: "Apply",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "The agency submits scope, cost, schedule, and benefits.",
+            lifeBullets: [
+              "Application package is completed.",
+              "PPR, estimates, and narrative are aligned.",
+              "Authority to submit is obtained."
+            ],
+            lifeNote: "Same Apply step.",
+            coordTitle: "Assemble & Submit",
+            coordSummary: "Integrate the package and protect the deadline.",
+            coordActions: [
+              "Assign attachment owners and a freeze date.",
+              "Reconcile scope, cost, schedule, and benefits.",
+              "Submit early with confirmation saved."
+            ],
+            coordHandoff: "Pull in: engineers, finance, clerk/signatory, partners."
+          },
+          {
+            num: "03",
+            lifeTitle: "Program",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "CTC adopts the project into a funding year. Programming is not authorization to spend.",
+            lifeBullets: [
+              "Project is placed in the program.",
+              "Delivery planning begins.",
+              "Baseline thresholds are checked."
+            ],
+            lifeNote: "Caltrans separates programming from later allocation and authorization.",
+            coordTitle: "Stand Up",
+            coordSummary: "Start the grant delivery file as soon as the project is programmed.",
+            coordActions: [
+              "Confirm programmed phases and years.",
+              "Open the grant tracker and DLAE contact path.",
+              "Start agreement and baseline checklists if needed."
+            ],
+            coordHandoff: "Pull in: project manager, DLAE, finance."
+          },
+          {
+            num: "04",
+            lifeTitle: "Agree",
+            kind: "extra",
+            kindLabel: "Extra",
+            lifeSummary: "Master Agreement, Baseline Agreement when required, and later Program Supplement create the legal path.",
+            lifeBullets: [
+              "Master Agreement covers the agency relationship.",
+              "Baseline Agreement may lock benefits, scope, cost, and schedule.",
+              "Program Supplement covers allocated project funds."
+            ],
+            lifeNote: "Heavier than basic Agree.",
+            coordTitle: "Clear Paper",
+            coordSummary: "Drive the agreement stack and keep documents reconciled.",
+            coordActions: [
+              "Track Master, Baseline, and supplement status.",
+              "Reconcile PPR, Baseline, and finance amounts.",
+              "Get governing-body authority early."
+            ],
+            coordHandoff: "Pull in: signatory, project manager, DLAE, finance."
+          },
+          {
+            num: "05",
+            lifeTitle: "Authorize",
+            kind: "extra",
+            kindLabel: "Extra",
+            lifeSummary: "CTC allocation and phase authorization control reimbursable work. Federal-aid phases often need an E-76. Environmental clearance comes first.",
+            lifeBullets: [
+              "Allocation is requested when the phase is ready.",
+              "Authorization is requested by phase.",
+              "Reimbursable work does not start early."
+            ],
+            lifeNote: "Biggest extra gate versus EMPG-style grants.",
+            coordTitle: "Fund the Phase",
+            coordSummary: "Request money only when the phase is truly ready.",
+            coordActions: [
+              "Verify environmental and document readiness.",
+              "Send complete allocation and RFA packages to the DLAE.",
+              "Block charging until authorization arrives."
+            ],
+            coordHandoff: "Pull in: project manager, DLAE, finance."
+          },
+          {
+            num: "06",
+            lifeTitle: "Deliver Capital",
+            kind: "extra",
+            kindLabel: "Extra",
+            lifeSummary: "Design, right-of-way, utilities, advertise and award, then construction administration.",
+            lifeBullets: [
+              "PS&E is completed before advertise.",
+              "Right-of-way is certified before construction advertise.",
+              "Construction is administered under LAPM rules."
+            ],
+            lifeNote: "Most complex Deliver step in this set.",
+            coordTitle: "Watch Delivery",
+            coordSummary: "Protect deadlines and compliance while engineering delivers the capital work.",
+            coordActions: [
+              "Track PE, R/W, advertise, award, and construction milestones.",
+              "Watch timely-use-of-funds and inactivity risk.",
+              "Route amendments before scope drifts."
+            ],
+            coordHandoff: "Pull in: project manager, R/W staff, resident engineer, DLAE."
+          },
+          {
+            num: "07",
+            lifeTitle: "Invoice & Report",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "The agency invoices eligible costs and submits required progress reports.",
+            lifeBullets: [
+              "Invoices cover authorized eligible costs only.",
+              "Progress reports are submitted on time.",
+              "Award and expenditure deadlines are watched."
+            ],
+            lifeNote: "Same Draw & Report step.",
+            coordTitle: "Invoice & Chase",
+            coordSummary: "Keep invoicing and reporting current. Clear rejects fast.",
+            coordActions: [
+              "Drive a steady invoice cycle with finance and the PM.",
+              "Submit progress reports on schedule.",
+              "Escalate deadline risk to leadership and the DLAE."
+            ],
+            coordHandoff: "Pull in: finance, project manager, DLAE."
+          },
+          {
+            num: "08",
+            lifeTitle: "Close Out",
+            kind: "core",
+            kindLabel: "Core",
+            lifeSummary: "Final invoice, Final Report of Expenditures, and program completion reports close the project.",
+            lifeBullets: [
+              "Final inspection and reports are completed.",
+              "Final expenditure documents go to the DLAE.",
+              "Records are retained for audit."
+            ],
+            lifeNote: "Same Close step with Caltrans packet names.",
+            coordTitle: "Close Clean",
+            coordSummary: "Run closeout as a critical path and lock the file.",
+            coordActions: [
+              "Start closeout before construction acceptance.",
+              "Submit completion, final delivery, and expenditure documents as required.",
+              "Archive the grant record."
+            ],
+            coordHandoff: "Pull in: project manager, finance, DLAE."
+          }
+        ]
+      }
+    };
+
+    const stageNav = document.getElementById("stageNav");
+    const stack = document.getElementById("stack");
+    const stackTitle = document.getElementById("stackTitle");
+    const programNote = document.getElementById("programNote");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const programButtons = Array.from(document.querySelectorAll(".program-toggle button"));
+    const pair = document.getElementById("pair");
+
+    let program = "basic";
+    let current = 0;
+
+    function steps() {
+      return programs[program].steps;
+    }
+
+    function setAccent() {
+      const accent = programs[program].accent;
+      document.documentElement.style.setProperty("--accent", accent);
+    }
+
+    function render() {
+      const prog = programs[program];
+      const list = steps();
+      setAccent();
+      programNote.textContent = prog.note;
+      stackTitle.textContent = `All steps · ${prog.label}`;
+
+      stageNav.innerHTML = list.map((step, index) => `
+        <button type="button" data-index="${index}" aria-pressed="${index === current}">
+          ${step.num} ${step.lifeTitle}
+        </button>
+      `).join("");
+
+      stageNav.querySelectorAll("button").forEach((btn) => {
+        btn.addEventListener("click", () => selectStep(Number(btn.dataset.index), true));
+      });
+
+      stack.innerHTML = list.map((step, index) => `
+        <button class="stack-row" type="button" data-index="${index}" aria-current="${index === current}">
+          <div class="stack-top">
+            <strong>${step.num}. ${step.lifeTitle}</strong>
+            <span class="pill ${step.kind === "core" ? "" : step.kind}">${step.kindLabel}</span>
+          </div>
+          <div class="stack-grid">
+            <div class="stack-col">
+              <em>Program</em>
+              ${step.lifeSummary}
+            </div>
+            <div class="stack-col">
+              <em>Coordinator</em>
+              <strong style="display:block;margin-bottom:0.2rem;font-family:var(--font-display);letter-spacing:0.04em;text-transform:uppercase;">${step.coordTitle}</strong>
+              ${step.coordActions[0]}
+            </div>
+          </div>
+        </button>
+      `).join("");
+
+      stack.querySelectorAll(".stack-row").forEach((btn) => {
+        btn.addEventListener("click", () => selectStep(Number(btn.dataset.index), true));
+      });
+
+      selectStep(Math.min(current, list.length - 1), false);
+    }
+
+    function selectStep(index, scrollPair) {
+      const list = steps();
+      current = Math.max(0, Math.min(list.length - 1, index));
+      const step = list[current];
+
+      stageNav.querySelectorAll("button").forEach((btn, i) => {
+        btn.setAttribute("aria-pressed", i === current ? "true" : "false");
+      });
+      stack.querySelectorAll(".stack-row").forEach((btn, i) => {
+        btn.setAttribute("aria-current", i === current ? "true" : "false");
+      });
+
+      document.getElementById("lifeIndex").textContent = step.num;
+      document.getElementById("lifeTitle").textContent = step.lifeTitle;
+      document.getElementById("lifeSummary").textContent = step.lifeSummary;
+      document.getElementById("lifeBullets").innerHTML = step.lifeBullets.map((b) => `<li>${b}</li>`).join("");
+      document.getElementById("lifeNote").textContent = step.lifeNote;
+      const lifePill = document.getElementById("lifePill");
+      lifePill.textContent = step.kindLabel;
+      lifePill.className = `pill${step.kind === "core" ? "" : " " + step.kind}`;
+
+      document.getElementById("coordIndex").textContent = step.num;
+      document.getElementById("coordTitle").textContent = step.coordTitle;
+      document.getElementById("coordSummary").textContent = step.coordSummary;
+      document.getElementById("coordActions").innerHTML = step.coordActions.map((b) => `<li>${b}</li>`).join("");
+      document.getElementById("coordHandoff").textContent = step.coordHandoff;
+
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === list.length - 1;
+
+      if (scrollPair && window.matchMedia("(max-width: 899px)").matches) {
+        pair.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    programButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        program = btn.dataset.program;
+        programButtons.forEach((b) => b.setAttribute("aria-pressed", b === btn ? "true" : "false"));
+        current = 0;
+        render();
+      });
+    });
+
+    prevBtn.addEventListener("click", () => selectStep(current - 1, true));
+    nextBtn.addEventListener("click", () => selectStep(current + 1, true));
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") selectStep(current + 1, false);
+      if (e.key === "ArrowLeft") selectStep(current - 1, false);
+    });
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+    pair.addEventListener("touchstart", (e) => {
+      const t = e.changedTouches[0];
+      touchStartX = t.clientX;
+      touchStartY = t.clientY;
+    }, { passive: true });
+    pair.addEventListener("touchend", (e) => {
+      const t = e.changedTouches[0];
+      const dx = t.clientX - touchStartX;
+      const dy = t.clientY - touchStartY;
+      if (Math.abs(dx) < 56 || Math.abs(dx) < Math.abs(dy)) return;
+      if (dx < 0) selectStep(current + 1, false);
+      else selectStep(current - 1, false);
+    }, { passive: true });
+
+    render();
+  </script>
+</body>
+</html>
