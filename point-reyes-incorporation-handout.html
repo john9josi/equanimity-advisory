@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Point Reyes Incorporation Options · One-page handout</title>
+  <meta name="description" content="One-page handout of Point Reyes Station incorporation options for the Village Association.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1c241c;
+      --soft: #3a4338;
+      --fog: #5c6458;
+      --rule: #d4cbb6;
+      --paper: #f4efe4;
+      --gold: #b8862a;
+      --marsh: #3d6b4a;
+      --barn: #9e3d2a;
+      --bay: #2a4a56;
+      --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+      --font-serif: "Source Serif 4", Georgia, serif;
+      --font-sans: "IBM Plex Sans", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    @page {
+      size: letter portrait;
+      margin: 0.38in;
+    }
+
+    html, body { margin: 0; }
+    body {
+      color: var(--ink);
+      font-family: var(--font-sans);
+      background: #d8d0be;
+    }
+
+    a { color: var(--marsh); }
+
+    .screen-bar {
+      width: min(8.5in, calc(100% - 1.5rem));
+      margin: 0.85rem auto 0.65rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      align-items: center;
+    }
+    .screen-bar a, .screen-bar button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 0.35rem 0.7rem;
+      border: 1px solid #b7ae99;
+      background: #f4efe4;
+      color: var(--soft);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .screen-bar a[aria-current="page"],
+    .screen-bar button.primary {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #f4efe4;
+    }
+
+    .sheet {
+      width: 8.5in;
+      min-height: 11in;
+      margin: 0 auto 1.5rem;
+      padding: 0.42in 0.44in 0.36in;
+      background: #fffdf7;
+      color: var(--ink);
+      box-shadow: 0 18px 40px rgba(40, 32, 16, 0.16);
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1.4fr 0.9fr;
+      gap: 0.7rem;
+      padding-bottom: 0.45rem;
+      border-bottom: 2px solid var(--ink);
+      margin-bottom: 0.42rem;
+    }
+
+    .kicker {
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--barn);
+      margin: 0 0 0.12rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 2.15rem;
+      line-height: 0.88;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+    }
+    h1 span { color: var(--marsh); }
+
+    .lede {
+      margin: 0.35rem 0 0;
+      font-family: var(--font-serif);
+      font-size: 0.86rem;
+      line-height: 1.32;
+      color: var(--soft);
+    }
+
+    .facts {
+      display: grid;
+      gap: 0.28rem;
+      align-content: start;
+      font-size: 0.72rem;
+      line-height: 1.3;
+    }
+    .facts div {
+      border: 1px solid var(--rule);
+      padding: 0.28rem 0.38rem;
+      background: #f7f1e3;
+    }
+    .facts b {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fog);
+    }
+
+    h2 {
+      margin: 0 0 0.28rem;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .stack {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.28rem;
+      margin-bottom: 0.48rem;
+    }
+    .box {
+      border: 1px solid var(--rule);
+      padding: 0.32rem 0.38rem 0.36rem;
+      min-height: 3.15rem;
+    }
+    .box b {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 0.86rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.08rem;
+    }
+    .box p {
+      margin: 0;
+      font-size: 0.7rem;
+      line-height: 1.28;
+      color: var(--soft);
+    }
+    .box.coast { border-top: 3px solid var(--bay); }
+    .box.county { border-top: 3px solid var(--ink); }
+    .box.advise { border-top: 3px solid var(--gold); }
+    .box.district { border-top: 3px solid var(--marsh); }
+
+    .fork {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.32rem;
+      margin-bottom: 0.48rem;
+    }
+    .fork article {
+      border: 1px solid var(--rule);
+      padding: 0.32rem 0.4rem 0.38rem;
+    }
+    .fork .land { border-top: 3px solid var(--barn); }
+    .fork .service { border-top: 3px solid var(--marsh); }
+    .fork p {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: 0.74rem;
+      line-height: 1.3;
+    }
+    .fork .then {
+      margin-top: 0.22rem;
+      font-family: var(--font-sans);
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--soft);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.64rem;
+      line-height: 1.25;
+      margin-bottom: 0.42rem;
+    }
+    th, td {
+      border: 1px solid var(--rule);
+      padding: 0.22rem 0.26rem;
+      vertical-align: top;
+      text-align: left;
+    }
+    thead th {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: #efe7d4;
+    }
+    tbody th {
+      width: 5.4rem;
+      background: #f7f1e3;
+      font-family: var(--font-display);
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .yes { color: var(--marsh); font-weight: 700; }
+    .no { color: var(--barn); font-weight: 700; }
+    .mid { color: #8a6414; font-weight: 700; }
+
+    .filters {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 0.28rem;
+      margin-bottom: 0.4rem;
+    }
+    .filters article {
+      border: 1px solid var(--rule);
+      padding: 0.28rem 0.32rem;
+    }
+    .filters h3 {
+      margin: 0 0 0.12rem;
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .filters p {
+      margin: 0;
+      font-size: 0.66rem;
+      line-height: 1.28;
+      color: var(--soft);
+    }
+
+    .cityhood {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.28rem;
+      margin-bottom: 0.32rem;
+    }
+    .cityhood div {
+      border: 1px solid var(--rule);
+      padding: 0.26rem 0.32rem;
+      background: #f7f1e3;
+    }
+    .cityhood b {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .cityhood p {
+      margin: 0.08rem 0 0;
+      font-size: 0.66rem;
+      line-height: 1.25;
+      color: var(--soft);
+    }
+
+    footer {
+      border-top: 1px solid var(--rule);
+      padding-top: 0.22rem;
+      font-size: 0.6rem;
+      line-height: 1.3;
+      color: var(--fog);
+    }
+
+    @media screen and (max-width: 900px) {
+      body { background: #fffdf7; }
+      .sheet {
+        width: 100%;
+        min-height: 0;
+        margin: 0;
+        padding: 0.9rem 0.85rem 1.2rem;
+        box-shadow: none;
+      }
+      .screen-bar { width: calc(100% - 1.2rem); }
+      header, .stack, .fork, .filters, .cityhood { grid-template-columns: 1fr 1fr; }
+      .table-wrap { overflow-x: auto; }
+      table { min-width: 720px; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .screen-bar { display: none !important; }
+      .sheet {
+        width: auto;
+        min-height: 0;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="screen-bar">
+    <a href="grant-basic-shape.html">Grant Shapes</a>
+    <a href="caltrans-grant-glossary.html">Glossary</a>
+    <a href="ulysses-grant-pays.html">Grant Pays Ulysses</a>
+    <a href="point-reyes-incorporation.html">Incorporation</a>
+    <a href="point-reyes-incorporation-handout.html" aria-current="page">Handout</a>
+    <button type="button" class="primary" id="printBtn">Print one page</button>
+  </div>
+
+  <main class="sheet">
+    <header>
+      <div>
+        <p class="kicker">PRSVA meeting handout · one page</p>
+        <h1>Point Reyes <span>Incorporation Options</span></h1>
+        <p class="lede">Point Reyes Station is not a city. Marin County is the local government. PRSVA can stay a civic forum, ask the County for a firmer seat, form a special district, or try to become a city. Each option gives a different power. Each option also takes more time, money, and volunteer work.</p>
+      </div>
+      <div class="facts">
+        <div><b>Scale</b> 895 people (2020 CDP). About 570 voters. About 3.6 sq mi.</div>
+        <div><b>Plan</b> Community Plan, 1976 / 2001. The County uses it. It does not bind the Supervisors.</div>
+        <div><b>Neighbors</b> No West Marin city. Muir Beach and Tomales run CSDs.</div>
+      </div>
+    </header>
+
+    <h2>Today</h2>
+    <div class="stack">
+      <div class="box coast"><b>Coastal Comm.</b><p>Last word on many coastal permits. A city still needs a Local Coastal Program.</p></div>
+      <div class="box county"><b>Marin County</b><p>Planning, sheriff, fire, septic, roads. The Board of Supervisors is the village’s city council.</p></div>
+      <div class="box advise"><b>PRSVA</b><p>Volunteer forum. Reviews projects. Advises. Cannot vote no on a permit.</p></div>
+      <div class="box district"><b>Districts</b><p>NMWD: water. CSA 28: paramedics. Most lots use septic.</p></div>
+    </div>
+
+    <h2>First, name the problem</h2>
+    <div class="fork">
+      <article class="land">
+        <h2>Land use</h2>
+        <p>Tourism, design review, housing, downtown, dark skies, parking, the Community Plan.</p>
+        <p class="then">A CSD cannot take these powers. Only a city gets zoning. If cityhood is too heavy: update the Plan, or ask for a municipal advisory council.</p>
+      </article>
+      <article class="service">
+        <h2>Services</h2>
+        <p>Wastewater, visitor bathrooms, parks, local roads, streetlights, a community hall.</p>
+        <p class="then">A CSD or CSA can run these. That is the West Marin pattern. Tomales and Muir Beach still do not control zoning.</p>
+      </article>
+    </div>
+
+    <h2>Seven options · lightest to heaviest</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Question</th>
+            <th scope="col">Stay as-is</th>
+            <th scope="col">Nonprofit</th>
+            <th scope="col">MAC</th>
+            <th scope="col">CSA</th>
+            <th scope="col">CSD</th>
+            <th scope="col">City</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">What it is</th>
+            <td>County governs. PRSVA advises.</td>
+            <td>PRSVA becomes a legal corporation. Village stays unincorporated.</td>
+            <td>County-made advisory council. Formal seat. Not a government.</td>
+            <td>County-run district for one extra service.</td>
+            <td>Elected district. City without land-use power.</td>
+            <td>General-law city. Local council, zoning, budget.</td>
+          </tr>
+          <tr>
+            <th scope="row">Land use</th>
+            <td class="no">No</td>
+            <td class="no">No</td>
+            <td class="mid">Advice</td>
+            <td class="no">No</td>
+            <td class="no">No</td>
+            <td class="yes">Yes</td>
+          </tr>
+          <tr>
+            <th scope="row">Run services</th>
+            <td class="no">No</td>
+            <td class="no">No</td>
+            <td class="no">No</td>
+            <td class="yes">Yes</td>
+            <td class="yes">Yes</td>
+            <td class="yes">Yes</td>
+          </tr>
+          <tr>
+            <th scope="row">Own tax</th>
+            <td class="no">No</td>
+            <td>Dues / grants</td>
+            <td>County may fund it</td>
+            <td class="yes">Yes</td>
+            <td class="yes">Yes</td>
+            <td class="yes">Yes</td>
+          </tr>
+          <tr>
+            <th scope="row">Advantage</th>
+            <td>No new government. Keep county staff.</td>
+            <td>Bank account, insurance, grants. No LAFCO.</td>
+            <td>Louder County seat. Cheap. Reversible.</td>
+            <td>Uses County staff. Good for one service.</td>
+            <td>Local board. Fits West Marin. Can own assets.</td>
+            <td>Only path that moves zoning to the village.</td>
+          </tr>
+          <tr>
+            <th scope="row">Disadvantage</th>
+            <td>Cannot vote no on a permit.</td>
+            <td>Zero land-use power. People may think the town incorporated.</td>
+            <td>Still advice. Board can ignore it.</td>
+            <td>County still holds the vote. No zoning.</td>
+            <td>No zoning. Needs real revenue and a manager.</td>
+            <td>Fiscal test, revenue neutrality, city-hall cost. ~500-voter floor.</td>
+          </tr>
+          <tr>
+            <th scope="row">For PRSVA</th>
+            <td>Keep the Plan and design review sharp.</td>
+            <td>Only step PRSVA can do by itself.</td>
+            <td>Become the MAC, or sit beside it.</td>
+            <td>Name one service and a map.</td>
+            <td>Sponsor a study. Do not become the board.</td>
+            <td>First product is a paid fiscal analysis, not a petition.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>If the Association cares most about&hellip;</h2>
+    <div class="filters">
+      <article>
+        <h3>Village character</h3>
+        <p>Update the Community Plan. Ask for a MAC. Price cityhood only after a fiscal study. A CSD will not become planning.</p>
+      </article>
+      <article>
+        <h3>Wastewater or a hall</h3>
+        <p>Study a CSD or CSA. Tomales is the closest model. Water already has NMWD.</p>
+      </article>
+      <article>
+        <h3>A louder County voice</h3>
+        <p>Ask the Supervisors for a municipal advisory council. Write the map and duties in the ask.</p>
+      </article>
+      <article>
+        <h3>Grants and insurance</h3>
+        <p>Incorporate PRSVA as a nonprofit. (c)(3) for education. (c)(4) for more lobbying. Permits do not change.</p>
+      </article>
+    </div>
+
+    <h2>Cityhood, if you go that far</h2>
+    <div class="cityhood">
+      <div><b>01 Map</b><p>Need 500 registered voters inside the line. Tight map may fail. Wide map hits ranchland.</p></div>
+      <div><b>02 Petition</b><p>About 25% of voters in the proposed city, or an agency resolution. File notice first.</p></div>
+      <div><b>03 Money test</b><p>LAFCO needs three years of revenues, services, and a reserve. Plus revenue neutrality with the County.</p></div>
+      <div><b>04 What stays</b><p>Coastal Commission, NMWD, County Fire, Highway 1, the Seashore. Police is likely a sheriff contract.</p></div>
+    </div>
+
+    <footer>
+      Briefing for the Point Reyes Station Village Association. Not a petition, fiscal analysis, or legal opinion.
+      Charter city is a later layer on a general-law city, not a first step.
+      Sources: PRSVA Community Plan; 2020 Census CDP; Gov. Code §§ 31010, 56043, 56720–56815, 61000–61100; Marin LAFCO West Marin MSR.
+      Full briefing: point-reyes-incorporation.html
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById("printBtn").addEventListener("click", function () {
+      window.print();
+    });
+  </script>
+</body>
+</html>

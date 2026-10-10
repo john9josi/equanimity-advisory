@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f3eee2">
+  <meta name="format-detection" content="telephone=no">
+  <title>Point Reyes Incorporation Options · PRSVA Briefing</title>
+  <meta name="description" content="Diagram briefing of Point Reyes Station governance options, with advantages and disadvantages for the Village Association.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f3eee2;
+      --paper-2: #ebe4d4;
+      --ink: #1c241c;
+      --ink-soft: #3a4338;
+      --fog: #5c6458;
+      --rule: rgba(28, 36, 28, 0.12);
+      --gold: #b8862a;
+      --gold-soft: #efe1b8;
+      --marsh: #3d6b4a;
+      --marsh-soft: #d7e6d6;
+      --barn: #9e3d2a;
+      --barn-soft: #f3d4cc;
+      --bay: #2a4a56;
+      --bay-soft: #d5e3e8;
+      --panel: #fffdf7;
+      --shadow: 0 16px 40px rgba(40, 32, 16, 0.08);
+      --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+      --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+      --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+      --tap: 44px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      color: var(--ink);
+      font-family: var(--font-sans);
+      background:
+        radial-gradient(900px 420px at 8% -8%, rgba(184, 134, 42, 0.14), transparent 55%),
+        radial-gradient(700px 380px at 100% 0%, rgba(61, 107, 74, 0.12), transparent 50%),
+        linear-gradient(180deg, #f7f2e6 0%, var(--paper) 40%, #e8e1d0 100%);
+      overflow-x: hidden;
+    }
+
+    a { color: var(--marsh); }
+    button { -webkit-appearance: none; appearance: none; font: inherit; color: inherit; }
+
+    .wrap {
+      width: min(1080px, 100%);
+      margin: 0 auto;
+      padding:
+        calc(1rem + var(--safe-top))
+        calc(1rem + var(--safe-right))
+        calc(2.75rem + var(--safe-bottom))
+        calc(1rem + var(--safe-left));
+    }
+
+    .topnav { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 1.4rem; }
+    .topnav a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 0.4rem 0.7rem;
+      border: 1px solid var(--rule);
+      color: var(--ink-soft);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      background: rgba(255, 253, 247, 0.7);
+    }
+    .topnav a[aria-current="page"] {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--paper);
+    }
+
+    header.hero {
+      display: grid;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      color: var(--barn);
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .kicker::before {
+      content: "";
+      width: 1.75rem;
+      height: 3px;
+      background: linear-gradient(90deg, var(--barn), transparent);
+    }
+
+    h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(2.5rem, 10vw, 5rem);
+      line-height: 0.9;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      max-width: 16ch;
+    }
+    h1 span { color: var(--marsh); }
+
+    .lede, .prose {
+      margin: 0;
+      max-width: 64ch;
+      font-family: var(--font-serif);
+      font-size: 1.08rem;
+      line-height: 1.5;
+      color: var(--ink-soft);
+    }
+    .lede p, .prose p { margin: 0 0 0.65rem; }
+    .lede p:last-child, .prose p:last-child { margin-bottom: 0; }
+
+    .note { margin: 0; color: var(--fog); font-size: 0.88rem; line-height: 1.45; max-width: 70ch; }
+
+    h2 {
+      margin: 0 0 0.65rem;
+      font-family: var(--font-display);
+      font-size: clamp(1.55rem, 4vw, 2.15rem);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    h3 {
+      margin: 0 0 0.4rem;
+      font-family: var(--font-display);
+      font-size: 1.28rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    section { margin: 0 0 2rem; }
+
+    .diagram {
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      box-shadow: var(--shadow);
+      padding: 1rem 1rem 1.1rem;
+    }
+    .diagram-label {
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fog);
+      margin-bottom: 0.75rem;
+    }
+
+    .stack {
+      display: grid;
+      gap: 0.4rem;
+    }
+    .stack-row {
+      display: grid;
+      grid-template-columns: 7.5rem 1fr;
+      gap: 0.5rem;
+      align-items: stretch;
+    }
+    .stack-who, .stack-does {
+      border: 1px solid var(--rule);
+      padding: 0.55rem 0.7rem;
+      min-height: 3rem;
+    }
+    .stack-who {
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+    }
+    .stack-does {
+      background: #f8f3e8;
+      font-size: 0.92rem;
+      line-height: 1.35;
+    }
+    .stack-row.advise .stack-who { background: var(--gold); color: #2a210c; }
+    .stack-row.district .stack-who { background: var(--marsh); }
+    .stack-row.coast .stack-who { background: var(--bay); }
+
+    .arrow-down {
+      width: 1.25rem;
+      height: 0.85rem;
+      margin: 0.15rem 0 0.15rem 3.1rem;
+      background:
+        linear-gradient(var(--ink), var(--ink)) 50% 0 / 2px 100% no-repeat;
+      position: relative;
+    }
+    .arrow-down::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid var(--ink);
+      transform: translateX(-50%);
+    }
+
+    .fork {
+      display: grid;
+      gap: 0.7rem;
+    }
+    .fork-flow {
+      display: grid;
+      justify-items: center;
+      gap: 0.45rem;
+      margin-bottom: 0.85rem;
+    }
+    .node {
+      min-height: 2.6rem;
+      padding: 0.45rem 0.8rem;
+      border: 1px solid var(--rule);
+      background: var(--gold-soft);
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .branch {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.7rem;
+      width: 100%;
+    }
+    .branch-card {
+      border: 1px solid var(--rule);
+      padding: 0.9rem 0.95rem;
+      background: var(--panel);
+    }
+    .branch-card.land { border-top: 4px solid var(--barn); }
+    .branch-card.service { border-top: 4px solid var(--marsh); }
+    .branch-card p, .filter p, .process p, .option-copy p {
+      margin: 0 0 0.55rem;
+      font-family: var(--font-serif);
+      font-size: 1.02rem;
+      line-height: 1.45;
+    }
+    .branch-card p:last-child, .option-copy p:last-child { margin-bottom: 0; }
+    .then {
+      margin-top: 0.55rem;
+      padding: 0.45rem 0.55rem;
+      background: #f7f0dc;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .option-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin: 0 0 0.85rem;
+    }
+    .option-nav button {
+      min-height: var(--tap);
+      padding: 0.4rem 0.7rem;
+      border: 1px solid var(--rule);
+      background: var(--panel);
+      cursor: pointer;
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+    .option-nav button[aria-pressed="true"] {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--paper);
+    }
+
+    .ladder {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 0.35rem;
+      margin: 0 0 1rem;
+    }
+    .rung {
+      min-height: 4.5rem;
+      padding: 0.45rem 0.4rem;
+      border: 1px solid var(--rule);
+      background: var(--panel);
+      text-align: left;
+      cursor: pointer;
+    }
+    .rung strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+    .rung span { display: block; margin-top: 0.2rem; font-size: 0.7rem; color: var(--fog); }
+    .rung[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+    .rung[aria-pressed="true"] span { color: #d8d2c2; }
+
+    .detail {
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      box-shadow: var(--shadow);
+      padding: 1.1rem 1.05rem 1.2rem;
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .machine {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.45rem;
+    }
+    .cell {
+      border: 1px solid var(--rule);
+      padding: 0.55rem 0.6rem;
+      background: #f8f3e8;
+      min-height: 5.2rem;
+    }
+    .cell dt {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fog);
+      margin-bottom: 0.25rem;
+    }
+    .cell dd {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: 0.98rem;
+      line-height: 1.3;
+    }
+
+    .powers {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.4rem;
+    }
+    .power {
+      border: 1px solid var(--rule);
+      padding: 0.45rem 0.5rem;
+      text-align: center;
+      background: var(--paper-2);
+    }
+    .power b {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .power span { font-size: 0.75rem; font-weight: 700; }
+    .power.yes { background: var(--marsh-soft); }
+    .power.no { background: var(--barn-soft); }
+    .power.mid { background: var(--gold-soft); }
+
+    .split { display: grid; gap: 0.7rem; }
+    .col { padding: 0.8rem 0.85rem; border: 1px solid var(--rule); }
+    .col.pro { background: var(--marsh-soft); }
+    .col.con { background: var(--barn-soft); }
+    .col h3 { font-size: 1.08rem; }
+    .col.pro h3 { color: var(--marsh); }
+    .col.con h3 { color: var(--barn); }
+    .col ul, .prsva ul, .filter ul, .sources ul, .then-list {
+      margin: 0;
+      padding-left: 1.1rem;
+      font-family: var(--font-serif);
+      font-size: 0.98rem;
+      line-height: 1.4;
+    }
+    .col li + li, .prsva li + li { margin-top: 0.32rem; }
+
+    .prsva {
+      padding: 0.8rem 0.85rem;
+      background: #f7f0dc;
+      border: 1px solid rgba(184, 134, 42, 0.28);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--rule);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 760px; font-size: 0.88rem; }
+    caption {
+      text-align: left;
+      padding: 0.8rem 0.9rem 0.35rem;
+      font-family: var(--font-serif);
+      color: var(--fog);
+    }
+    th, td {
+      padding: 0.55rem 0.65rem;
+      border-top: 1px solid var(--rule);
+      text-align: left;
+      vertical-align: top;
+    }
+    thead th {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: var(--paper-2);
+    }
+    tbody th { width: 10.5rem; background: #f8f3e8; }
+    td .mark {
+      display: inline-block;
+      min-width: 1.6rem;
+      font-weight: 700;
+    }
+    .mark-yes { color: var(--marsh); }
+    .mark-no { color: var(--barn); }
+    .mark-mid { color: #8a6414; }
+
+    .filters, .steps { display: grid; gap: 0.7rem; }
+    .filter, .step, .process {
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      padding: 0.95rem 1rem;
+      box-shadow: var(--shadow);
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 3rem 1fr;
+      gap: 0.7rem;
+      align-items: start;
+    }
+    .step-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 0.9;
+      color: var(--marsh);
+    }
+
+    .sources { color: var(--fog); font-size: 0.9rem; }
+    .sources a { color: var(--bay); }
+
+    footer.page-foot {
+      margin-top: 1.4rem;
+      padding-top: 0.9rem;
+      border-top: 1px solid var(--rule);
+      color: var(--fog);
+      font-size: 0.82rem;
+    }
+
+    @media (min-width: 760px) {
+      .fork { grid-template-columns: 1fr; }
+      .split { grid-template-columns: 1fr 1fr; }
+      .filters { grid-template-columns: 1fr 1fr; }
+      .now { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 0.85rem; align-items: start; }
+    }
+    @media (max-width: 859px) {
+      .ladder { display: none; }
+      .machine, .powers { grid-template-columns: 1fr 1fr; }
+      .stack-row { grid-template-columns: 1fr; }
+      .arrow-down { margin-left: 0.6rem; }
+    }
+    @media (min-width: 860px) { .option-nav { display: none; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    @media print {
+      body { background: #fff; }
+      .topnav, .option-nav, .ladder { display: none !important; }
+      .diagram, .detail, .filter, .step { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="topnav" aria-label="Civic briefing pages">
+      <a href="grant-basic-shape.html">Grant Shapes</a>
+      <a href="caltrans-grant-glossary.html">Glossary</a>
+      <a href="ulysses-grant-pays.html">Grant Pays Ulysses</a>
+      <a href="point-reyes-incorporation.html" aria-current="page">Incorporation</a>
+      <a href="point-reyes-incorporation-handout.html">Handout</a>
+    </nav>
+
+    <header class="hero">
+      <div class="kicker">PRSVA briefing · West Marin</div>
+      <h1>Point Reyes <span>Incorporation Options</span></h1>
+      <div class="lede">
+        <p>Point Reyes Station is not a city. It is an unincorporated village. Marin County is the local government.</p>
+        <p>The Village Association can stay a civic forum. It can also ask the County for a firmer seat, form a special district, or try to become a city.</p>
+        <p>Each option gives a different power. Each option also takes more time, money, and volunteer work.</p>
+      </div>
+      <p class="note">This is a briefing for PRSVA. It is not legal advice and not a recommendation. Marin LAFCO, the Board of Supervisors, the Coastal Commission, and local voters decide any formal change. Print the <a href="point-reyes-incorporation-handout.html">one-page handout</a> for a meeting.</p>
+    </header>
+
+    <section class="now" aria-labelledby="now-heading">
+      <div>
+        <h2 id="now-heading">How it works now</h2>
+        <p class="note" style="margin-bottom:0.7rem;">Read the stack from the top. The County makes the decisions. PRSVA writes comments. Districts run some services.</p>
+        <div class="diagram">
+          <div class="diagram-label">Today’s government stack</div>
+          <div class="stack">
+            <div class="stack-row coast">
+              <div class="stack-who">Coastal Comm.</div>
+              <div class="stack-does">Last word on many coastal permits. A city would still need a Local Coastal Program.</div>
+            </div>
+            <div class="arrow-down" aria-hidden="true"></div>
+            <div class="stack-row">
+              <div class="stack-who">Marin County</div>
+              <div class="stack-does">Planning, sheriff, fire, septic, roads. Board of Supervisors is the city council for the village.</div>
+            </div>
+            <div class="arrow-down" aria-hidden="true"></div>
+            <div class="stack-row advise">
+              <div class="stack-who">PRSVA</div>
+              <div class="stack-does">Volunteer forum. Reviews projects against the Community Plan. Advises the County. Cannot vote no on a permit.</div>
+            </div>
+            <div class="arrow-down" aria-hidden="true"></div>
+            <div class="stack-row district">
+              <div class="stack-who">Districts</div>
+              <div class="stack-does">NMWD: West Marin water. CSA 28: paramedics. Most lots use septic. No West Marin city.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="diagram">
+        <div class="diagram-label">Village facts</div>
+        <div class="stack">
+          <div class="stack-row">
+            <div class="stack-who">People</div>
+            <div class="stack-does">895 residents in the 2020 CDP. About 570 registered voters. About 3.6 square miles.</div>
+          </div>
+          <div class="stack-row">
+            <div class="stack-who">Plan</div>
+            <div class="stack-does">Community Plan, 1976 / 2001. The County uses it. It is not a city charter and does not bind the Supervisors.</div>
+          </div>
+          <div class="stack-row">
+            <div class="stack-who">Neighbors</div>
+            <div class="stack-does">Muir Beach and Tomales: CSDs. Bolinas and Inverness: utility districts. No incorporated town in West Marin.</div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section aria-labelledby="fork-heading">
+      <h2 id="fork-heading">First, name the problem</h2>
+      <div class="diagram">
+        <div class="diagram-label">Two different problems. Two different tools.</div>
+        <div class="fork-flow">
+          <div class="node">What is the village trying to fix?</div>
+          <div class="arrow-down" aria-hidden="true"></div>
+        </div>
+        <div class="branch">
+          <article class="branch-card land">
+            <h3>Land use</h3>
+            <p>Tourism, design review, housing, the historic downtown, dark skies, parking, and the Community Plan.</p>
+            <p>A CSD cannot take these powers. Only a city gets zoning. The Coastal Act still applies after that.</p>
+            <div class="then">If cityhood is too heavy: update the Community Plan, or ask the County for a municipal advisory council.</div>
+          </article>
+          <article class="branch-card service">
+            <h3>Services</h3>
+            <p>Wastewater, visitor bathrooms, parks, local roads, streetlights, or a community hall.</p>
+            <p>A special district can run these. California law treats a CSD as an alternative to a new city, or as a step toward one.</p>
+            <div class="then">West Marin pattern: Tomales and Muir Beach formed CSDs. They still do not control zoning.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="options-heading">
+      <h2 id="options-heading">Seven options</h2>
+      <p class="note" style="margin-bottom:0.75rem;">Select a path. The ladder runs from lightest civic change to heaviest government.</p>
+
+      <div class="option-nav" role="group" aria-label="Choose an incorporation option">
+        <button type="button" data-option="status" aria-pressed="true">Stay as-is</button>
+        <button type="button" data-option="nonprofit">PRSVA nonprofit</button>
+        <button type="button" data-option="mac">Advisory council</button>
+        <button type="button" data-option="csa">County service area</button>
+        <button type="button" data-option="csd">CSD</button>
+        <button type="button" data-option="city">General-law city</button>
+        <button type="button" data-option="charter">Charter city</button>
+      </div>
+
+      <div class="ladder" role="group" aria-label="Power ladder of incorporation options">
+        <button type="button" class="rung" data-option="status" aria-pressed="true"><strong>Stay as-is</strong><span>Lightest</span></button>
+        <button type="button" class="rung" data-option="nonprofit" aria-pressed="false"><strong>Nonprofit</strong><span>PRSVA only</span></button>
+        <button type="button" class="rung" data-option="mac" aria-pressed="false"><strong>MAC</strong><span>County seat</span></button>
+        <button type="button" class="rung" data-option="csa" aria-pressed="false"><strong>CSA</strong><span>County board</span></button>
+        <button type="button" class="rung" data-option="csd" aria-pressed="false"><strong>CSD</strong><span>Elected board</span></button>
+        <button type="button" class="rung" data-option="city" aria-pressed="false"><strong>City</strong><span>Land use</span></button>
+        <button type="button" class="rung" data-option="charter" aria-pressed="false"><strong>Charter</strong><span>Heaviest</span></button>
+      </div>
+
+      <article class="detail" id="optionDetail" aria-live="polite">
+        <div class="option-copy" id="optionCopy"></div>
+        <dl class="machine" id="optionMachine"></dl>
+        <div class="powers" id="optionPowers" role="group" aria-label="Powers for this option"></div>
+        <div class="split">
+          <div class="col pro">
+            <h3>Advantages</h3>
+            <ul id="optionPros"></ul>
+          </div>
+          <div class="col con">
+            <h3>Disadvantages</h3>
+            <ul id="optionCons"></ul>
+          </div>
+        </div>
+        <div class="prsva">
+          <h3>For PRSVA</h3>
+          <ul id="optionPrsva"></ul>
+        </div>
+      </article>
+    </section>
+
+    <section aria-labelledby="compare-heading">
+      <h2 id="compare-heading">Side-by-side</h2>
+      <div class="table-wrap">
+        <table>
+          <caption>Yes / no / mid. Land use is the power PRSVA spends the most time on today. Charter city matches general-law city on this table.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Question</th>
+              <th scope="col">Stay as-is</th>
+              <th scope="col">Nonprofit</th>
+              <th scope="col">MAC</th>
+              <th scope="col">CSA</th>
+              <th scope="col">CSD</th>
+              <th scope="col">City</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Who governs</th>
+              <td>County. PRSVA advises.</td>
+              <td>County. PRSVA is a corporation.</td>
+              <td>County, plus a named local council.</td>
+              <td>Supervisors sit as the CSA board.</td>
+              <td>Five-member elected district board.</td>
+              <td>Elected city council.</td>
+            </tr>
+            <tr>
+              <th scope="row">Land-use power</th>
+              <td><span class="mark mark-no">No</span></td>
+              <td><span class="mark mark-no">No</span></td>
+              <td><span class="mark mark-mid">Advice</span></td>
+              <td><span class="mark mark-no">No</span></td>
+              <td><span class="mark mark-no">No</span></td>
+              <td><span class="mark mark-yes">Yes</span> Coastal Act still applies.</td>
+            </tr>
+            <tr>
+              <th scope="row">Can run water, sewer, parks, roads</th>
+              <td><span class="mark mark-no">No</span></td>
+              <td><span class="mark mark-no">No</span></td>
+              <td><span class="mark mark-no">No</span></td>
+              <td><span class="mark mark-yes">Yes</span> if activated</td>
+              <td><span class="mark mark-yes">Yes</span> if LAFCO activates it</td>
+              <td><span class="mark mark-yes">Yes</span> or contract them out</td>
+            </tr>
+            <tr>
+              <th scope="row">Own tax or assessment</th>
+              <td><span class="mark mark-no">No</span></td>
+              <td>Dues, gifts, grants</td>
+              <td>County may pay for it</td>
+              <td><span class="mark mark-yes">Yes</span> for the service</td>
+              <td><span class="mark mark-yes">Yes</span> with voter rules</td>
+              <td><span class="mark mark-yes">Yes</span> plus city taxes</td>
+            </tr>
+            <tr>
+              <th scope="row">Public agency / Brown Act</th>
+              <td><span class="mark mark-no">No</span></td>
+              <td><span class="mark mark-no">No</span></td>
+              <td><span class="mark mark-yes">Yes</span></td>
+              <td><span class="mark mark-yes">Yes</span></td>
+              <td><span class="mark mark-yes">Yes</span></td>
+              <td><span class="mark mark-yes">Yes</span></td>
+            </tr>
+            <tr>
+              <th scope="row">First hurdle</th>
+              <td>Keep showing up</td>
+              <td>Articles, bylaws, IRS</td>
+              <td>Supervisors resolution</td>
+              <td>LAFCO + County</td>
+              <td>25% voter petition + LAFCO</td>
+              <td>500 voters, fiscal study, election</td>
+            </tr>
+            <tr>
+              <th scope="row">Hard to undo</th>
+              <td>n/a</td>
+              <td>Easy</td>
+              <td>County can undo it</td>
+              <td>Harder</td>
+              <td>Hard. Needs LAFCO.</td>
+              <td>Hardest. Disincorporation.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="filter-heading">
+      <h2 id="filter-heading">If PRSVA cares most about&hellip;</h2>
+      <div class="filters">
+        <article class="filter">
+          <h3>Village character and the Community Plan</h3>
+          <p>Do not expect a CSD to become the planning department. Update the Community Plan. Keep design review sharp. Ask the County if a municipal advisory council would give a harder seat. Cityhood is the only structural upgrade for zoning. Price that with a fiscal study first.</p>
+        </article>
+        <article class="filter">
+          <h3>Wastewater, bathrooms, or a village hall</h3>
+          <p>Study a CSD or a county service area for a short list of services. Tomales CSD is the closest local model for sewer and community facilities. Water already has a district: North Marin.</p>
+        </article>
+        <article class="filter">
+          <h3>A louder voice in San Rafael, without a new government</h3>
+          <p>A municipal advisory council is the tool for this. The Supervisors make it, name its duties, and can fund it. PRSVA must decide if it becomes that council or sits beside it.</p>
+        </article>
+        <article class="filter">
+          <h3>Grants, insurance, and a way to hire help</h3>
+          <p>Incorporate PRSVA as a California nonprofit. A 501(c)(3) fits education and grants. A 501(c)(4) fits more direct lobbying. Neither one changes who issues permits.</p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="process-heading">
+      <h2 id="process-heading">What cityhood requires</h2>
+      <ol class="steps">
+        <li class="step">
+          <div class="step-num">01</div>
+          <div>
+            <h3>Draw a map</h3>
+            <p>The area must have at least 500 registered voters. Point Reyes Station is near that line. A tight village map may fail the count. A wide map through ranchland is a harder political fight.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">02</div>
+          <div>
+            <h3>File a petition or a resolution</h3>
+            <p>A voter petition needs about 25 percent of registered voters in the proposed city. An affected agency can also adopt a resolution. File a notice of intent before you collect signatures.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">03</div>
+          <div>
+            <h3>Pay for a fiscal analysis</h3>
+            <p>Marin LAFCO must find that the city can pay for services and a reserve for three years. This study is the real gate. Plan for years of work and a six-figure cost before anyone is mayor.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">04</div>
+          <div>
+            <h3>Make the County roughly whole</h3>
+            <p>Revenue neutrality means the County should not lose the tax base and keep the service costs. The new city often pays for that gap. Sales tax and hotel tax do not all stay in the village by default.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">05</div>
+          <div>
+            <h3>Win LAFCO, then win an election</h3>
+            <p>CEQA review and a sphere-of-influence finding come with the case. Voters in the area then vote on incorporation. New California cities almost always start as general-law cities.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">06</div>
+          <div>
+            <h3>Keep the agencies that already work</h3>
+            <p>Incorporation does not take the National Seashore, cancel Coastal Commission review, or move water off NMWD. Police would likely be a sheriff contract. Fire would likely stay County Fire.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="sources" aria-labelledby="sources-heading">
+      <h2 id="sources-heading">Sources and limits</h2>
+      <ul>
+        <li>PRSVA history, bylaws, and Community Plan: <a href="https://www.pointreyesstation.org/">pointreyesstation.org</a></li>
+        <li>2020 Census CDP: 895 people, 3.615 square miles</li>
+        <li>Voter count is an order of magnitude from public voter files (~570). Use the Registrar for petition math.</li>
+        <li>City incorporation: Gov. Code §§ 56043, 56720–56724, 56800, 56815</li>
+        <li>Community services districts: Gov. Code §§ 61000–61250, especially 61011–61012 and 61100</li>
+        <li>Municipal advisory councils: Gov. Code § 31010</li>
+        <li>West Marin services: Marin LAFCO West Marin MSR, NMWD West Marin water, CSA 28</li>
+      </ul>
+    </section>
+
+    <footer class="page-foot">
+      Briefing for the Point Reyes Station Village Association. Not a petition, fiscal analysis, or legal opinion.
+    </footer>
+  </div>
+
+  <script>
+    const OPTIONS = {
+      status: {
+        copy: "<h3>Stay unincorporated</h3><p>Keep Marin County as city hall. Keep PRSVA as the village forum. This is how every West Marin village works today.</p><p>No LAFCO case. No new tax. No elected local legislature. The County still does planning, sheriff, fire, and roads.</p>",
+        machine: [
+          ["Governs", "County Board of Supervisors"],
+          ["PRSVA does", "Advise, review, convene"],
+          ["Money", "No village tax. County budget."],
+          ["First step", "Keep the Community Plan current"]
+        ],
+        powers: [
+          ["Land use", "No", "no"],
+          ["Run services", "No", "no"],
+          ["Tax", "No", "no"],
+          ["Elected local board", "No", "no"]
+        ],
+        pros: [
+          "No new government, payroll, or Brown Act load on a small volunteer bench.",
+          "Residents keep county-scale staff behind fire, sheriff, and planning.",
+          "PRSVA stays the local voice. It does not compete with a new council.",
+          "Easy to change course later if the village wants a CSD or a city study."
+        ],
+        cons: [
+          "PRSVA can advise and organize. It cannot vote no on a permit.",
+          "County priorities stay countywide. West Marin is one district among five.",
+          "Tourism, housing, and septic work can outrun a volunteer meeting cycle.",
+          "Many grants need a public agency as the applicant. PRSVA is not one."
+        ],
+        prsva: [
+          "This is the present job: inform the village, review projects, and answer the County.",
+          "Capacity is the scarce resource. Talk that is not tied to a specific power will burn it.",
+          "If this stays the choice, put the work on the Community Plan, design review, and a short list of County asks."
+        ]
+      },
+      nonprofit: {
+        copy: "<h3>Incorporate PRSVA as a nonprofit</h3><p>This incorporates the Association, not the village. File as a California nonprofit. Then choose a federal lane: 501(c)(3) for education and grants, or 501(c)(4) for more direct advocacy.</p><p>The village stays unincorporated. The County still issues permits.</p>",
+        machine: [
+          ["Governs", "Still the County"],
+          ["PRSVA does", "Same civic work, with a legal shell"],
+          ["Money", "Dues, gifts, grants. No tax."],
+          ["First step", "Purpose, bylaws, counsel, IRS"]
+        ],
+        powers: [
+          ["Land use", "No", "no"],
+          ["Run services", "No", "no"],
+          ["Tax", "No", "no"],
+          ["Elected local board", "No", "no"]
+        ],
+        pros: [
+          "Gives PRSVA a durable legal person: bank account, insurance, contracts, and succession.",
+          "A 501(c)(3) is a cleaner applicant for planning research and public-education grants.",
+          "Does not start a LAFCO case or a fight over boundaries.",
+          "Leaves every later public option open."
+        ],
+        cons: [
+          "Zero land-use power. The County can still approve what PRSVA opposes.",
+          "Paperwork and a board that must govern a corporation, not only a meeting.",
+          "A 501(c)(3) must watch the lobbying line. A 501(c)(4) is weaker for some grants.",
+          "People may think “we incorporated” means the town did. It does not."
+        ],
+        prsva: [
+          "This is the only option PRSVA can carry by itself, with a lawyer and the membership.",
+          "Decide the purpose first. A political forum may fit a (c)(4) better than a charity.",
+          "Do not let nonprofit paperwork replace the Community Plan fight."
+        ]
+      },
+      mac: {
+        copy: "<h3>Municipal advisory council</h3><p>The Board of Supervisors can make a municipal advisory council for an unincorporated area and fund it. The resolution sets the name, map, duties, and how members are chosen.</p><p>It is a formal seat, not a government. It cannot zone, tax, or run a sewer plant.</p>",
+        machine: [
+          ["Governs", "County, with a named local council"],
+          ["PRSVA does", "Become the MAC, or sit beside it"],
+          ["Money", "County may fund operations"],
+          ["First step", "Draft a Supervisors resolution"]
+        ],
+        powers: [
+          ["Land use", "Advice", "mid"],
+          ["Run services", "No", "no"],
+          ["Tax", "No", "no"],
+          ["Elected local board", "Maybe", "mid"]
+        ],
+        pros: [
+          "Puts the village on the County org chart, not only in a stack of comment letters.",
+          "The Board can pay operating costs. Volunteers stop floating the whole civic load.",
+          "Duties can be written around planning, public works, and the Community Plan.",
+          "Faster and cheaper than a district or a city. The County can unwind it."
+        ],
+        cons: [
+          "Still advice. The Supervisors can thank the council and vote the other way.",
+          "It exists only as long as the Board wants it.",
+          "A new official body can sideline PRSVA if the two are not designed together.",
+          "Does not unlock grant programs that need a municipal applicant."
+        ],
+        prsva: [
+          "Decide whether PRSVA becomes the MAC, nominates its members, or stays independent beside it.",
+          "Write the ask as a draft resolution: map, duties, Community Plan review, and a staff liaison.",
+          "This is the strongest “more voice, not more government” option on the list."
+        ]
+      },
+      csa: {
+        copy: "<h3>County service area</h3><p>A CSA is a county-governed district that pays for extra services in a mapped area. West Marin already has CSA 28 for paramedics. The Board of Supervisors is the board.</p><p>Use this when the village wants a service and a revenue source, but does not want to stand up an independent elected district.</p>",
+        machine: [
+          ["Governs", "Supervisors, as the CSA board"],
+          ["PRSVA does", "Define the service, then watch it"],
+          ["Money", "Assessment or special tax for that service"],
+          ["First step", "Name one service and a map"]
+        ],
+        powers: [
+          ["Land use", "No", "no"],
+          ["Run services", "Yes", "yes"],
+          ["Tax", "Yes", "yes"],
+          ["Elected local board", "No", "no"]
+        ],
+        pros: [
+          "Uses County staff, purchasing, and insurance. You do not hire a general manager from scratch.",
+          "Can attach a benefit assessment or special tax to one service.",
+          "Familiar locally, because CSA 28 already exists.",
+          "Less civic overhead than a CSD or a city."
+        ],
+        cons: [
+          "No independent local board. The County still holds the vote.",
+          "No land-use authority.",
+          "Residents may pay more and still feel they do not run the service.",
+          "LAFCO still has to approve formation or a new activation."
+        ],
+        prsva: [
+          "PRSVA would define the service and the map, then stay the public watchdog.",
+          "Only pursue a CSA if there is one concrete service and a way to pay for it.",
+          "Compare this with a CSD before you file. The choice is local control versus County capacity."
+        ]
+      },
+      csd: {
+        copy: "<h3>Community services district</h3><p>A CSD is an independent local government with an elected board. The Legislature wrote it as a city without land-use power, and as a possible step toward cityhood.</p><p>Muir Beach and Tomales already run CSDs at this scale. Formation needs a published notice, then a petition signed by at least 25 percent of registered voters in the proposed district, or a resolution from an affected agency. Marin LAFCO decides the boundary, the powers, and the money.</p>",
+        machine: [
+          ["Governs", "Five-member elected district board"],
+          ["PRSVA does", "Sponsor a study. Stay the civic forum."],
+          ["Money", "Fees, assessments, or taxes voters approve"],
+          ["First step", "Name 1–3 services and a funding method"]
+        ],
+        powers: [
+          ["Land use", "No", "no"],
+          ["Run services", "Yes", "yes"],
+          ["Tax", "Yes", "yes"],
+          ["Elected local board", "Yes", "yes"]
+        ],
+        pros: [
+          "Local elected board, local budget, and a public agency that can own assets and apply for grants.",
+          "Fits the West Marin toolkit. Neighbors already run CSDs with a few hundred people.",
+          "Can be scoped to one or two problems, such as community wastewater or a village hall.",
+          "Leaves cityhood available later if the district shows the village can govern."
+        ],
+        cons: [
+          "Cannot decide land use. Tourism and design fights stay with the County and Coastal Commission.",
+          "Needs a real revenue source. Prop 13 and two-thirds tax rules still apply.",
+          "Creates a second civic table. A competent board and a general manager are the hidden cost.",
+          "Water is already NMWD’s. Do not duplicate that service unless NMWD agrees."
+        ],
+        prsva: [
+          "PRSVA should not become the CSD. It can sponsor a formation study and then remain the civic forum.",
+          "Start with a service list of three items or fewer. “General village government” is how these proposals stall.",
+          "If the pain is planning, a CSD will disappoint. If the pain is a plant, a restroom, or a hall, price this option."
+        ]
+      },
+      city: {
+        copy: "<h3>Incorporate as a general-law city</h3><p>This is the only option that moves planning, police power, and a municipal budget to a Point Reyes council. A general-law city lives inside the state statutes. It can adopt ordinances, run or contract services, and write its own general plan.</p><p>It is still in the coastal zone. A Local Coastal Program still matters. Marin LAFCO will not approve a city that cannot show three years of revenues, services, and a reserve.</p>",
+        machine: [
+          ["Governs", "Elected city council"],
+          ["PRSVA does", "Shrink to a commission, or fold in"],
+          ["Money", "City taxes, plus revenue-neutrality payments"],
+          ["First step", "Paid fiscal analysis and a draft map"]
+        ],
+        powers: [
+          ["Land use", "Yes", "yes"],
+          ["Run services", "Yes", "yes"],
+          ["Tax", "Yes", "yes"],
+          ["Elected local board", "Yes", "yes"]
+        ],
+        pros: [
+          "Local control over zoning, design standards, business rules, and the municipal budget.",
+          "A city can apply for programs that skip unincorporated groups.",
+          "City revenues that now land at the County can be negotiated into a city budget.",
+          "Gives the Community Plan a government that must own it, not only defend it in comment letters."
+        ],
+        cons: [
+          "The fiscal test is the real gate. A village of this size has a thin payroll base and a tourism-skewed tax mix.",
+          "Revenue neutrality can remove the upside people imagine when they say “keep our taxes here.”",
+          "City hall is expensive: clerk, finance, attorney, planning, insurance, records, and elections.",
+          "A tight map may fail the 500-voter floor. A wide map will draw a fight over ranchland and park edges.",
+          "Volunteer burnout becomes a public-agency failure, not a quiet empty meeting.",
+          "Coastal Commission, Caltrans on Highway 1, NMWD, County Fire, and the Seashore do not go away."
+        ],
+        prsva: [
+          "PRSVA’s role would shrink to a neighborhood or historic commission, or it would dissolve into city committees.",
+          "Do not circulate a petition to send a message. An incomplete application still spends years and money.",
+          "The first honest product is a paid comprehensive fiscal analysis, with a draft map and a service plan.",
+          "Ask whether the Association is ready to recruit a council, not only oppose projects."
+        ]
+      },
+      charter: {
+        copy: "<h3>Charter city</h3><p>A charter city writes its own municipal constitution. On “municipal affairs,” it can depart from some general laws. Election systems, some contracting, and local structure are the usual reasons.</p><p>A charter is not a way around the Coastal Act, the Brown Act, or Propositions 13 and 218. Almost no community should try to be born as a charter city. If Point Reyes ever incorporated, start as a general-law city. Add a charter later if a specific problem appears.</p>",
+        machine: [
+          ["Governs", "City council, under a local charter"],
+          ["PRSVA does", "Same shift as cityhood, plus a charter fight"],
+          ["Money", "Same hard fiscal test as a general-law city"],
+          ["First step", "Do not start here"]
+        ],
+        powers: [
+          ["Land use", "Yes", "yes"],
+          ["Run services", "Yes", "yes"],
+          ["Tax", "Yes", "yes"],
+          ["Elected local board", "Yes", "yes"]
+        ],
+        pros: [
+          "More room to design council structure, elections, and some municipal-affair rules.",
+          "Some tax and assessment tools are easier for charter cities than for general-law cities.",
+          "Makes local self-government the point, not only a service contract."
+        ],
+        cons: [
+          "Does not fix the small-city money problem. A charter cannot invent a tax base.",
+          "Drafting and defending a charter is its own political campaign.",
+          "Courts, not the village, decide what counts as a municipal affair.",
+          "For a first incorporation, it adds complexity without solving land use or wastewater."
+        ],
+        prsva: [
+          "Treat this as a later chapter, not an option on the first ballot.",
+          "If someone says “charter city,” ask which municipal affair they need that a general-law city cannot do.",
+          "Do not spend a year drafting a charter before there is a city, a map, and a fiscal analysis."
+        ]
+      }
+    };
+
+    const buttons = Array.from(document.querySelectorAll("[data-option]"));
+    const copyEl = document.getElementById("optionCopy");
+    const machineEl = document.getElementById("optionMachine");
+    const powersEl = document.getElementById("optionPowers");
+    const prosEl = document.getElementById("optionPros");
+    const consEl = document.getElementById("optionCons");
+    const prsvaEl = document.getElementById("optionPrsva");
+
+    function list(el, items) {
+      el.innerHTML = items.map(function (item) { return "<li>" + item + "</li>"; }).join("");
+    }
+
+    function setOption(id) {
+      var option = OPTIONS[id];
+      if (!option) return;
+
+      buttons.forEach(function (button) {
+        button.setAttribute("aria-pressed", button.getAttribute("data-option") === id ? "true" : "false");
+      });
+
+      copyEl.innerHTML = option.copy;
+      machineEl.innerHTML = option.machine.map(function (pair) {
+        return "<div class=\"cell\"><dt>" + pair[0] + "</dt><dd>" + pair[1] + "</dd></div>";
+      }).join("");
+      powersEl.innerHTML = option.powers.map(function (power) {
+        return "<div class=\"power " + power[2] + "\"><b>" + power[0] + "</b><span>" + power[1] + "</span></div>";
+      }).join("");
+      list(prosEl, option.pros);
+      list(consEl, option.cons);
+      list(prsvaEl, option.prsva);
+
+      if (history.replaceState) history.replaceState(null, "", "#" + id);
+    }
+
+    buttons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        setOption(button.getAttribute("data-option"));
+      });
+    });
+
+    var initial = (location.hash || "#status").slice(1);
+    setOption(OPTIONS[initial] ? initial : "status");
+  </script>
+</body>
+</html>
